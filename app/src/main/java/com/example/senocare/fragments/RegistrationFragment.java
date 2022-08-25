@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.senocare.R;
 import com.example.senocare.activity.RegistrationActivity;
@@ -75,13 +77,52 @@ public class RegistrationFragment extends Fragment {
         button_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = getView().findViewById(R.id.email).toString();
-                String password = getView().findViewById(R.id.password).toString();
-                String name = getView().findViewById(R.id.name).toString();
-                String birthday = getView().findViewById(R.id.birthday).toString();
-                String phone = getView().findViewById(R.id.phone_number).toString();
-                String address = getView().findViewById(R.id.home_address).toString();
+                String email = ((EditText) getView().findViewById(R.id.email)).getText().toString();
+                String password = ((EditText) getView().findViewById(R.id.password)).getText().toString();
+                String name = ((EditText) getView().findViewById(R.id.name)).getText().toString();
+                String birthday = ((EditText) getView().findViewById(R.id.birthday)).getText().toString();
+                String phone = ((EditText) getView().findViewById(R.id.phone_number)).getText().toString();
+                String address = ((EditText) getView().findViewById(R.id.home_address)).getText().toString();
 
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getContext(), "Email cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getContext(), "Password cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    Toast.makeText(getContext(), "Password too short", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(birthday)) {
+                    Toast.makeText(getContext(), "Birthday cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(phone)) {
+                    Toast.makeText(getContext(), "Phone number cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(address)) {
+                    Toast.makeText(getContext(), "Address cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent login = new Intent();
+                login.putExtra("userEmail", email);
+                login.putExtra("userPassword", password);
+                getActivity().setResult(Activity.RESULT_OK, login);
                 getActivity().finish();
             }
         });
@@ -116,13 +157,52 @@ public class RegistrationFragment extends Fragment {
         button_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = getView().findViewById(R.id.email).toString();
-                String password = getView().findViewById(R.id.password).toString();
-                String name = getView().findViewById(R.id.name).toString();
-                String birthday = getView().findViewById(R.id.birthday).toString();
-                String yearsExp = getView().findViewById(R.id.yearsExp).toString();
-                String specialize = getView().findViewById(R.id.specialize).toString();
+                String email = ((EditText) getView().findViewById(R.id.email)).getText().toString();
+                String password = ((EditText) getView().findViewById(R.id.password)).getText().toString();
+                String name = ((EditText) getView().findViewById(R.id.name)).getText().toString();
+                String birthday = ((EditText) getView().findViewById(R.id.birthday)).getText().toString();
+                String yearsExp = ((EditText) getView().findViewById(R.id.yearsExp)).getText().toString();
+                String specialize = ((Spinner) getView().findViewById(R.id.specialize)).getSelectedItem().toString();
 
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(getContext(), "Email cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(getContext(), "Password cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    Toast.makeText(getContext(), "Password too short", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(birthday)) {
+                    Toast.makeText(getContext(), "Birthday cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(yearsExp)) {
+                    Toast.makeText(getContext(), "Years of Experience cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(specialize)) {
+                    Toast.makeText(getContext(), "Specialization cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent login = new Intent();
+                login.putExtra("userEmail", email);
+                login.putExtra("userPassword", password);
+                getActivity().setResult(Activity.RESULT_OK, login);
                 getActivity().finish();
             }
         });
