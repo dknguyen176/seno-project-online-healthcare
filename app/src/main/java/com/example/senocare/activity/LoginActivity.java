@@ -22,7 +22,10 @@ import android.widget.Toast;
 import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -36,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
         SenoDB.init(this);
 
-        //login();
+        login();
 
         Button signInButton = findViewById(R.id.btn_signin);
         signInButton.setOnClickListener(new View.OnClickListener() {
@@ -88,14 +91,14 @@ public class LoginActivity extends AppCompatActivity {
     /* ============================================================================================ */
 
     private void login() {
-        user = app.currentUser();
-        if (user == null) return;
+        user.set(app.currentUser());
+        if (user.get() == null) return;
 
         defaultSubscription();
 
         setUserType();
 
-        Log.v("AUTH", "Remember patient login: " + user.getProfile().getEmail());
+        Log.v("AUTH", "Remember patient login: " + user.get().getProfile().getEmail());
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
@@ -105,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
         app.loginAsync(emailPasswordCredentials, it -> {
             if (it.isSuccess()) {
-                user = app.currentUser();
+                user.set(app.currentUser());
 
                 defaultSubscription();
 
@@ -123,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        user.logOutAsync( result -> {
+        user.get().logOutAsync( result -> {
             if (result.isSuccess()) {
                 Log.v("AUTH", "Successfully logged out.");
             } else {

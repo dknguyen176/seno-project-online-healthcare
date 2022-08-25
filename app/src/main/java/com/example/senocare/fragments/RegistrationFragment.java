@@ -233,7 +233,7 @@ public class RegistrationFragment extends Fragment {
         Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
         app.loginAsync(emailPasswordCredentials, it -> {
             if (it.isSuccess()) {
-                user = app.currentUser();
+                user.set(app.currentUser());
 
                 patientSubscription();
 
@@ -255,7 +255,7 @@ public class RegistrationFragment extends Fragment {
         Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
         app.loginAsync(emailPasswordCredentials, it -> {
             if (it.isSuccess()) {
-                user = app.currentUser();
+                user.set(app.currentUser());
 
                 doctorSubscription();
 

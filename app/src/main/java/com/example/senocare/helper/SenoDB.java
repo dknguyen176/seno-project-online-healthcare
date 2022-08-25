@@ -6,6 +6,8 @@ import android.util.Log;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -23,7 +25,7 @@ public final class SenoDB {
 
     public static Realm realm = null;
     public static App app;
-    public static User user;
+    public static AtomicReference<User> user = new AtomicReference<User>();
 
     public static boolean IS_PATIENT = true;
 
@@ -42,7 +44,7 @@ public final class SenoDB {
     }
 
     public static void defaultSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user)
+        SyncConfiguration config = new SyncConfiguration.Builder(user.get())
                 .allowQueriesOnUiThread(true)
                 .allowWritesOnUiThread(true)
                 .build();
@@ -51,13 +53,13 @@ public final class SenoDB {
     }
 
     public static void patientSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user)
+        SyncConfiguration config = new SyncConfiguration.Builder(user.get())
                 .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                     @Override
                     public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
                         // add a subscription with a name
                         subscriptions.add(Subscription.create("patientSubscription",
-                                realm.where(Patient.class).equalTo("email", user.getProfile().getEmail())));
+                                realm.where(Patient.class).equalTo("email", user.get().getProfile().getEmail())));
                         subscriptions.add(Subscription.create("doctorSubscription",
                                 realm.where(Doctor.class)));
                     }
@@ -71,7 +73,7 @@ public final class SenoDB {
     }
 
     public static void doctorSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user)
+        SyncConfiguration config = new SyncConfiguration.Builder(user.get())
                 .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                     @Override
                     public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
@@ -79,7 +81,7 @@ public final class SenoDB {
                         subscriptions.add(Subscription.create("patientSubscription",
                                 realm.where(Patient.class)));
                         subscriptions.add(Subscription.create("doctorSubscription",
-                                realm.where(Doctor.class).equalTo("email", user.getProfile().getEmail())));
+                                realm.where(Doctor.class).equalTo("email", user.get().getProfile().getEmail())));
                     }
                 })
                 //.waitForInitialRemoteData(1000, TimeUnit.MILLISECONDS)
@@ -106,7 +108,7 @@ public final class SenoDB {
 
     public static void setUserType() {
         Patient patient = realm.where(Patient.class).findFirst();
-        IS_PATIENT = (patient != null && patient.get_id().equals(user.getProfile().getEmail()));
+        IS_PATIENT = (patient != null && patient.get_id().equals(user.get().getProfile().getEmail()));
     }
 
     public static void setUserType(boolean bool) {
