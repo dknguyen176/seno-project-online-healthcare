@@ -3,15 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_login.xml" value="0.22826086956521738" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_maps.xml" value="0.22826086956521738" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_registration.xml" value="0.264" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_registration2.xml" value="0.22826086956521738" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/doctor_registration.xml" value="0.1" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/fragment_registration.xml" value="0.176" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/patient_or_doctor.xml" value="0.1" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/patient_registration.xml" value="0.24074074074074073" />
+        <entry key="..\:/Repositories/android/seno-project-online-healthcare/app/src/main/res/layout/activity_login.xml" value="0.18802083333333333" />
+        <entry key="..\:/Repositories/android/seno-project-online-healthcare/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/Repositories/android/seno-project-online-healthcare/app/src/main/res/layout/activity_registration.xml" value="0.22" />
+        <entry key="..\:/Repositories/android/seno-project-online-healthcare/app/src/main/res/layout/doctor_registration.xml" value="0.22" />
+        <entry key="..\:/Repositories/android/seno-project-online-healthcare/app/src/main/res/layout/fragment_registration.xml" value="0.18802083333333333" />
+        <entry key="..\:/Repositories/android/seno-project-online-healthcare/app/src/main/res/layout/patient_or_doctor.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>

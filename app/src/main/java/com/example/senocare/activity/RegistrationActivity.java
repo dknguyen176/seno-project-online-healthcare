@@ -1,7 +1,9 @@
 package com.example.senocare.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        setResult(Activity.RESULT_CANCELED, new Intent());
 
         TextView signInText = findViewById(R.id.text_signin);
         signInText.setOnClickListener(new View.OnClickListener() {
