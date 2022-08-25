@@ -6,6 +6,7 @@ import static com.example.senocare.helper.SenoDB.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.senocare.R;
@@ -18,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SenoDB.init(this);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
+
+        // SenoDB.init(this);
 
         //register("dknguyen176", "1234abcd");
         //login("dknguyen176", "1234abcd");
