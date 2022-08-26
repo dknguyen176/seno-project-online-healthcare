@@ -90,15 +90,26 @@ public class LoginActivity extends AppCompatActivity {
 
     /* ============================================================================================ */
 
+    private void anonymousLogin(boolean isPatient) {
+        // not login actually, just skip the login
+        // *** DON'T USE DB WITH THIS LOGIN ***
+        setUserType(isPatient);
+
+        Log.v("AUTH", "Anonymous login");
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
+    }
+
     private void login() {
-        user.set(app.currentUser());
-        if (user.get() == null) return;
+        user = app.currentUser();
+        if (user == null) return;
 
         defaultSubscription();
 
         setUserType();
 
-        Log.v("AUTH", "Remember patient login: " + user.get().getProfile().getEmail());
+        Log.v("AUTH", "Remember patient login: " + user.getProfile().getEmail());
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
@@ -108,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
         app.loginAsync(emailPasswordCredentials, it -> {
             if (it.isSuccess()) {
-                user.set(app.currentUser());
+                user = app.currentUser();
 
                 defaultSubscription();
 
@@ -126,8 +137,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        user.get().logOutAsync( result -> {
+        user.logOutAsync( result -> {
             if (result.isSuccess()) {
+                SenoDB.close();
                 Log.v("AUTH", "Successfully logged out.");
             } else {
                 Log.e("AUTH", result.getError().toString());

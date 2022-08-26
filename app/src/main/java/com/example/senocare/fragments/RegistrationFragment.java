@@ -103,15 +103,22 @@ public class RegistrationFragment extends Fragment {
                 String phone = ((EditText) getView().findViewById(R.id.phone_number)).getText().toString();
                 String address = ((EditText) getView().findViewById(R.id.home_address)).getText().toString();
 
+/*
                 if (TextUtils.isEmpty(email)) { Toast.makeText(getContext(), "Email cannot be empty", Toast.LENGTH_LONG).show(); return;}
                 if (TextUtils.isEmpty(password)) { Toast.makeText(getContext(), "Password cannot be empty", Toast.LENGTH_LONG).show(); return; }
                 if (TextUtils.isEmpty(name)) { Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_LONG).show(); return; }
                 if (TextUtils.isEmpty(birthday)) { Toast.makeText(getContext(), "Birthday cannot be empty", Toast.LENGTH_LONG).show(); return; }
                 if (TextUtils.isEmpty(phone)) { Toast.makeText(getContext(), "Phone number cannot be empty", Toast.LENGTH_LONG).show(); return; }
                 if (TextUtils.isEmpty(address)) { Toast.makeText(getContext(), "Address cannot be empty", Toast.LENGTH_LONG).show(); return; }
+*/
 
-                Patient patient = new Patient(email, name, birthday, phone, address);
-                register(email, password, patient);
+                // Patient() get default info patient, not the input
+                Patient patient = new Patient();
+                register(patient.getEmail(), "123456", patient);
+
+                // use this when finish, change some args to match the variables
+                //Patient patient = new Patient(email, name, sex, birth, phone, address);
+                //register(email, password, patient);
             }
         });
     }
@@ -152,15 +159,21 @@ public class RegistrationFragment extends Fragment {
                 String yearsExp = ((EditText) getView().findViewById(R.id.yearsExp)).getText().toString();
                 String specialty = ((Spinner) getView().findViewById(R.id.specialty)).getSelectedItem().toString();
 
+/*
                 if (TextUtils.isEmpty(email)) { Toast.makeText(getContext(), "Email cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(password)) { Toast.makeText(getContext(), "Password cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(name)) { Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(birthday)) { Toast.makeText(getContext(), "Birthday cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(yearsExp)) { Toast.makeText(getContext(), "Years of Experience cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(specialty)) { Toast.makeText(getContext(), "Specialty cannot be empty", Toast.LENGTH_SHORT).show(); return; }
+*/
+                // Doctor() get default info patient, not the input
+                Doctor doctor = new Doctor();
+                register(doctor.getEmail(), "123456", doctor);
 
-                Doctor doctor = new Doctor(email, name, specialty, birthday, Integer.parseInt(yearsExp));
-                register(email, password, doctor);
+                // use this when finish, change some args to match the variables
+                //Doctor doctor = new Doctor(email, name, sex, birth, spec, exper, loc, bio, rating);
+                //register(email, password, doctor);
             }
         });
     }
@@ -233,7 +246,7 @@ public class RegistrationFragment extends Fragment {
         Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
         app.loginAsync(emailPasswordCredentials, it -> {
             if (it.isSuccess()) {
-                user.set(app.currentUser());
+                user = app.currentUser();
 
                 patientSubscription();
 
@@ -255,7 +268,7 @@ public class RegistrationFragment extends Fragment {
         Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
         app.loginAsync(emailPasswordCredentials, it -> {
             if (it.isSuccess()) {
-                user.set(app.currentUser());
+                user = app.currentUser();
 
                 doctorSubscription();
 
