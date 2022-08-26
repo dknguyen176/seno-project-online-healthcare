@@ -1,5 +1,7 @@
 package com.example.senocare.activity;
 
+import static com.example.senocare.helper.SenoDB.realm;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -30,23 +32,14 @@ public class ShowDoctorList extends AppCompatActivity {
     public static boolean active = false;
 
     Toolbar toolbar;
-    TextView result, titleView;
-
-    int count;
+    TextView titleView;
 
     RecyclerView doctorRecyclerView;
     public static DoctorAdapter doctorAdapter;
     public static List<Doctor> doctorList;
     public static HashMap<String, Integer> doctorListPosition;
 
-    TextView cartCount;
-
-    String category;
-    String title;
-    String[] tags;
-
-    HashMap < String, Object > favMap;
-    boolean fav;
+    String title = "Doctor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +47,13 @@ public class ShowDoctorList extends AppCompatActivity {
         setContentView(R.layout.activity_show_doctor_list);
         active = true;
 
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
         createToolbar();
 
         createTitle();
+
+        createDoctorView();
     }
 
     @Override
@@ -81,18 +76,12 @@ public class ShowDoctorList extends AppCompatActivity {
         doctorRecyclerView = findViewById(R.id.doc_rec);
         doctorRecyclerView.setLayoutManager(new GridLayoutManager(ShowDoctorList.this,2));
         doctorList = new ArrayList<>();
-        doctorAdapter = new DoctorAdapter(ShowDoctorList.this,doctorList, R.layout.doctor_large);
+        doctorAdapter = new DoctorAdapter(
+                ShowDoctorList.this,
+                realm.where(Doctor.class).findAll(),
+                R.layout.doctor_large);
         doctorRecyclerView.setAdapter(doctorAdapter);
         doctorListPosition = new HashMap<>();
-
-        // query doctor list
-        getDoctorList();
-    }
-
-    private void getDoctorList() {
-
-
-
     }
 
     private void createToolbar() {
