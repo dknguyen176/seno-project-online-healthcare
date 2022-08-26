@@ -14,13 +14,13 @@
         android:theme="@style/Theme.SenoCare"
         tools:targetApi="31">
         <activity
-            android:name=".DetailedDoctor"
+            android:name=".activity.DetailedDoctor"
             android:exported="false" />
         <activity
-            android:name=".ShowSpecialtyList"
+            android:name=".activity.ShowSpecialtyList"
             android:exported="false" />
         <activity
-            android:name=".ShowDoctors"
+            android:name=".activity.ShowDoctorList"
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"

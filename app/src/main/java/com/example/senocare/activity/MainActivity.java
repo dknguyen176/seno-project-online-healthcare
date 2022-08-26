@@ -32,6 +32,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button showDrBtn = findViewById(R.id.showDoctor);
+        showDrBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ShowDoctorList.class);
+                startActivity(intent);
+            }
+        });
+
         TextView textView = findViewById(R.id.user_type);
         if (IS_PATIENT) {
             textView.setText("Patient");

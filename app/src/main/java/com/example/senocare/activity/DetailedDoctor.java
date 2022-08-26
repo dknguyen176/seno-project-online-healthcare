@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.senocare.R;
+import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
 
 public class DetailedDoctor extends AppCompatActivity {
@@ -21,9 +23,10 @@ public class DetailedDoctor extends AppCompatActivity {
         Doctor doctor = getDoctorFromID(doc_id);
 
         // put doctor's info into the layout
+        Log.v("DETAIL DOCTOR", "" + doctor);
     }
 
     private Doctor getDoctorFromID(String doc_id) {
-        return null;
+        return SenoDB.getDoctor(doc_id);
     }
 }
