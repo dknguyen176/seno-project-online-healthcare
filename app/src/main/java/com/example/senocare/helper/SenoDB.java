@@ -4,7 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.senocare.model.Doctor;
+import com.example.senocare.model.Message;
 import com.example.senocare.model.Patient;
+import com.example.senocare.model.Prescription;
+import com.example.senocare.model.Schedule;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,7 +28,7 @@ public final class SenoDB {
 
     public static Realm realm = null;
     public static App app;
-    public static AtomicReference<User> user = new AtomicReference<User>();
+    public static User user;
 
     public static boolean IS_PATIENT = true;
 
@@ -44,7 +47,7 @@ public final class SenoDB {
     }
 
     public static void defaultSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user.get())
+        SyncConfiguration config = new SyncConfiguration.Builder(user)
                 .allowQueriesOnUiThread(true)
                 .allowWritesOnUiThread(true)
                 .build();
@@ -53,15 +56,31 @@ public final class SenoDB {
     }
 
     public static void patientSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user.get())
+        SyncConfiguration config = new SyncConfiguration.Builder(user)
                 .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                     @Override
                     public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
                         // add a subscription with a name
                         subscriptions.add(Subscription.create("patientSubscription",
-                                realm.where(Patient.class).equalTo("email", user.get().getProfile().getEmail())));
+                                realm.where(Patient.class)
+                                        .equalTo("email", user.getProfile().getEmail())
+                        ));
                         subscriptions.add(Subscription.create("doctorSubscription",
-                                realm.where(Doctor.class)));
+                                realm.where(Doctor.class)
+                        ));
+                        subscriptions.add(Subscription.create("prescriptionSubscription",
+                                realm.where(Prescription.class)
+                                        .equalTo("patient", user.getProfile().getEmail())
+                        ));
+                        subscriptions.add(Subscription.create("scheduleSubscription",
+                                realm.where(Schedule.class)
+                                        .equalTo("patient", user.getProfile().getEmail())
+                        ));
+                        subscriptions.add(Subscription.create("messageSubscription",
+                                realm.where(Message.class)
+                                        .equalTo("sender", user.getProfile().getEmail())
+                                        .or().equalTo("receiver", user.getProfile().getEmail())
+                        ));
                     }
                 })
                 //.waitForInitialRemoteData(1000, TimeUnit.MILLISECONDS)
@@ -73,15 +92,31 @@ public final class SenoDB {
     }
 
     public static void doctorSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user.get())
+        SyncConfiguration config = new SyncConfiguration.Builder(user)
                 .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
                     @Override
                     public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
                         // add a subscription with a name
                         subscriptions.add(Subscription.create("patientSubscription",
-                                realm.where(Patient.class)));
+                                realm.where(Patient.class)
+                        ));
                         subscriptions.add(Subscription.create("doctorSubscription",
-                                realm.where(Doctor.class).equalTo("email", user.get().getProfile().getEmail())));
+                                realm.where(Doctor.class)
+                                        .equalTo("email", user.getProfile().getEmail())
+                        ));
+                        subscriptions.add(Subscription.create("prescriptionSubscription",
+                                realm.where(Prescription.class)
+                                        .equalTo("doctor", user.getProfile().getEmail())
+                        ));
+                        subscriptions.add(Subscription.create("scheduleSubscription",
+                                realm.where(Schedule.class)
+                                        .equalTo("doctor", user.getProfile().getEmail())
+                        ));
+                        subscriptions.add(Subscription.create("messageSubscription",
+                                realm.where(Message.class)
+                                        .equalTo("sender", user.getProfile().getEmail())
+                                        .or().equalTo("receiver", user.getProfile().getEmail())
+                        ));
                     }
                 })
                 //.waitForInitialRemoteData(1000, TimeUnit.MILLISECONDS)
@@ -94,21 +129,21 @@ public final class SenoDB {
 
     public static void insertPatient(Patient patient) {
         realm.executeTransaction(r -> {
-            Patient newPatient = r.createObject(Patient.class, patient.getEmail());
+            Patient newPatient = r.createObject(Patient.class, user.getId());
             newPatient.set(patient);
         });
     }
 
     public static void insertDoctor(Doctor doctor) {
         realm.executeTransaction(r -> {
-            Doctor newDoctor = r.createObject(Doctor.class, doctor.getEmail());
+            Doctor newDoctor = r.createObject(Doctor.class, user.getId());
             newDoctor.set(doctor);
         });
     }
 
     public static void setUserType() {
         Patient patient = realm.where(Patient.class).findFirst();
-        IS_PATIENT = (patient != null && patient.get_id().equals(user.get().getProfile().getEmail()));
+        IS_PATIENT = (patient != null && patient.get_id().equals(user.getId()));
     }
 
     public static void setUserType(boolean bool) {
@@ -129,5 +164,9 @@ public final class SenoDB {
 
     public static Doctor getDoctor() {
         return realm.where(Doctor.class).findFirst();
+    }
+
+    public static Doctor getDoctor(String _id) {
+        return realm.where(Doctor.class).equalTo("_id", _id).findFirst();
     }
 }
