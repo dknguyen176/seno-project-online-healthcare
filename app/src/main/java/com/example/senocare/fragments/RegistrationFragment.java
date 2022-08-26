@@ -118,7 +118,7 @@ public class RegistrationFragment extends Fragment {
 
     private void doctorRegistration(){
         setBirthdayText();
-        Spinner specialize = getView().findViewById(R.id.specialize);
+        Spinner specialize = getView().findViewById(R.id.specialty);
         List<String> specializeList = new ArrayList<>();;
         specializeList.add("lmao");
         specializeList.add("sus");
@@ -150,16 +150,16 @@ public class RegistrationFragment extends Fragment {
                 String name = ((EditText) getView().findViewById(R.id.name)).getText().toString();
                 String birthday = ((EditText) getView().findViewById(R.id.birthday)).getText().toString();
                 String yearsExp = ((EditText) getView().findViewById(R.id.yearsExp)).getText().toString();
-                String specialize = ((Spinner) getView().findViewById(R.id.specialize)).getSelectedItem().toString();
+                String specialty = ((Spinner) getView().findViewById(R.id.specialty)).getSelectedItem().toString();
 
                 if (TextUtils.isEmpty(email)) { Toast.makeText(getContext(), "Email cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(password)) { Toast.makeText(getContext(), "Password cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(name)) { Toast.makeText(getContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(birthday)) { Toast.makeText(getContext(), "Birthday cannot be empty", Toast.LENGTH_SHORT).show(); return; }
                 if (TextUtils.isEmpty(yearsExp)) { Toast.makeText(getContext(), "Years of Experience cannot be empty", Toast.LENGTH_SHORT).show(); return; }
-                if (TextUtils.isEmpty(specialize)) { Toast.makeText(getContext(), "Specialization cannot be empty", Toast.LENGTH_SHORT).show(); return; }
+                if (TextUtils.isEmpty(specialty)) { Toast.makeText(getContext(), "Specialty cannot be empty", Toast.LENGTH_SHORT).show(); return; }
 
-                Doctor doctor = new Doctor(email, name, specialize, birthday, Integer.parseInt(yearsExp));
+                Doctor doctor = new Doctor(email, name, specialty, birthday, Integer.parseInt(yearsExp));
                 register(email, password, doctor);
             }
         });
