@@ -28,16 +28,16 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.senocare.R;
-import com.example.senocare.adapters.PagerAdapter;
+import com.example.senocare.adapters.RegistrationAdapter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 
 import io.realm.mongodb.Credentials;
 
-public class PagerFragment extends Fragment {
+public class RegistrationFragment extends Fragment {
     // When requested, this adapter returns a PagerObjectFragment,
     // representing an object in the collection.
-    PagerAdapter pagerAdapter;
+    RegistrationAdapter registrationAdapter;
     ViewPager2 viewPager;
 
     int position = 1;
@@ -54,9 +54,9 @@ public class PagerFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        pagerAdapter = new PagerAdapter(this);
+        registrationAdapter = new RegistrationAdapter(this);
         viewPager = view.findViewById(R.id.pager);
-        viewPager.setAdapter(pagerAdapter);
+        viewPager.setAdapter(registrationAdapter);
         viewPager.setUserInputEnabled(false);
 
         Button nextBtn = view.findViewById(R.id.reg_nextBtn);
@@ -123,8 +123,8 @@ public class PagerFragment extends Fragment {
                     if (position < 7) {
                         position++;
                         viewPager.setCurrentItem(position - 1);
+                        if (position == 7) nextBtn.setText("Finish Registration");
                     } else {
-                        nextBtn.setText("Finish Registration");
                         Patient patient = new Patient(email, name, sex, birth, phone, address);
                         register(patient.getEmail(), password, patient);
                     }
@@ -136,8 +136,8 @@ public class PagerFragment extends Fragment {
                     if (position < 10) {
                         position++;
                         viewPager.setCurrentItem(position - 1);
+                        if (position == 10) nextBtn.setText("Finish Registration");
                     } else {
-                        nextBtn.setText("Finish Registration");
                         Doctor doctor = new Doctor(email, name, sex, birth, bio, loc, spec);
                         register(doctor.getEmail(), password, doctor);
                     }

@@ -34,7 +34,7 @@
             android:layout_weight="3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            class="com.example.senocare.fragments.PagerFragment"/>
+            class="com.example.senocare.fragments.RegistrationFragment"/>
 
     </LinearLayout>
 

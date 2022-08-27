@@ -1,10 +1,8 @@
-package com.example.senocare.fragments;
+package com.example.senocare.fragments.patient;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -17,11 +15,11 @@ import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
+import com.example.senocare.model.Specialty;
 import com.example.senocare.model.Message;
 import com.example.senocare.model.Patient;
 import com.example.senocare.model.Prescription;
 import com.example.senocare.model.Schedule;
-import com.example.senocare.model.SpecialtyModel;
 
 import org.bson.types.ObjectId;
 
@@ -31,10 +29,10 @@ import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class HomeFragment extends Fragment {
+public class PatientHomeFragment extends Fragment {
 
     // private ArrayList<???> userMessageList;
-    private OrderedRealmCollection<SpecialtyModel> specialtiesList;
+    private OrderedRealmCollection<Specialty> specialtiesList;
     private OrderedRealmCollection<Doctor> popularDoctorsList;
 
     private SpecialtyAdapter specialtyAdapter;
@@ -42,7 +40,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView messagesRecyclerView, specialtiesRecyclerView, popularDoctorsRecyclerView;
 
-    public HomeFragment() {
+    public PatientHomeFragment() {
         // Required empty public constructor
     }
 

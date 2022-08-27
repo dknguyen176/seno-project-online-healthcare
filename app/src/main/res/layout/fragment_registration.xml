@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PagerFragment"
+    android:orientation="vertical"
+    tools:context=".fragments.RegistrationFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_gravity="top"/>
+        android:layout_height="200dp" />
 
     <Button
         android:id="@+id/reg_nextBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:background="@drawable/roundedbutton2"
         android:fontFamily="@font/overlock_black"
         android:text="Continue"
@@ -26,4 +25,4 @@
         app:backgroundTint="@color/white" />
 
 
-</FrameLayout>
+</LinearLayout>

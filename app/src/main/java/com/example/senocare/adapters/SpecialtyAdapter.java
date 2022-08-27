@@ -14,17 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.senocare.R;
 import com.example.senocare.activity.ShowDoctorList;
-import com.example.senocare.model.SpecialtyModel;
+import com.example.senocare.model.Specialty;
 
 import java.util.List;
 
 public class SpecialtyAdapter extends RecyclerView.Adapter < SpecialtyAdapter.ViewHolder > {
 
     private Context context;
-    private List<SpecialtyModel> list;
+    private List<Specialty> list;
     private int layoutId;
 
-    public SpecialtyAdapter(Context context, List<SpecialtyModel> list, int layoutId) {
+    public SpecialtyAdapter(Context context, List<Specialty> list, int layoutId) {
         this.context = context;
         this.list = list;
         this.layoutId = layoutId;
@@ -38,7 +38,7 @@ public class SpecialtyAdapter extends RecyclerView.Adapter < SpecialtyAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(context).load(list.get(position).getImg_url()).into(holder.specImg);
+        // Glide.with(context).load(list.get(position).getImg_url()).into(holder.specImg);
         String name = list.get(position).getName();
 
         holder.specName.setText(name);

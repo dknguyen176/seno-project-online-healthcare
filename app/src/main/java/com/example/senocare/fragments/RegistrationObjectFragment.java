@@ -21,19 +21,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.senocare.R;
-import com.example.senocare.model.SpecialtyModel;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 
 // Instances of this class are fragments representing a single
 // object in our collection.
-public class PagerObjectFragment extends Fragment {
+public class RegistrationObjectFragment extends Fragment {
     public static final String ARG_OBJECT = "object";
 
     @Nullable
@@ -132,7 +128,7 @@ public class PagerObjectFragment extends Fragment {
     }
 
     private void inputSpecialty(TextView textView, Spinner spinner) {
-        textView.setText("Choose your specialty from this list");
+        textView.setText("Choose your specialty from this list.");
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.SpecialtiesList, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -140,49 +136,49 @@ public class PagerObjectFragment extends Fragment {
     }
 
     private void inputLocation(TextView textView, EditText editText) {
-        textView.setText("Enter your work location");
+        textView.setText("Where do you work?");
         editText.setHint("Work Address");
     }
 
     private void inputBio(TextView textView, EditText editText) {
-        textView.setText("Say something about yourself");
+        textView.setText("Say something about yourself.");
         editText.setHint("Personal Bio");
         editText.setFilters(new InputFilter[] { new InputFilter.LengthFilter(100) });
     }
 
     private void inputHomeAddress(TextView textView, EditText editText) {
-        textView.setText("Enter your home address");
+        textView.setText("Where do you live?");
         editText.setHint("Home Address");
     }
 
     private void inputPhone(TextView textView, EditText editText) {
-        textView.setText("Enter your phone number");
+        textView.setText("What is your phone number?");
         editText.setHint("Phone Number");
         editText.setInputType(InputType.TYPE_CLASS_PHONE);
         editText.setKeyListener(DigitsKeyListener.getInstance("0123456789."));
     }
 
     private void inputMaleFemale(CheckBox ckbox1, CheckBox ckbox2, TextView textView, TextView noteText) {
-        textView.setText("Are you male or female");
+        textView.setText("Are you male or female?");
         ckbox1.setText("Male");
         ckbox2.setText("Female");
         noteText.setVisibility(View.VISIBLE);
     }
 
     private void inputPatientDoctor(CheckBox ckbox1, CheckBox ckbox2, TextView textView, TextView noteText) {
-        textView.setText("Are you a patient or a doctor");
+        textView.setText("Are you a patient or a doctor?");
         ckbox1.setText("Patient");
         ckbox2.setText("Doctor");
         noteText.setVisibility(View.INVISIBLE);
     }
 
     private void inputName(TextView textView, EditText editText) {
-        textView.setText("What is your name");
+        textView.setText("What is your name?");
         editText.setHint("Full Name");
     }
 
     private void inputBirthday(TextView textView, EditText editText) {
-        textView.setText("What is your birthday");
+        textView.setText("When is your birthday?");
         editText.setHint("Birthday");
         editText.setFocusable(false);
         editText.setClickable(true);

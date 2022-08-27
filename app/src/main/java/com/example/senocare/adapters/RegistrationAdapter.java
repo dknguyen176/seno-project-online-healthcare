@@ -6,18 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.senocare.fragments.PagerFragment;
-import com.example.senocare.fragments.PagerObjectFragment;
+import com.example.senocare.fragments.RegistrationObjectFragment;
 
-public class PagerAdapter extends FragmentStateAdapter {
-    public PagerAdapter(Fragment fragment) {
+public class RegistrationAdapter extends FragmentStateAdapter {
+    public RegistrationAdapter(Fragment fragment) {
         super(fragment);
     }
 
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = new PagerObjectFragment();
+        Fragment fragment = new RegistrationObjectFragment();
         Bundle args = new Bundle();
 
         args.putInt("position", position + 1);

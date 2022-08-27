@@ -3,14 +3,14 @@ package com.example.senocare.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class SpecialtyModel implements Parcelable {
+public class Specialty implements Parcelable {
     String name;
     String img_url;
 
-    public SpecialtyModel() {
+    public Specialty() {
     }
 
-    public SpecialtyModel(String name, String img_url) {
+    public Specialty(String name, String img_url) {
         this.name = name;
         this.img_url = img_url;
     }
@@ -42,19 +42,19 @@ public class SpecialtyModel implements Parcelable {
         dest.writeString(img_url);
     }
 
-    public static final Parcelable.Creator<SpecialtyModel> CREATOR = new Creator<SpecialtyModel>() {
+    public static final Parcelable.Creator<Specialty> CREATOR = new Creator<Specialty>() {
         @Override
-        public SpecialtyModel createFromParcel(Parcel source) {
-            return new SpecialtyModel(source);
+        public Specialty createFromParcel(Parcel source) {
+            return new Specialty(source);
         }
 
         @Override
-        public SpecialtyModel[] newArray(int size) {
-            return new SpecialtyModel[size];
+        public Specialty[] newArray(int size) {
+            return new Specialty[size];
         }
     };
 
-    private SpecialtyModel(Parcel source) {
+    private Specialty(Parcel source) {
         name = source.readString();
         img_url = source.readString();
     }

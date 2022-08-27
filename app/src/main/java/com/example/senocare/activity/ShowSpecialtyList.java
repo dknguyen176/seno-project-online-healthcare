@@ -1,27 +1,19 @@
 package com.example.senocare.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.senocare.R;
 import com.example.senocare.adapters.SpecialtyAdapter;
-import com.example.senocare.model.SpecialtyModel;
+import com.example.senocare.model.Specialty;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ShowSpecialtyList extends AppCompatActivity {
@@ -30,7 +22,7 @@ public class ShowSpecialtyList extends AppCompatActivity {
 
     RecyclerView specialtyRecyclerView;
     SpecialtyAdapter specialtyAdapter;
-    List<SpecialtyModel> specialtyModelList;
+    List<Specialty> specialtyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +31,7 @@ public class ShowSpecialtyList extends AppCompatActivity {
 
         createToolbar();
 
-        createCategoryView();
+        createSpecialtyView();
     }
 
     @Override
@@ -47,18 +39,18 @@ public class ShowSpecialtyList extends AppCompatActivity {
         super.onResume();
     }
 
-    private void createCategoryView() {
+    private void createSpecialtyView() {
         specialtyRecyclerView = findViewById(R.id.all_spec_rec);
         specialtyRecyclerView.setLayoutManager(new GridLayoutManager(ShowSpecialtyList.this,2));
-        specialtyModelList = new ArrayList<>();
-        specialtyAdapter = new SpecialtyAdapter(ShowSpecialtyList.this,specialtyModelList,R.layout.spec_large);
+        specialtyList = new ArrayList<>();
+
+        ArrayList<String> specialtyNames = new ArrayList<>(R.array.SpecialtiesList);
+        for (String name : specialtyNames){
+            specialtyList.add(new Specialty(name, null));
+        }
+
+        specialtyAdapter = new SpecialtyAdapter(ShowSpecialtyList.this, specialtyList,R.layout.spec_large);
         specialtyRecyclerView.setAdapter(specialtyAdapter);
-
-        getSpecialtyList();
-    }
-
-    private void getSpecialtyList() {
-        // get all specialties
     }
 
     private void createToolbar() {
