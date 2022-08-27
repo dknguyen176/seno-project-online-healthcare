@@ -53,7 +53,6 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         Doctor doctor = getItem(position);
         Log.i(TAG, "Binding view holder: " + doctor.getName());
 
@@ -63,6 +62,15 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
         holder.exper.setText(doctor.getExper().toString());
         // holder.rating.setText(doctor.getRating());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailedDoctor.class);
+                intent.putExtra("_id", doctor.get_id());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,18 +87,6 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
             spec = itemView.findViewById(R.id.doc_spec);
             exper = itemView.findViewById(R.id.doc_exper);
             rating = itemView.findViewById(R.id.doc_rating);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Doctor doctor = getItem(getAdapterPosition());
-
-                    Intent intent = new Intent(context, DetailedDoctor.class);
-                    intent.putExtra("id", doctor.get_id());
-
-                    context.startActivity(intent);
-                }
-            });
         }
     }
 }

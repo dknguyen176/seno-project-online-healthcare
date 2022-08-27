@@ -29,7 +29,7 @@ import io.realm.mongodb.sync.SyncConfiguration;
 public final class SenoDB {
     private final static String appID = "senocare-uzrlz";
 
-    public static Realm realm = null;
+    private static Realm realm = null;
     public static App app;
     public static User user;
 

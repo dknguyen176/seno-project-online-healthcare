@@ -1,7 +1,5 @@
 package com.example.senocare.activity;
 
-import static com.example.senocare.helper.SenoDB.realm;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +19,7 @@ import android.widget.Toast;
 import com.example.senocare.R;
 import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
+import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.SpecialtyModel;
 
@@ -76,10 +75,7 @@ public class ShowDoctorList extends AppCompatActivity {
         doctorRecyclerView = findViewById(R.id.doc_rec);
         doctorRecyclerView.setLayoutManager(new GridLayoutManager(ShowDoctorList.this,2));
         doctorList = new ArrayList<>();
-        doctorAdapter = new DoctorAdapter(
-                ShowDoctorList.this,
-                realm.where(Doctor.class).findAll(),
-                R.layout.doctor_large);
+        doctorAdapter = new DoctorAdapter(ShowDoctorList.this, SenoDB.getDoctorList(), R.layout.doctor_large);
         doctorRecyclerView.setAdapter(doctorAdapter);
         doctorListPosition = new HashMap<>();
     }

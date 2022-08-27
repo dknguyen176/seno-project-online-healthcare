@@ -18,7 +18,7 @@ public class DetailedDoctor extends AppCompatActivity {
         setContentView(R.layout.activity_detailed_doctor);
 
         Intent intent = getIntent();
-        String doc_id = intent.getStringExtra("id");
+        String doc_id = intent.getStringExtra("_id");
 
         Doctor doctor = getDoctorFromID(doc_id);
 
