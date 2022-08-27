@@ -49,4 +49,25 @@ public class Prescription extends RealmObject {
 
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
+
+    // Constructor
+    public Prescription() { }
+
+    public Prescription(String doctor, String patient, String time, String diagnostic, RealmList<Drugs> drugs, String note) {
+        Drugs = drugs;
+        this.diagnostic = diagnostic;
+        this.doctor = doctor;
+        this.note = note;
+        this.patient = patient;
+        this.time = time;
+    }
+
+    public void set(Prescription p) {
+        Drugs = p.getDrugs();
+        this.diagnostic = p.diagnostic;
+        this.doctor = p.doctor;
+        this.note = p.note;
+        this.patient = p.patient;
+        this.time = p.time;
+    }
 }

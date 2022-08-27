@@ -35,31 +35,6 @@ public class Doctor extends RealmObject {
     @Required
     private String spec;
 
-    // Constructor
-    public Doctor() {
-        this.bio = "Hi! I'm the doctor you need.";
-        this.birth = "01/01/2000";
-        this.email = "doctor@gmail.com";
-        this.exper = 5;
-        this.loc = "123 st. bolsa";
-        this.name = "Doctor";
-        this.rating = 5.f;
-        this.sex = "Male";
-        this.spec = "Heart";
-    }
-
-    public Doctor(String email, String name, String sex, String birth, String spec, int exper, String loc, String bio, float rating) {
-        this.bio = bio;
-        this.birth = birth;
-        this.email = email;
-        this.exper = exper;
-        this.loc = loc;
-        this.name = name;
-        this.rating = rating;
-        this.sex = sex;
-        this.spec = spec;
-    }
-
     // Standard getters & setters
     public String get_id() { return _id; }
     public void set_id(String _id) { this._id = _id; }
@@ -91,15 +66,40 @@ public class Doctor extends RealmObject {
     public String getSpec() { return spec; }
     public void setSpec(String spec) { this.spec = spec; }
 
-    public void set(Doctor doctor) {
-        setEmail(doctor.getEmail());
-        setName(doctor.getName());
-        setSex(doctor.getSex());
-        setBirth(doctor.getBirth());
-        setSpec(doctor.getSpec());
-        setExper(doctor.getExper());
-        setLoc(doctor.getLoc());
-        setBio(doctor.getBio());
-        setRating(doctor.getRating());
+    // Constructor
+    public Doctor() {
+        this.bio = "Hi! I'm the doctor you need.";
+        this.birth = "01/01/2000";
+        this.email = "doctor@gmail.com";
+        this.exper = 5;
+        this.loc = "123 st. bolsa";
+        this.name = "Doctor";
+        this.rating = 5.f;
+        this.sex = "Male";
+        this.spec = "Heart";
+    }
+
+    public Doctor(String email, String name, String sex, String birth, String spec, int exper, String loc, String bio, float rating) {
+        this.bio = bio;
+        this.birth = birth;
+        this.email = email;
+        this.exper = exper;
+        this.loc = loc;
+        this.name = name;
+        this.rating = rating;
+        this.sex = sex;
+        this.spec = spec;
+    }
+
+    public void set(Doctor d) {
+        this.bio = d.bio;
+        this.birth = d.birth;
+        this.email = d.email;
+        this.exper = d.exper;
+        this.loc = d.loc;
+        this.name = d.name;
+        this.rating = d.rating;
+        this.sex = d.sex;
+        this.spec = d.spec;
     }
 }

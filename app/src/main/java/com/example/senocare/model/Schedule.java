@@ -43,4 +43,23 @@ public class Schedule extends RealmObject {
 
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
+
+    // Constructor
+    public Schedule() { }
+
+    public Schedule(String doctor, String patient, String time, String note, String status) {
+        this.doctor = doctor;
+        this.note = note;
+        this.patient = patient;
+        this.status = status;
+        this.time = time;
+    }
+
+    public void set(Schedule s) {
+        this.doctor = s.doctor;
+        this.note = s.note;
+        this.patient = s.patient;
+        this.status = s.status;
+        this.time = s.time;
+    }
 }

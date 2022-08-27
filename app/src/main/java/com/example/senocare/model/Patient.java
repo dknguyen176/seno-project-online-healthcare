@@ -26,25 +26,6 @@ public class Patient extends RealmObject {
     @Required
     private String sex;
 
-    // Constructor
-    public Patient() {
-        this.address = "123 st. bolsa";
-        this.birth = "01/01/2000";
-        this.email = "patient@gmail.com";
-        this.name = "patient";
-        this.phone = "0123456789";
-        this.sex = "Male";
-    }
-
-    public Patient(String email, String name, String sex, String birth, String phone, String address) {
-        this.address = address;
-        this.birth = birth;
-        this.email = email;
-        this.name = name;
-        this.phone = phone;
-        this.sex = sex;
-    }
-
     // Standard getters & setters
     public String get_id() { return _id; }
     public void set_id(String _id) { this._id = _id; }
@@ -67,12 +48,31 @@ public class Patient extends RealmObject {
     public String getSex() { return sex; }
     public void setSex(String sex) { this.sex = sex; }
 
-    public void set(Patient patient) {
-        setEmail(patient.getEmail());
-        setName(patient.getName());
-        setSex(patient.getSex());
-        setBirth(patient.getBirth());
-        setPhone(patient.getPhone());
-        setAddress(patient.getAddress());
+    // Constructor
+    public Patient() {
+        this.address = "123 st. bolsa";
+        this.birth = "01/01/2000";
+        this.email = "patient@gmail.com";
+        this.name = "patient";
+        this.phone = "0123456789";
+        this.sex = "Male";
+    }
+
+    public Patient(String email, String name, String sex, String birth, String phone, String address) {
+        this.address = address;
+        this.birth = birth;
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        this.sex = sex;
+    }
+
+    public void set(Patient p) {
+        this.address = p.address;
+        this.birth = p.birth;
+        this.email = p.email;
+        this.name = p.name;
+        this.phone = p.phone;
+        this.sex = p.sex;
     }
 }

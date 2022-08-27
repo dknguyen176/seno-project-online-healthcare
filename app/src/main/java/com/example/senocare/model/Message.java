@@ -11,6 +11,9 @@ public class Message extends RealmObject {
     private ObjectId _id;
 
     @Required
+    private String conservation;
+
+    @Required
     private String receiver;
 
     @Required
@@ -26,6 +29,9 @@ public class Message extends RealmObject {
     public ObjectId get_id() { return _id; }
     public void set_id(ObjectId _id) { this._id = _id; }
 
+    public String getConservation() { return conservation; }
+    public void setConservation(String conservation) { this.conservation = conservation; }
+
     public String getReceiver() { return receiver; }
     public void setReceiver(String receiver) { this.receiver = receiver; }
 
@@ -37,5 +43,24 @@ public class Message extends RealmObject {
 
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
+
+    // Constructor
+    public Message() { }
+
+    public Message(String conservation, String sender, String receiver, String text, String time) {
+        this.conservation = conservation;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.text = text;
+        this.time = time;
+    }
+
+    public void set(Message m) {
+        this.conservation = m.conservation;
+        this.receiver = m.receiver;
+        this.sender = m.sender;
+        this.text = m.text;
+        this.time = m.time;
+    }
 }
 
