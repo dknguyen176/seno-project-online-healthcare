@@ -8,4 +8,31 @@
     <string name="item1">Item 1</string>
     <string name="item2">Item 2</string>
     <string name="searchHint">What are you finding?</string>
+    <string-array name="SpecialtiesList">
+        <item>Allergy</item>
+        <item>Anesthesiology</item>
+        <item>Cardiologist</item>
+        <item>Child Psychiatry</item>
+        <item>Dental Specialist</item>
+        <item>Dermatology</item>
+        <item>Diagnostic Radiology</item>
+        <item>Emergency Medicine</item>
+        <item>Esthetician</item>
+        <item>Gynecology</item>
+        <item>Heart</item>
+        <item>Infectious Diseases</item>
+        <item>Medical Genetics</item>
+        <item>Neurology</item>
+        <item>Nutritionist</item>
+        <item>Ophthalmology</item>
+        <item>Orthopedics</item>
+        <item>Otolaryngology</item>
+        <item>Pathology</item>
+        <item>Pediatrics</item>
+        <item>Psychiatry</item>
+        <item>Radiation Oncology</item>
+        <item>Sports Physician</item>
+        <item>Surgery</item>
+        <item>Urology</item>
+    </string-array>
 </resources>

@@ -7,6 +7,7 @@ import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 public class Doctor extends RealmObject {
+
     @PrimaryKey
     private String _id;
 
@@ -77,6 +78,18 @@ public class Doctor extends RealmObject {
         this.rating = 5.f;
         this.sex = "Male";
         this.spec = "Heart";
+    }
+
+    public Doctor(String email, String name, String sex, String birth, String bio, String loc, String spec) {
+        this.bio = bio;
+        this.birth = birth;
+        this.email = email;
+        this.loc = loc;
+        this.name = name;
+        this.sex = sex;
+        this.spec = spec;
+        this.exper = 5;
+        this.rating = 5.f;
     }
 
     public Doctor(String email, String name, String sex, String birth, String spec, int exper, String loc, String bio, float rating) {

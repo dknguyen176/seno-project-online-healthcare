@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/reg_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_marginBottom="20dp"
+            android:text="Text"/>
+
+        <EditText
+            android:id="@+id/reg_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_edittext"
+            android:drawableLeft="@drawable/ic_baseline_account_circle"
+            android:padding="10dp"
+            android:drawablePadding="5dp"
+            android:elevation="3dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="10dp"
+            android:hint="Hint"/>
+
+        <TextView
+            android:id="@+id/reg_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginHorizontal="25dp"
+            android:text="Note: This information can be changed later"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
