@@ -44,5 +44,8 @@ public class PatientProfileFragment extends Fragment {
 
         TextView phone = view.findViewById(R.id.phone_content);
         phone.setText(patient.getPhone());
+
+        TextView address = view.findViewById(R.id.address_content);
+        address.setText(patient.getAddress());
     }
 }

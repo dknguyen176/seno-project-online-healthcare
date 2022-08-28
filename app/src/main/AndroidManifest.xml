@@ -20,6 +20,12 @@
             android:name=".activity.ChatListActivity"
             android:exported="false" />
         <activity
+            android:name=".ShowScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MakeScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.DetailedDoctor"
             android:exported="false" />
         <activity

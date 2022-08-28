@@ -40,11 +40,11 @@ public class ShowSpecialtyList extends AppCompatActivity {
     }
 
     private void createSpecialtyView() {
-        specialtyRecyclerView = findViewById(R.id.all_spec_rec);
+        specialtyRecyclerView = findViewById(R.id.spec_rec);
         specialtyRecyclerView.setLayoutManager(new GridLayoutManager(ShowSpecialtyList.this,2));
         specialtyList = new ArrayList<>();
 
-        ArrayList<String> specialtyNames = new ArrayList<>(R.array.SpecialtiesList);
+        String[] specialtyNames = getResources().getStringArray(R.array.SpecialtiesList);
         for (String name : specialtyNames){
             specialtyList.add(new Specialty(name, null));
         }

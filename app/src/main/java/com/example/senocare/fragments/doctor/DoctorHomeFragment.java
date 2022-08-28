@@ -1,46 +1,40 @@
-package com.example.senocare.fragments.patient;
+package com.example.senocare.fragments.doctor;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.senocare.R;
-import com.example.senocare.activity.ShowSpecialtyList;
 import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
-import com.example.senocare.model.Specialty;
 import com.example.senocare.model.Message;
 import com.example.senocare.model.Patient;
 import com.example.senocare.model.Prescription;
 import com.example.senocare.model.Schedule;
-
-import java.util.ArrayList;
+import com.example.senocare.model.Specialty;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmResults;
 
-public class PatientHomeFragment extends Fragment {
+public class DoctorHomeFragment extends Fragment {
 
     // private ArrayList<???> userMessageList;
-    private ArrayList<Specialty> specialtyList;
+    private OrderedRealmCollection<Specialty> specialtiesList;
     private OrderedRealmCollection<Doctor> popularDoctorsList;
 
     private SpecialtyAdapter specialtyAdapter;
     private DoctorAdapter popularDoctorsAdapter;
 
-    RecyclerView messagesRecyclerView, specialtyRecyclerView, popularDoctorsRecyclerView;
+    RecyclerView messagesRecyclerView, specialtiesRecyclerView, popularDoctorsRecyclerView;
 
-    public PatientHomeFragment() {
+    public DoctorHomeFragment() {
         // Required empty public constructor
     }
 
@@ -65,17 +59,13 @@ public class PatientHomeFragment extends Fragment {
     }
 
     private void getMedicalSpecialtiesList(View root) {
-        specialtyRecyclerView = root.findViewById(R.id.spec_rec);
-        specialtyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        specialtyList = new ArrayList<>();
-
-        String[] specialtyNames = getResources().getStringArray(R.array.SpecialtiesList);
-        for (String name : specialtyNames){
-            specialtyList.add(new Specialty(name, null));
-        }
-
-        specialtyAdapter = new SpecialtyAdapter(getContext(), specialtyList,R.layout.spec_small);
-        specialtyRecyclerView.setAdapter(specialtyAdapter);
+        /*
+        specialtiesRecyclerView = root.findViewById(R.id.rec_specialty);
+        specialtiesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        specialtyAdapter = new SpecialtyAdapter(getActivity(), specialtiesList, R.layout.specialties_list);
+        specialtiesRecyclerView.setAdapter(specialtyAdapter);
+        */
+        // get SpecialtiesList from dbdocto
     }
 
     private void getPopularDoctorsList(View root) {
