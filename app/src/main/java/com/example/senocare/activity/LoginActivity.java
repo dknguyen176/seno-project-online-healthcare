@@ -69,6 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                 String email = ((EditText)findViewById(R.id.email)).getText().toString();
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
 
+                ((Button) v).setEnabled(false);
+                Log.v("LOGIN", "Button pressed.");
+
                 login(email, password);
             }
         });

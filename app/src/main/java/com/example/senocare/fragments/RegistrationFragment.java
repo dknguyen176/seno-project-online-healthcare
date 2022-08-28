@@ -122,6 +122,9 @@ public class RegistrationFragment extends Fragment {
                         viewPager.setCurrentItem(position - 1);
                         if (position == 7) nextBtn.setText("Finish Registration");
                     } else {
+                        ((Button) v).setEnabled(false);
+                        Log.v("REGISTER", "Button pressed.");
+
                         Patient patient = new Patient(email, name, sex, birth, phone, address);
                         register(patient.getEmail(), password, patient);
                     }
@@ -135,6 +138,9 @@ public class RegistrationFragment extends Fragment {
                         viewPager.setCurrentItem(position - 1);
                         if (position == 10) nextBtn.setText("Finish Registration");
                     } else {
+                        ((Button) v).setEnabled(false);
+                        Log.v("REGISTER", "Button pressed.");
+
                         Doctor doctor = new Doctor(email, name, sex, birth, bio, loc, spec);
                         register(doctor.getEmail(), password, doctor);
                     }

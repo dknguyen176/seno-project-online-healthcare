@@ -92,14 +92,9 @@ public final class SenoDB {
         realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
             @Override
             public void update(MutableSubscriptionSet subscriptions) {
-                /*Subscription subscription = subscriptions.find("account");
-                if (subscription != null)
-                    Log.v("SUBSCRIPTION", subscription.getName());
-                else
-                    Log.v("SUBSCRIPTION", null);*/
-
                 // if subscription has been added, then skip
-                if (subscriptions.find("account") != null) return;
+                Subscription subscription = subscriptions.find("account");
+                if (subscription != null) return;
 
                 // add a subscription with a name
                 subscriptions.add(Subscription.create("account",
@@ -108,6 +103,8 @@ public final class SenoDB {
                 ));
             }
         }).waitForSynchronization();
+
+        realm.refresh();
     }
 
     public static void patientSubscription() {
@@ -115,7 +112,8 @@ public final class SenoDB {
             @Override
             public void update(MutableSubscriptionSet subscriptions) {
                 // if subscription has been added, then skip
-                if (subscriptions.find("patient") != null) return;
+                Subscription subscription = subscriptions.find("patient");
+                if (subscription != null) return;
 
                 // add a subscription with a name
                 subscriptions.add(Subscription.create("patient",
@@ -125,11 +123,14 @@ public final class SenoDB {
             }
         }).waitForSynchronization();
 
+        realm.refresh();
+
         realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
             @Override
             public void update(MutableSubscriptionSet subscriptions) {
                 // if subscription has been added, then skip
-                if (subscriptions.find("doctor") != null) return;
+                Subscription subscription = subscriptions.find("doctor");
+                if (subscription != null) return;
 
                 subscriptions.add(Subscription.create("doctor",
                         realm.where(Doctor.class)
@@ -156,7 +157,8 @@ public final class SenoDB {
             @Override
             public void update(MutableSubscriptionSet subscriptions) {
                 // if subscription has been added, then skip
-                if (subscriptions.find("doctor") != null) return;
+                Subscription subscription = subscriptions.find("doctor");
+                if (subscription != null) return;
 
                 subscriptions.add(Subscription.create("doctor",
                         realm.where(Doctor.class)
@@ -165,11 +167,14 @@ public final class SenoDB {
             }
         }).waitForSynchronization();
 
+        realm.refresh();
+
         realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
             @Override
             public void update(MutableSubscriptionSet subscriptions) {
                 // if subscription has been added, then skip
-                if (subscriptions.find("patient") != null) return;
+                Subscription subscription = subscriptions.find("patient");
+                if (subscription != null) return;
 
                 // add a subscription with a name
                 subscriptions.add(Subscription.create("patient",
