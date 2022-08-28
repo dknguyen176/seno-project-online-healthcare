@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +50,7 @@ public class DoctorHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home_doctor, container, false);
 
-        ImageView reviewAppointment = root.findViewById(R.id.review_appointment_btn);
+        CardView reviewAppointment = root.findViewById(R.id.review_appointment_btn);
         reviewAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +59,7 @@ public class DoctorHomeFragment extends Fragment {
         });
 
 
-        ImageView seeAppointment = root.findViewById(R.id.make_prescription_btn);
+        CardView seeAppointment = root.findViewById(R.id.make_prescription_btn);
         seeAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

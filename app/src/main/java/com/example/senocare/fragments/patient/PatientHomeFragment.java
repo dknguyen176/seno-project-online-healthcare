@@ -3,6 +3,7 @@ package com.example.senocare.fragments.patient;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,7 +51,7 @@ public class PatientHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home_patient, container, false);
 
-        ImageView makeAppointment = root.findViewById(R.id.make_appointment_btn);
+        CardView makeAppointment = root.findViewById(R.id.make_appointment_btn);
         makeAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +60,7 @@ public class PatientHomeFragment extends Fragment {
         });
 
 
-        ImageView seeAppointment = root.findViewById(R.id.see_prescription_btn);
+        CardView seeAppointment = root.findViewById(R.id.see_prescription_btn);
         seeAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
