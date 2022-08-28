@@ -1,15 +1,20 @@
 package com.example.senocare.fragments.doctor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.senocare.R;
+import com.example.senocare.activity.ScheduleMakeActivity;
+import com.example.senocare.activity.ScheduleReviewActivity;
+import com.example.senocare.activity.ScheduleShowActivity;
 import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
@@ -41,41 +46,29 @@ public class DoctorHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_home_doctor, container, false);
 
-        getUserMessagesList(root);
+        ImageView reviewAppointment = root.findViewById(R.id.review_appointment_btn);
+        reviewAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ScheduleReviewActivity.class));
+            }
+        });
 
-        getMedicalSpecialtiesList(root);
 
-        getPopularDoctorsList(root);
+        ImageView seeAppointment = root.findViewById(R.id.see_appointment_btn);
+        seeAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ScheduleShowActivity.class));
+            }
+        });
+
 
         test();
 
         return root;
-    }
-
-    private void getUserMessagesList(View root) {
-
-    }
-
-    private void getMedicalSpecialtiesList(View root) {
-        /*
-        specialtiesRecyclerView = root.findViewById(R.id.rec_specialty);
-        specialtiesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
-        specialtyAdapter = new SpecialtyAdapter(getActivity(), specialtiesList, R.layout.specialties_list);
-        specialtiesRecyclerView.setAdapter(specialtyAdapter);
-        */
-        // get SpecialtiesList from dbdocto
-    }
-
-    private void getPopularDoctorsList(View root) {
-        /*
-        popularDoctorsRecyclerView = root.findViewById(R.id.popular_doctors_rec);
-        popularDoctorsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        popularDoctorsAdapter = new DoctorAdapter(getActivity(), popularDoctorsList, R.layout.doctor_large);
-        popularDoctorsRecyclerView.setAdapter(popularDoctorsAdapter);
-        */
-        // get popularDoctorList from db
     }
 
     void test() {

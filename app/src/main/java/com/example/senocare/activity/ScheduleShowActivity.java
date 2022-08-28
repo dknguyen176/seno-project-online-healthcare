@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.senocare.R;
 
-public class ShowScheduleActivity extends AppCompatActivity {
+public class ScheduleShowActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

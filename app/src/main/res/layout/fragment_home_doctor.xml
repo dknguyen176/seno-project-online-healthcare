@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.patient.PatientHomeFragment"
+    android:paddingTop="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="12dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/review_appointment_btn"
+                    android:background="@color/yellow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="review appointments"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="12dp"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/see_appointment_btn"
+                    android:background="@color/orange"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="see all appointments"
+                    android:layout_gravity="center"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/btn_show_doctor"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="5dp"
+                android:layout_marginHorizontal="5dp"
+                android:text="Show Doctor"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:fontFamily="@font/overlock_bold"
+                android:background="@drawable/bg_search_rounded"/>
+            <TextView
+                android:id="@+id/btn_show_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="5dp"
+                android:layout_marginHorizontal="5dp"
+                android:text="Show Chat"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:fontFamily="@font/overlock_bold"
+                android:background="@drawable/bg_search_rounded"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.core.widget.NestedScrollView>

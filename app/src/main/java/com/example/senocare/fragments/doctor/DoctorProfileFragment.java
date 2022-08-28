@@ -46,10 +46,10 @@ public class DoctorProfileFragment extends Fragment {
         spec.setText(doctor.getSpec());
 
         TextView location = view.findViewById(R.id.location_content);
-        location.setText(doctor.getExper());
+        location.setText(doctor.getLoc());
 
         TextView bio = view.findViewById(R.id.bio_content);
-        bio.setText(doctor.getExper());
+        bio.setText(doctor.getBio());
 
         TextView exper = view.findViewById(R.id.exper_content);
         exper.setText(String.valueOf(doctor.getExper()));

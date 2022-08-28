@@ -1,9 +1,9 @@
 package com.example.senocare.fragments.patient;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.senocare.R;
-import com.example.senocare.activity.ShowSpecialtyList;
+import com.example.senocare.activity.ScheduleMakeActivity;
+import com.example.senocare.activity.ScheduleShowActivity;
 import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
@@ -47,45 +49,28 @@ public class PatientHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_home_patient, container, false);
 
-        getUserMessagesList(root);
+        ImageView makeAppointment = root.findViewById(R.id.make_appointment_btn);
+        makeAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ScheduleMakeActivity.class));
+            }
+        });
 
-        getMedicalSpecialtiesList(root);
 
-        getPopularDoctorsList(root);
+        ImageView seeAppointment = root.findViewById(R.id.see_appointment_btn);
+        seeAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ScheduleShowActivity.class));
+            }
+        });
 
         test();
 
         return root;
-    }
-
-    private void getUserMessagesList(View root) {
-
-    }
-
-    private void getMedicalSpecialtiesList(View root) {
-        specialtyRecyclerView = root.findViewById(R.id.spec_rec);
-        specialtyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        specialtyList = new ArrayList<>();
-
-        String[] specialtyNames = getResources().getStringArray(R.array.SpecialtiesList);
-        for (String name : specialtyNames){
-            specialtyList.add(new Specialty(name, null));
-        }
-
-        specialtyAdapter = new SpecialtyAdapter(getContext(), specialtyList,R.layout.spec_small);
-        specialtyRecyclerView.setAdapter(specialtyAdapter);
-    }
-
-    private void getPopularDoctorsList(View root) {
-        /*
-        popularDoctorsRecyclerView = root.findViewById(R.id.popular_doctors_rec);
-        popularDoctorsRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        popularDoctorsAdapter = new DoctorAdapter(getActivity(), popularDoctorsList, R.layout.doctor_large);
-        popularDoctorsRecyclerView.setAdapter(popularDoctorsAdapter);
-        */
-        // get popularDoctorList from db
     }
 
     void test() {
