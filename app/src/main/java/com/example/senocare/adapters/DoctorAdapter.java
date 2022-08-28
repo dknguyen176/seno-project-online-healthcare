@@ -27,28 +27,23 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
     String TAG = "REALM_RECYCLER_ADAPTER";
 
     private Context context;
-    //private List<Doctor> list;
     private int layoutId;
-
-    /*public DoctorAdapter(Context context, List<Doctor> list, int layoutId) {
-        this.context = context;
-        this.list = list;
-        this.layoutId = layoutId;
-    }*/
 
     public DoctorAdapter(Context context, OrderedRealmCollection<Doctor> data, int layoutId) {
         super(data, true);
         this.context = context;
         this.layoutId = layoutId;
-        Log.i(TAG, "Created RealmRecyclerViewAdapter for "
-                + getData().size() + " items.");
+        Log.i(TAG, "Created DoctorAdapter for " + getData().size() + " items.");
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "Creating view holder");
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(layoutId,parent,false));
+        return new ViewHolder(LayoutInflater
+                .from(parent.getContext())
+                .inflate(layoutId,parent,false)
+        );
     }
 
     @Override
@@ -80,7 +75,6 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
 
             img = itemView.findViewById(R.id.doc_img);
             name = itemView.findViewById(R.id.doc_name);

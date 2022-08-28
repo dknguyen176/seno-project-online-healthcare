@@ -21,15 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShowDoctorList extends AppCompatActivity {
-    public static boolean active = false;
-
     Toolbar toolbar;
     TextView titleView;
 
     RecyclerView doctorRecyclerView;
     public static DoctorAdapter doctorAdapter;
-    public static List<Doctor> doctorList;
-    public static HashMap<String, Integer> doctorListPosition;
 
     String title = "Doctor";
 
@@ -37,7 +33,6 @@ public class ShowDoctorList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_doctor_list);
-        active = true;
 
         //Intent intent = getIntent();
 
@@ -45,13 +40,7 @@ public class ShowDoctorList extends AppCompatActivity {
 
         createTitle();
 
-        createDoctorView();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        active = false;
+        createDoctorRecyclerView();
     }
 
     @Override
@@ -64,13 +53,11 @@ public class ShowDoctorList extends AppCompatActivity {
         titleView.setText(title);
     }
 
-    private void createDoctorView() {
+    private void createDoctorRecyclerView() {
         doctorRecyclerView = findViewById(R.id.doc_rec);
         doctorRecyclerView.setLayoutManager(new GridLayoutManager(ShowDoctorList.this,2));
-        doctorList = new ArrayList<>();
         doctorAdapter = new DoctorAdapter(ShowDoctorList.this, SenoDB.getDoctorList(), R.layout.doctor_large);
         doctorRecyclerView.setAdapter(doctorAdapter);
-        doctorListPosition = new HashMap<>();
     }
 
     private void createToolbar() {
