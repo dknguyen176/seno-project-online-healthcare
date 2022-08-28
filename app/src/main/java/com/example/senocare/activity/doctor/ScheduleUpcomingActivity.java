@@ -30,13 +30,8 @@ public class ScheduleUpcomingActivity extends AppCompatActivity {
         createAppointmentReviewRecyclerView();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private void createAppointmentReviewRecyclerView() {
-        appointmentRecyclerView = findViewById(R.id.doc_rec);
+        appointmentRecyclerView = findViewById(R.id.app_rec);
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(ScheduleUpcomingActivity.this, LinearLayoutManager.VERTICAL, false));
 
         // TODO: SenoDB.getUpcomingScheduleList() lay nhung Schedule co thoi gian tu hom nay tro di

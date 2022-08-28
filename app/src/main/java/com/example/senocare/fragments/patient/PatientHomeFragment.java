@@ -11,9 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.senocare.R;
+import com.example.senocare.activity.ShowDoctorList;
+import com.example.senocare.activity.patient.PrescriptionListActivity;
 import com.example.senocare.activity.patient.ScheduleMakeActivity;
 import com.example.senocare.activity.patient.ScheduleShowActivity;
 import com.example.senocare.adapters.DoctorAdapter;
@@ -60,8 +62,24 @@ public class PatientHomeFragment extends Fragment {
         });
 
 
-        CardView seeAppointment = root.findViewById(R.id.see_prescription_btn);
-        seeAppointment.setOnClickListener(new View.OnClickListener() {
+        CardView seePrescription = root.findViewById(R.id.see_prescription_btn);
+        seePrescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), PrescriptionListActivity.class));
+            }
+        });
+
+        TextView doctor_btn = root.findViewById(R.id.doc_see_all);
+        doctor_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ShowDoctorList.class));
+            }
+        });
+
+        TextView app_btn = root.findViewById(R.id.app_see_all);
+        app_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), ScheduleShowActivity.class));

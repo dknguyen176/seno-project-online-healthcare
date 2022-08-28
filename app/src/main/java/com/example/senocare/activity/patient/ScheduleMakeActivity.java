@@ -12,7 +12,7 @@ public class ScheduleMakeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make_schedule);
+        setContentView(R.layout.activity_schedule_make);
 
         Intent intent = getIntent();
     }

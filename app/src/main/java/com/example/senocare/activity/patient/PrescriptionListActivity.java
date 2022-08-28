@@ -9,40 +9,31 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.senocare.R;
+import com.example.senocare.activity.doctor.ScheduleUpcomingActivity;
 import com.example.senocare.adapters.AppointmentAdapter;
+import com.example.senocare.adapters.PrescriptionAdapter;
 
-public class ScheduleShowActivity extends AppCompatActivity {
+public class PrescriptionListActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    RecyclerView appointmentRecyclerView;
-    public static AppointmentAdapter appointmentAdapter;
+    RecyclerView prescriptionRecyclerView;
+    public static PrescriptionAdapter prescriptionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schedule_show);
-
-        //Intent intent = getIntent();
+        setContentView(R.layout.activity_prescription_list);
 
         createToolbar();
 
-        createAppointmentReviewRecyclerView();
-    }
+        prescriptionRecyclerView = findViewById(R.id.app_rec);
+        prescriptionRecyclerView.setLayoutManager(new LinearLayoutManager(PrescriptionListActivity.this, LinearLayoutManager.VERTICAL, false));
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+        // TODO: lay Prescription sort desc theo time
+        prescriptionAdapter = null;
 
-    private void createAppointmentReviewRecyclerView() {
-        appointmentRecyclerView = findViewById(R.id.app_rec);
-        appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(com.example.senocare.activity.patient.ScheduleShowActivity.this, LinearLayoutManager.VERTICAL, false));
-
-        // TODO: SenoDB.getPatientScheduleList() lay nhung Schedule cua Patient
-        // appointmentAdapter = new appointmentAdapter(ScheduleShowActivity.this, SenoDB.getScheduleList(), R.layout.appointment_patient);
-
-        appointmentRecyclerView.setAdapter(appointmentAdapter);
+        prescriptionRecyclerView.setAdapter(prescriptionAdapter);
     }
 
     private void createToolbar() {

@@ -190,7 +190,7 @@ public class RegistrationObjectFragment extends Fragment {
                 myCalendar.set(Calendar.MONTH,month);
                 myCalendar.set(Calendar.DAY_OF_MONTH,day);
 
-                String myFormat="MM/dd/yyyy";
+                String myFormat="dd/MM/yyyy";
                 SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
                 editText.setText(dateFormat.format(myCalendar.getTime()));
             }

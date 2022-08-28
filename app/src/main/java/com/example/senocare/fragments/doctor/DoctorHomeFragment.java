@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -59,12 +61,20 @@ public class DoctorHomeFragment extends Fragment {
         });
 
 
-        CardView seeAppointment = root.findViewById(R.id.make_prescription_btn);
-        seeAppointment.setOnClickListener(new View.OnClickListener() {
+        CardView makePrescription = root.findViewById(R.id.make_prescription_btn);
+        makePrescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: them args
                 startActivity(new Intent(getContext(), PrescriptionMakeActivity.class));
+            }
+        });
+
+        TextView app_btn = root.findViewById(R.id.app_see_all);
+        app_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), ScheduleUpcomingActivity.class));
             }
         });
 

@@ -30,13 +30,8 @@ public class ScheduleReviewActivity extends AppCompatActivity {
         createAppointmentReviewRecyclerView();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     private void createAppointmentReviewRecyclerView() {
-        appointmentRecyclerView = findViewById(R.id.doc_rec);
+        appointmentRecyclerView = findViewById(R.id.app_rec);
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(ScheduleReviewActivity.this, LinearLayoutManager.VERTICAL, false));
 
         // TODO: SenoDB.getPendingScheduleList() lay nhung Schedule co status la Waiting/Pending gi do
