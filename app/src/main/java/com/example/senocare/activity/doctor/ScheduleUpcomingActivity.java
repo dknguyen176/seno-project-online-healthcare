@@ -21,7 +21,7 @@ public class ScheduleUpcomingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_doctor_list);
+        setContentView(R.layout.activity_schedule_upcoming);
 
         //Intent intent = getIntent();
 
