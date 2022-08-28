@@ -3,6 +3,7 @@ package com.example.senocare.helper;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.senocare.model.Account;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Message;
 import com.example.senocare.model.Patient;
@@ -49,94 +50,161 @@ public final class SenoDB {
         }
     }
 
-    public static void defaultSubscription() {
+    public static void loginInit() {
+        accountSubscription();
+
+        setAccount();
+
+        if (IS_PATIENT)
+            patientSubscription();
+        else
+            doctorSubscription();
+    }
+
+    public static void regPatientInit(Patient patient) {
+        accountSubscription();
+
+        insertAccount(true);
+
+        patientSubscription();
+
+        insertPatient(patient);
+    }
+
+    public static void regDoctorInit(Doctor doctor) {
+        accountSubscription();
+
+        insertAccount(false);
+
+        doctorSubscription();
+
+        insertDoctor(doctor);
+    }
+
+    public static void accountSubscription() {
         SyncConfiguration config = new SyncConfiguration.Builder(user)
                 .allowQueriesOnUiThread(true)
                 .allowWritesOnUiThread(true)
                 .build();
 
         realm = Realm.getInstance(config);
+
+        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
+            @Override
+            public void update(MutableSubscriptionSet subscriptions) {
+                /*Subscription subscription = subscriptions.find("account");
+                if (subscription != null)
+                    Log.v("SUBSCRIPTION", subscription.getName());
+                else
+                    Log.v("SUBSCRIPTION", null);*/
+
+                // if subscription has been added, then skip
+                if (subscriptions.find("account") != null) return;
+
+                // add a subscription with a name
+                subscriptions.add(Subscription.create("account",
+                        realm.where(Account.class)
+                                .equalTo("_id", user.getId())
+                ));
+            }
+        }).waitForSynchronization();
     }
 
     public static void patientSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user)
-                .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
-                    @Override
-                    public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                        // add a subscription with a name
-                        subscriptions.add(Subscription.create("patientSubscription",
-                                realm.where(Patient.class)
-                                        .equalTo("email", user.getProfile().getEmail())
-                        ));
-                        subscriptions.add(Subscription.create("doctorSubscription",
-                                realm.where(Doctor.class)
-                        ));
-                        subscriptions.add(Subscription.create("prescriptionSubscription",
-                                realm.where(Prescription.class)
-                                        .equalTo("patient", user.getProfile().getEmail())
-                        ));
-                        subscriptions.add(Subscription.create("scheduleSubscription",
-                                realm.where(Schedule.class)
-                                        .equalTo("patient", user.getProfile().getEmail())
-                        ));
-                        subscriptions.add(Subscription.create("messageSubscription",
-                                realm.where(Message.class)
-                                        .equalTo("sender", user.getProfile().getEmail())
-                                        .or().equalTo("receiver", user.getProfile().getEmail())
-                        ));
-                    }
-                })
-                //.waitForInitialRemoteData(1000, TimeUnit.MILLISECONDS)
-                .allowQueriesOnUiThread(true)
-                .allowWritesOnUiThread(true)
-                .build();
+        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
+            @Override
+            public void update(MutableSubscriptionSet subscriptions) {
+                // if subscription has been added, then skip
+                if (subscriptions.find("patient") != null) return;
 
-        realm = Realm.getInstance(config);
+                // add a subscription with a name
+                subscriptions.add(Subscription.create("patient",
+                        realm.where(Patient.class)
+                                .equalTo("email", user.getProfile().getEmail())
+                ));
+            }
+        }).waitForSynchronization();
+
+        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
+            @Override
+            public void update(MutableSubscriptionSet subscriptions) {
+                // if subscription has been added, then skip
+                if (subscriptions.find("doctor") != null) return;
+
+                subscriptions.add(Subscription.create("doctor",
+                        realm.where(Doctor.class)
+                ));
+                subscriptions.add(Subscription.create("prescription",
+                        realm.where(Prescription.class)
+                                .equalTo("patient", user.getProfile().getEmail())
+                ));
+                subscriptions.add(Subscription.create("schedule",
+                        realm.where(Schedule.class)
+                                .equalTo("patient", user.getProfile().getEmail())
+                ));
+                subscriptions.add(Subscription.create("message",
+                        realm.where(Message.class)
+                                .equalTo("sender", user.getProfile().getEmail())
+                                .or().equalTo("receiver", user.getProfile().getEmail())
+                ));
+            }
+        });
     }
 
     public static void doctorSubscription() {
-        SyncConfiguration config = new SyncConfiguration.Builder(user)
-                .initialSubscriptions(new SyncConfiguration.InitialFlexibleSyncSubscriptions() {
-                    @Override
-                    public void configure(Realm realm, MutableSubscriptionSet subscriptions) {
-                        // add a subscription with a name
-                        subscriptions.add(Subscription.create("patientSubscription",
-                                realm.where(Patient.class)
-                        ));
-                        subscriptions.add(Subscription.create("doctorSubscription",
-                                realm.where(Doctor.class)
-                                        .equalTo("email", user.getProfile().getEmail())
-                        ));
-                        subscriptions.add(Subscription.create("prescriptionSubscription",
-                                realm.where(Prescription.class)
-                                        .equalTo("doctor", user.getProfile().getEmail())
-                        ));
-                        subscriptions.add(Subscription.create("scheduleSubscription",
-                                realm.where(Schedule.class)
-                                        .equalTo("doctor", user.getProfile().getEmail())
-                        ));
-                        subscriptions.add(Subscription.create("messageSubscription",
-                                realm.where(Message.class)
-                                        .equalTo("sender", user.getProfile().getEmail())
-                                        .or().equalTo("receiver", user.getProfile().getEmail())
-                        ));
-                    }
-                })
-                //.waitForInitialRemoteData(1000, TimeUnit.MILLISECONDS)
-                .allowQueriesOnUiThread(true)
-                .allowWritesOnUiThread(true)
-                .build();
+        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
+            @Override
+            public void update(MutableSubscriptionSet subscriptions) {
+                // if subscription has been added, then skip
+                if (subscriptions.find("doctor") != null) return;
 
-        realm = Realm.getInstance(config);
+                subscriptions.add(Subscription.create("doctor",
+                        realm.where(Doctor.class)
+                                .equalTo("email", user.getProfile().getEmail())
+                ));
+            }
+        }).waitForSynchronization();
+
+        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
+            @Override
+            public void update(MutableSubscriptionSet subscriptions) {
+                // if subscription has been added, then skip
+                if (subscriptions.find("patient") != null) return;
+
+                // add a subscription with a name
+                subscriptions.add(Subscription.create("patient",
+                        realm.where(Patient.class)
+                ));
+                subscriptions.add(Subscription.create("prescription",
+                        realm.where(Prescription.class)
+                                .equalTo("doctor", user.getProfile().getEmail())
+                ));
+                subscriptions.add(Subscription.create("schedule",
+                        realm.where(Schedule.class)
+                                .equalTo("doctor", user.getProfile().getEmail())
+                ));
+                subscriptions.add(Subscription.create("message",
+                        realm.where(Message.class)
+                                .equalTo("sender", user.getProfile().getEmail())
+                                .or().equalTo("receiver", user.getProfile().getEmail())
+                ));
+            }
+        });
     }
 
-    public static void setUserType() {
-        Patient patient = realm.where(Patient.class).findFirst();
-        IS_PATIENT = (patient != null && patient.get_id().equals(user.getId()));
+    public static void setAccount() {
+        IS_PATIENT = realm.where(Account.class).findFirst().getType().equals("patient");
     }
 
-    public static void setUserType(boolean bool) {
-        IS_PATIENT = bool;
+    public static void insertAccount(boolean is_patient) {
+        IS_PATIENT = is_patient;
+        realm.executeTransaction(r -> {
+            Account account = r.createObject(Account.class, user.getId());
+            if (IS_PATIENT)
+                account.setType("patient");
+            else
+                account.setType("doctor");
+        });
     }
 
     public static void insertPatient(Patient patient) {
@@ -259,6 +327,13 @@ public final class SenoDB {
 
     public static Doctor getDoctor(String _id) {
         return realm.where(Doctor.class).equalTo("_id", _id).findFirst();
+    }
+
+    public static String getNameByEmail(String email) {
+        if (IS_PATIENT)
+            return realm.where(Doctor.class).equalTo("email", email).findFirst().getName();
+        else
+            return realm.where(Patient.class).equalTo("email", email).findFirst().getName();
     }
 
     public static Prescription getPrescription(ObjectId _id) {

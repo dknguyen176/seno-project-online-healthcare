@@ -1,11 +1,8 @@
 package com.example.senocare.fragments;
 
 import static com.example.senocare.helper.SenoDB.app;
-import static com.example.senocare.helper.SenoDB.doctorSubscription;
-import static com.example.senocare.helper.SenoDB.insertDoctor;
-import static com.example.senocare.helper.SenoDB.insertPatient;
-import static com.example.senocare.helper.SenoDB.patientSubscription;
-import static com.example.senocare.helper.SenoDB.setUserType;
+import static com.example.senocare.helper.SenoDB.regDoctorInit;
+import static com.example.senocare.helper.SenoDB.regPatientInit;
 import static com.example.senocare.helper.SenoDB.user;
 
 import android.app.Activity;
@@ -178,11 +175,7 @@ public class RegistrationFragment extends Fragment {
             if (it.isSuccess()) {
                 user = app.currentUser();
 
-                patientSubscription();
-
-                setUserType(true);
-
-                insertPatient(patient);
+                regPatientInit(patient);
 
                 Log.v("AUTH", "Successfully authenticated using an email and password.");
 
@@ -200,11 +193,7 @@ public class RegistrationFragment extends Fragment {
             if (it.isSuccess()) {
                 user = app.currentUser();
 
-                doctorSubscription();
-
-                setUserType(false);
-
-                insertDoctor(doctor);
+                regDoctorInit(doctor);
 
                 Log.v("AUTH", "Successfully authenticated using an email and password.");
 

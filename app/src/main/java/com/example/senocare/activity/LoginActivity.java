@@ -1,8 +1,7 @@
 package com.example.senocare.activity;
 
+import static com.example.senocare.helper.SenoDB.IS_PATIENT;
 import static com.example.senocare.helper.SenoDB.app;
-import static com.example.senocare.helper.SenoDB.defaultSubscription;
-import static com.example.senocare.helper.SenoDB.setUserType;
 import static com.example.senocare.helper.SenoDB.user;
 
 import androidx.annotation.Nullable;
@@ -11,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,10 +20,8 @@ import android.widget.Toast;
 import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
 
-import java.util.concurrent.atomic.AtomicReference;
-
+import io.realm.Realm;
 import io.realm.mongodb.Credentials;
-import io.realm.mongodb.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,8 +35,33 @@ public class LoginActivity extends AppCompatActivity {
 
         SenoDB.init(this);
 
+        //testAndFinish();
+
         login();
 
+        createSignInBtn();
+
+        createSignUpBtn();
+    }
+
+    private void testAndFinish() {
+        Realm realm = Realm.getDefaultInstance();
+        Log.i("Realm", realm.getPath());
+        finish();
+    }
+
+    private void createSignUpBtn() {
+        TextView signUpText = findViewById(R.id.text_signup);
+        signUpText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivityForResult(intent, LAUNCH_REGISTER_ACTIVITY);
+            }
+        });
+    }
+
+    private void createSignInBtn() {
         Button signInButton = findViewById(R.id.btn_signin);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,15 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                 String password = ((EditText)findViewById(R.id.password)).getText().toString();
 
                 login(email, password);
-            }
-        });
-
-        TextView signUpText = findViewById(R.id.text_signup);
-        signUpText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivityForResult(intent, LAUNCH_REGISTER_ACTIVITY);
             }
         });
     }
@@ -93,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     private void anonymousLogin(boolean isPatient) {
         // not login actually, just skip the login
         // *** DON'T USE DB WITH THIS LOGIN ***
-        setUserType(isPatient);
+        IS_PATIENT = true;
 
         Log.v("AUTH", "Anonymous login");
 
@@ -105,9 +117,7 @@ public class LoginActivity extends AppCompatActivity {
         user = app.currentUser();
         if (user == null) return;
 
-        defaultSubscription();
-
-        setUserType();
+        SenoDB.loginInit();
 
         Log.v("AUTH", "Remember patient login: " + user.getProfile().getEmail());
 
@@ -121,9 +131,7 @@ public class LoginActivity extends AppCompatActivity {
             if (it.isSuccess()) {
                 user = app.currentUser();
 
-                defaultSubscription();
-
-                setUserType();
+                SenoDB.loginInit();
 
                 Log.v("AUTH", "Successfully authenticated using an email and password.");
 
