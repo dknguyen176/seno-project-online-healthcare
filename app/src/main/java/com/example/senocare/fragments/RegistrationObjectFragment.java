@@ -198,10 +198,12 @@ public class RegistrationObjectFragment extends Fragment {
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(getView().getContext(), date,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getView().getContext(), date,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                datePickerDialog.show();
             }
         });
     }

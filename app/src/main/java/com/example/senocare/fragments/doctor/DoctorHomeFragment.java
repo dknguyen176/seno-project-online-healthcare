@@ -12,9 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.senocare.R;
-import com.example.senocare.activity.ScheduleMakeActivity;
-import com.example.senocare.activity.ScheduleReviewActivity;
-import com.example.senocare.activity.ScheduleShowActivity;
+import com.example.senocare.activity.doctor.PrescriptionMakeActivity;
+import com.example.senocare.activity.doctor.ScheduleReviewActivity;
+import com.example.senocare.activity.doctor.ScheduleUpcomingActivity;
+import com.example.senocare.activity.patient.ScheduleShowActivity;
 import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
@@ -57,11 +58,12 @@ public class DoctorHomeFragment extends Fragment {
         });
 
 
-        ImageView seeAppointment = root.findViewById(R.id.see_appointment_btn);
+        ImageView seeAppointment = root.findViewById(R.id.make_prescription_btn);
         seeAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), ScheduleShowActivity.class));
+                // TODO: them args
+                startActivity(new Intent(getContext(), PrescriptionMakeActivity.class));
             }
         });
 

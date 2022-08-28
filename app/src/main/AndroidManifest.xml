@@ -14,7 +14,13 @@
         android:theme="@style/Theme.SenoCare"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ScheduleReviewActivity"
+            android:name=".activity.doctor.PrescriptionMakeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.doctor.ScheduleUpcomingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.doctor.ScheduleReviewActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ChatBoxActivity"
@@ -23,10 +29,10 @@
             android:name=".activity.ChatListActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ScheduleShowActivity"
+            android:name=".activity.patient.ScheduleShowActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ScheduleMakeActivity"
+            android:name=".activity.patient.ScheduleMakeActivity"
             android:exported="false" />
         <activity
             android:name=".activity.DetailedDoctor"
