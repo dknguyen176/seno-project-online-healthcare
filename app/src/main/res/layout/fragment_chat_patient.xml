@@ -6,8 +6,11 @@
     tools:context=".fragments.patient.PatientChatFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chat_recyclerview"
+        android:id="@+id/rec_chat_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp" />
 
 </FrameLayout>

@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_sent_message"
-        android:fontFamily="@font/overlock"
         android:padding="13dp"
         android:layout_marginRight="20dp"
         android:text="Message here"
