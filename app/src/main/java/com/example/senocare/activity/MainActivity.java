@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senocare.R;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setLogoutBtn() {
-        Button logoutBtn = findViewById(R.id.logout);
+        ImageView logoutBtn = findViewById(R.id.logout);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

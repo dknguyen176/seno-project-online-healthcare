@@ -35,19 +35,11 @@ public class LoginActivity extends AppCompatActivity {
 
         SenoDB.init(this);
 
-        //testAndFinish();
-
         login();
 
         createSignInBtn();
 
         createSignUpBtn();
-    }
-
-    private void testAndFinish() {
-        Realm realm = Realm.getDefaultInstance();
-        Log.i("Realm", realm.getPath());
-        finish();
     }
 
     private void createSignUpBtn() {
