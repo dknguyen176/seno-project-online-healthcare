@@ -14,10 +14,10 @@ public class Message extends RealmObject {
     private String conservation;
 
     @Required
-    private String receiver;
+    private String email2;
 
     @Required
-    private String sender;
+    private String email1;
 
     @Required
     private String text;
@@ -32,11 +32,11 @@ public class Message extends RealmObject {
     public String getConservation() { return conservation; }
     public void setConservation(String conservation) { this.conservation = conservation; }
 
-    public String getReceiver() { return receiver; }
-    public void setReceiver(String receiver) { this.receiver = receiver; }
+    public String getReceiver() { return email2; }
+    public void setReceiver(String receiver) { this.email2 = receiver; }
 
-    public String getSender() { return sender; }
-    public void setSender(String sender) { this.sender = sender; }
+    public String getSender() { return email1; }
+    public void setSender(String sender) { this.email1 = sender; }
 
     public String getText() { return text; }
     public void setText(String text) { this.text = text; }
@@ -49,16 +49,16 @@ public class Message extends RealmObject {
 
     public Message(String conservation, String sender, String receiver, String text, String time) {
         this.conservation = conservation;
-        this.receiver = receiver;
-        this.sender = sender;
+        this.email2 = receiver;
+        this.email1 = sender;
         this.text = text;
         this.time = time;
     }
 
     public void set(Message m) {
         this.conservation = m.conservation;
-        this.receiver = m.receiver;
-        this.sender = m.sender;
+        this.email2 = m.email2;
+        this.email1 = m.email1;
         this.text = m.text;
         this.time = m.time;
     }

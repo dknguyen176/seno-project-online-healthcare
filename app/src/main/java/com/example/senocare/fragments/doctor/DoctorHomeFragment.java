@@ -78,7 +78,7 @@ public class DoctorHomeFragment extends Fragment {
         RealmResults<Patient> patients = SenoDB.getPatientList();
         RealmResults<Doctor> doctors = SenoDB.getDoctorList();
         RealmResults<Doctor> doctors1 = SenoDB.getDoctorList("Heart");
-        RealmResults<Doctor> doctors2 = SenoDB.getTopDoctorList("Heart", 1);
+        RealmResults<Doctor> doctors2 = SenoDB.getTopDoctorList(1);
         RealmResults<Prescription> prescriptions = SenoDB.getPrescriptionList();
         RealmResults<Message> messages = SenoDB.getLatestMessageList();
         //RealmResults<Message> messages1 = SenoDB.getMessageList(messages.get(0).getConservation());

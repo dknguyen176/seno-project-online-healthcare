@@ -118,7 +118,7 @@ public final class SenoDB {
                 // add a subscription with a name
                 subscriptions.add(Subscription.create("patient",
                         realm.where(Patient.class)
-                                .equalTo("email", user.getProfile().getEmail())
+                                .equalTo("_id", user.getId())
                 ));
             }
         }).waitForSynchronization();
@@ -137,16 +137,16 @@ public final class SenoDB {
                 ));
                 subscriptions.add(Subscription.create("prescription",
                         realm.where(Prescription.class)
-                                .equalTo("patient", user.getProfile().getEmail())
+                                .equalTo("email1", user.getProfile().getEmail())
                 ));
                 subscriptions.add(Subscription.create("schedule",
                         realm.where(Schedule.class)
-                                .equalTo("patient", user.getProfile().getEmail())
+                                .equalTo("email1", user.getProfile().getEmail())
                 ));
                 subscriptions.add(Subscription.create("message",
                         realm.where(Message.class)
-                                .equalTo("sender", user.getProfile().getEmail())
-                                .or().equalTo("receiver", user.getProfile().getEmail())
+                                .equalTo("email1", user.getProfile().getEmail())
+                                .or().equalTo("email2", user.getProfile().getEmail())
                 ));
             }
         });
@@ -162,7 +162,7 @@ public final class SenoDB {
 
                 subscriptions.add(Subscription.create("doctor",
                         realm.where(Doctor.class)
-                                .equalTo("email", user.getProfile().getEmail())
+                                .equalTo("_id", user.getId())
                 ));
             }
         }).waitForSynchronization();
@@ -182,16 +182,16 @@ public final class SenoDB {
                 ));
                 subscriptions.add(Subscription.create("prescription",
                         realm.where(Prescription.class)
-                                .equalTo("doctor", user.getProfile().getEmail())
+                                .equalTo("email2", user.getProfile().getEmail())
                 ));
                 subscriptions.add(Subscription.create("schedule",
                         realm.where(Schedule.class)
-                                .equalTo("doctor", user.getProfile().getEmail())
+                                .equalTo("email2", user.getProfile().getEmail())
                 ));
                 subscriptions.add(Subscription.create("message",
                         realm.where(Message.class)
-                                .equalTo("sender", user.getProfile().getEmail())
-                                .or().equalTo("receiver", user.getProfile().getEmail())
+                                .equalTo("email1", user.getProfile().getEmail())
+                                .or().equalTo("email2", user.getProfile().getEmail())
                 ));
             }
         });
@@ -285,7 +285,7 @@ public final class SenoDB {
                 .findAll();
     }
 
-    public static RealmResults<Doctor> getTopDoctorList(String spec, int limit) {
+    public static RealmResults<Doctor> getTopDoctorList(int limit) {
         return realm.where(Doctor.class)
                 .sort("rating", Sort.DESCENDING)
                 .limit(limit)
@@ -318,6 +318,20 @@ public final class SenoDB {
                 .findAll();
     }
 
+    public static RealmResults<Schedule> getPendingScheduleList() {
+        return realm.where(Schedule.class)
+                .equalTo("status", "Pending")
+                .sort("time", Sort.ASCENDING)
+                .findAll();
+    }
+
+    public static RealmResults<Schedule> getUpcomingScheduleList() {
+        return realm.where(Schedule.class)
+                .equalTo("status", "Accepted")
+                .sort("time", Sort.ASCENDING)
+                .findAll();
+    }
+
     public static Patient getPatient() {
         return realm.where(Patient.class).findFirst();
     }
@@ -336,9 +350,9 @@ public final class SenoDB {
 
     public static String getNameByEmail(String email) {
         if (IS_PATIENT)
-            return realm.where(Doctor.class).equalTo("email", email).findFirst().getName();
+            return realm.where(Doctor.class).equalTo("email1", email).findFirst().getName();
         else
-            return realm.where(Patient.class).equalTo("email", email).findFirst().getName();
+            return realm.where(Patient.class).equalTo("email1", email).findFirst().getName();
     }
 
     public static Prescription getPrescription(ObjectId _id) {

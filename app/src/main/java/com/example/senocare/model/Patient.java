@@ -15,7 +15,7 @@ public class Patient extends RealmObject {
     private String birth;
 
     @Required
-    private String email;
+    private String email1;
 
     @Required
     private String name;
@@ -36,8 +36,8 @@ public class Patient extends RealmObject {
     public String getBirth() { return birth; }
     public void setBirth(String birth) { this.birth = birth; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getEmail() { return email1; }
+    public void setEmail(String email) { this.email1 = email; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -52,7 +52,7 @@ public class Patient extends RealmObject {
     public Patient() {
         this.address = "123 st. bolsa";
         this.birth = "01/01/2000";
-        this.email = "patient@gmail.com";
+        this.email1 = "patient@gmail.com";
         this.name = "patient";
         this.phone = "0123456789";
         this.sex = "Male";
@@ -61,7 +61,7 @@ public class Patient extends RealmObject {
     public Patient(String email, String name, String sex, String birth, String phone, String address) {
         this.address = address;
         this.birth = birth;
-        this.email = email;
+        this.email1 = email;
         this.name = name;
         this.phone = phone;
         this.sex = sex;
@@ -70,7 +70,7 @@ public class Patient extends RealmObject {
     public void set(Patient p) {
         this.address = p.address;
         this.birth = p.birth;
-        this.email = p.email;
+        this.email1 = p.email1;
         this.name = p.name;
         this.phone = p.phone;
         this.sex = p.sex;

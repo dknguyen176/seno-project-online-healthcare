@@ -18,7 +18,7 @@ public class Doctor extends RealmObject {
     private String birth;
 
     @Required
-    private String email;
+    private String email1;
 
     private Integer exper;
 
@@ -46,8 +46,8 @@ public class Doctor extends RealmObject {
     public String getBirth() { return birth; }
     public void setBirth(String birth) { this.birth = birth; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getEmail() { return email1; }
+    public void setEmail(String email) { this.email1 = email; }
 
     public Integer getExper() { return exper; }
     public void setExper(Integer exper) { this.exper = exper; }
@@ -71,7 +71,7 @@ public class Doctor extends RealmObject {
     public Doctor() {
         this.bio = "Hi! I'm the doctor you need.";
         this.birth = "01/01/2000";
-        this.email = "doctor@gmail.com";
+        this.email1 = "doctor@gmail.com";
         this.exper = 5;
         this.loc = "123 st. bolsa";
         this.name = "Doctor";
@@ -83,7 +83,7 @@ public class Doctor extends RealmObject {
     public Doctor(String email, String name, String sex, String birth, String bio, String loc, String spec) {
         this.bio = bio;
         this.birth = birth;
-        this.email = email;
+        this.email1 = email;
         this.loc = loc;
         this.name = name;
         this.sex = sex;
@@ -95,7 +95,7 @@ public class Doctor extends RealmObject {
     public Doctor(String email, String name, String sex, String birth, String spec, int exper, String loc, String bio, float rating) {
         this.bio = bio;
         this.birth = birth;
-        this.email = email;
+        this.email1 = email;
         this.exper = exper;
         this.loc = loc;
         this.name = name;
@@ -107,7 +107,7 @@ public class Doctor extends RealmObject {
     public void set(Doctor d) {
         this.bio = d.bio;
         this.birth = d.birth;
-        this.email = d.email;
+        this.email1 = d.email1;
         this.exper = d.exper;
         this.loc = d.loc;
         this.name = d.name;

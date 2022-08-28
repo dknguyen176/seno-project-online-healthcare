@@ -17,13 +17,13 @@ public class Prescription extends RealmObject {
     private String diagnostic;
 
     @Required
-    private String doctor;
+    private String email2;
 
     @Required
     private String note;
 
     @Required
-    private String patient;
+    private String email1;
 
     @Required
     private String time;
@@ -38,14 +38,14 @@ public class Prescription extends RealmObject {
     public String getDiagnostic() { return diagnostic; }
     public void setDiagnostic(String diagnostic) { this.diagnostic = diagnostic; }
 
-    public String getDoctor() { return doctor; }
-    public void setDoctor(String doctor) { this.doctor = doctor; }
+    public String getDoctor() { return email2; }
+    public void setDoctor(String doctor) { this.email2 = doctor; }
 
     public String getNote() { return note; }
     public void setNote(String note) { this.note = note; }
 
-    public String getPatient() { return patient; }
-    public void setPatient(String patient) { this.patient = patient; }
+    public String getPatient() { return email1; }
+    public void setPatient(String patient) { this.email1 = patient; }
 
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
@@ -56,18 +56,18 @@ public class Prescription extends RealmObject {
     public Prescription(String doctor, String patient, String time, String diagnostic, RealmList<Drugs> drugs, String note) {
         Drugs = drugs;
         this.diagnostic = diagnostic;
-        this.doctor = doctor;
+        this.email2 = doctor;
         this.note = note;
-        this.patient = patient;
+        this.email1 = patient;
         this.time = time;
     }
 
     public void set(Prescription p) {
         Drugs = p.getDrugs();
         this.diagnostic = p.diagnostic;
-        this.doctor = p.doctor;
+        this.email2 = p.email2;
         this.note = p.note;
-        this.patient = p.patient;
+        this.email1 = p.email1;
         this.time = p.time;
     }
 }
