@@ -10,14 +10,24 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Make An Appointment" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Make an appointment"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@id/tool_bar">
 
         <TextView
@@ -25,28 +35,32 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="Patient's Information:"/>
+            android:text="Patient's Information"
+            android:textColor="@color/black" />
 
         <EditText
             android:id="@+id/pat_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Full Name"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/pat_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Birthday"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/pat_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone Number"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            android:textColor="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +73,8 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="Sex:"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -88,9 +103,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Doctor's Information:"
+            android:layout_marginTop="15dp"
+            android:text="Doctor's Information"
             android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
 
         <LinearLayout
@@ -101,15 +118,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:layout_gravity="center"
                 android:text="Specialty:"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:id="@+id/doc_spec_spinner"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_weight="3"/>
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -120,125 +139,195 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="Name:"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
             <Spinner
                 android:id="@+id/doc_name_spinner"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_weight="3"/>
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Appointment Schedule:"
+            android:layout_marginTop="15dp"
+            android:text="Appointment Schedule"
             android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                app:layout_constraintDimensionRatio="4:1"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/date1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
                     app:cardElevation="5dp"
-                    app:cardCornerRadius="9dp"
-                    android:layout_margin="15dp">
+                    app:cardCornerRadius="10dp">
 
                     <TextView
+                        android:id="@+id/date1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="Date"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:text="Aug 27, 2022"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/date2"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:cardElevation="5dp"
-                    app:cardCornerRadius="9dp"
-                    android:layout_margin="15dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Date"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/date3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:cardElevation="5dp"
-                    app:cardCornerRadius="9dp"
-                    android:layout_margin="15dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Date"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/date4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:cardElevation="5dp"
-                    app:cardCornerRadius="9dp"
-                    android:layout_margin="15dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Date"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
-                </androidx.cardview.widget.CardView>
-
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Today"/>
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:id="@+id/date2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Aug 28, 2022"
+                        android:textStyle="bold"
+                        android:textSize="13sp"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Tomorrow"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:id="@+id/date3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Aug 29, 2022"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Day after"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:id="@+id/date4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textSize="25sp" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="Another day"/>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Reason:"
+            android:layout_marginTop="15dp"
+            android:text="Reason"
             android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
-        <EditText
-            android:id="@+id/note"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Describe your symptoms" />
+
+            app:boxCornerRadiusBottomEnd="17dp"
+            app:boxCornerRadiusBottomStart="17dp"
+            app:boxCornerRadiusTopEnd="17dp"
+            app:boxCornerRadiusTopStart="17dp"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reason"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Type your reason here"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/finish_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:background="@drawable/roundedbutton2"
             android:text="Make Appointment"
             android:textAllCaps="false"/>
