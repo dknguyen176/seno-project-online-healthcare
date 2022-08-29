@@ -3,6 +3,7 @@ package com.example.senocare.activity.patient;
 import static com.example.senocare.helper.SenoDB.getPrescription;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.senocare.R;
+import com.example.senocare.adapters.DrugSeeAdapter;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
@@ -51,7 +53,8 @@ public class PrescriptionSeeActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.doc_sig)).setText(doctor.getName());
 
         RecyclerView drugRecyclerView = findViewById(R.id.drug_rec);
-        
-
+        drugRecyclerView.setLayoutManager(new LinearLayoutManager(PrescriptionSeeActivity.this, LinearLayoutManager.VERTICAL, false));
+        DrugSeeAdapter drugSeeAdapter = new DrugSeeAdapter(PrescriptionSeeActivity.this, prescription.getDrugs(), R.layout.drug_see);
+        drugRecyclerView.setAdapter(drugSeeAdapter);
     }
 }

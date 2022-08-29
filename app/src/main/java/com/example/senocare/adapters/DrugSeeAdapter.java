@@ -44,7 +44,7 @@ public class DrugSeeAdapter extends RealmRecyclerViewAdapter<Drugs, DrugSeeAdapt
         Log.i(TAG, "Binding view holder: " + drugs.getName());
 
         holder.name.setText(drugs.getName());
-        holder.quantity.setText(drugs.getQuantity());
+        holder.quantity.setText(String.valueOf(drugs.getQuantity()));
         holder.note.setText(drugs.getNote());
     }
 

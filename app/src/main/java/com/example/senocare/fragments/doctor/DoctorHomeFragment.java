@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.senocare.R;
@@ -19,6 +20,7 @@ import com.example.senocare.activity.doctor.PrescriptionMakeActivity;
 import com.example.senocare.activity.doctor.ScheduleReviewActivity;
 import com.example.senocare.activity.doctor.ScheduleUpcomingActivity;
 import com.example.senocare.activity.patient.ScheduleShowActivity;
+import com.example.senocare.adapters.AppointmentAdapter;
 import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
@@ -40,8 +42,9 @@ public class DoctorHomeFragment extends Fragment {
 
     private SpecialtyAdapter specialtyAdapter;
     private DoctorAdapter popularDoctorsAdapter;
+    private AppointmentAdapter appointmentAdapter;
 
-    RecyclerView messagesRecyclerView, specialtiesRecyclerView, popularDoctorsRecyclerView;
+    RecyclerView messagesRecyclerView, specialtiesRecyclerView, popularDoctorsRecyclerView, appointmentRecyclerView;
 
     public DoctorHomeFragment() {
         // Required empty public constructor
@@ -77,10 +80,17 @@ public class DoctorHomeFragment extends Fragment {
             }
         });
 
-
+        createAppointmentRecyclerView(root);
         //test();
 
         return root;
+    }
+
+    private void createAppointmentRecyclerView(View root) {
+        appointmentRecyclerView = root.findViewById(R.id.app_rec);
+        appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        appointmentAdapter = new AppointmentAdapter(getContext(), SenoDB.getUpcomingScheduleList(3), R.layout.appointment_patient);
+        appointmentRecyclerView.setAdapter(appointmentAdapter);
     }
 
     void test() {
