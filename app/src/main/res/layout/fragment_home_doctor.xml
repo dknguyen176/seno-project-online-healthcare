@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/green_bg">
 
         <LinearLayout
             android:id="@+id/linear_layout_1"
@@ -27,10 +28,21 @@
                 app:cardCornerRadius="15dp"
                 app:cardElevation="10dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@color/orange"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/calendar_btn"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pending Appointments"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="5dp"/>
 
             </androidx.cardview.widget.CardView>
 
@@ -43,10 +55,21 @@
                 app:cardCornerRadius="15dp"
                 app:cardElevation="10dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@color/orange"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/pill_btn"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Make A Prescription"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/green_dark"
+                    android:layout_marginBottom="5dp"/>
 
             </androidx.cardview.widget.CardView>
 

@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -18,6 +20,7 @@ import com.example.senocare.activity.ShowDoctorList;
 import com.example.senocare.activity.patient.PrescriptionListActivity;
 import com.example.senocare.activity.patient.ScheduleMakeActivity;
 import com.example.senocare.activity.patient.ScheduleShowActivity;
+import com.example.senocare.adapters.AppointmentAdapter;
 import com.example.senocare.adapters.DoctorAdapter;
 import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
@@ -35,14 +38,10 @@ import io.realm.RealmResults;
 
 public class PatientHomeFragment extends Fragment {
 
-    // private ArrayList<???> userMessageList;
-    private ArrayList<Specialty> specialtyList;
-    private OrderedRealmCollection<Doctor> popularDoctorsList;
+    DoctorAdapter doctorAdapter;
+    AppointmentAdapter appointmentAdapter;
 
-    private SpecialtyAdapter specialtyAdapter;
-    private DoctorAdapter popularDoctorsAdapter;
-
-    RecyclerView messagesRecyclerView, specialtyRecyclerView, popularDoctorsRecyclerView;
+    RecyclerView doctorRecyclerView, appointmentRecyclerView;
 
     public PatientHomeFragment() {
         // Required empty public constructor
@@ -86,9 +85,18 @@ public class PatientHomeFragment extends Fragment {
             }
         });
 
-        //test();
+        createDoctorRecyclerView(root);
 
         return root;
+    }
+
+    private void createDoctorRecyclerView(View root) {
+        doctorRecyclerView = root.findViewById(R.id.doc_rec);
+        doctorRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+
+        // TODO: getPopularDoctorList (khoang 10 cai sort desc theo rating)
+        doctorAdapter = new DoctorAdapter(getContext(), SenoDB.getDoctorList(), R.layout.doctor_large);
+        doctorRecyclerView.setAdapter(doctorAdapter);
     }
 
     void test() {
