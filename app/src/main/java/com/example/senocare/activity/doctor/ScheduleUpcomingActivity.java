@@ -45,6 +45,8 @@ public class ScheduleUpcomingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("Upcoming Appointments");
+
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

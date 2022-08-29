@@ -1,6 +1,7 @@
 package com.example.senocare.activity.doctor;
 
 import static com.example.senocare.helper.SenoDB.getDoctor;
+import static com.example.senocare.helper.SenoDB.setDateEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -96,35 +97,7 @@ public class PrescriptionMakeActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.doc_email)).setText(getDoctor().getEmail());
 
         EditText time = findViewById(R.id.time);
-        Calendar myCalendar = Calendar.getInstance();
-        String myFormat="dd/MM/yyyy";
-        SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        time.setText(dateFormat.format(myCalendar.getTime()));
-        time.setFocusable(false);
-        time.setClickable(true);
-
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, month);
-                myCalendar.set(Calendar.DAY_OF_MONTH, day);
-
-                time.setText(dateFormat.format(myCalendar.getTime()));
-            }
-        };
-
-        time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(PrescriptionMakeActivity.this, date,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-                datePickerDialog.show();
-            }
-        });
+        setDateEditText(time, "yyyy/MM/dd", PrescriptionMakeActivity.this, false, true);
     }
 
     private void createDrugsRecyclerView() {
@@ -149,6 +122,7 @@ public class PrescriptionMakeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("Make Prescription");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

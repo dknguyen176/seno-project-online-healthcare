@@ -1,5 +1,7 @@
 package com.example.senocare.fragments;
 
+import static com.example.senocare.helper.SenoDB.setDateEditText;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
@@ -179,32 +181,6 @@ public class RegistrationObjectFragment extends Fragment {
 
     private void inputBirthday(TextView textView, EditText editText) {
         textView.setText("When is your birthday?");
-        editText.setHint("Birthday");
-        editText.setFocusable(false);
-        editText.setClickable(true);
-        Calendar myCalendar = Calendar.getInstance();
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
-
-                String myFormat="dd/MM/yyyy";
-                SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-                editText.setText(dateFormat.format(myCalendar.getTime()));
-            }
-        };
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getView().getContext(), date,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-                datePickerDialog.show();
-            }
-        });
+        setDateEditText(editText, "dd/MM/yyyy", getView().getContext(), true, false);
     }
 }

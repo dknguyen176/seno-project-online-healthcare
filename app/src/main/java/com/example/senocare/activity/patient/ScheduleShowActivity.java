@@ -50,6 +50,7 @@ public class ScheduleShowActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("All Appointments");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -45,6 +45,7 @@ public class ScheduleReviewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("Review Appointments");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

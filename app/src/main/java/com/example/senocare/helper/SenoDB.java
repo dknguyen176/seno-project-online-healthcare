@@ -1,7 +1,14 @@
 package com.example.senocare.helper;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.example.senocare.model.Account;
 import com.example.senocare.model.Doctor;
@@ -12,6 +19,9 @@ import com.example.senocare.model.Schedule;
 
 import org.bson.types.ObjectId;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
@@ -357,5 +367,35 @@ public final class SenoDB {
 
     public static Prescription getPrescription(ObjectId _id) {
         return realm.where(Prescription.class).equalTo("_id", _id).findFirst();
+    }
+
+    public static void setDateEditText(EditText editText,  String format, Context context, boolean maxDate, boolean minDate) {
+        editText.setHint(format.toLowerCase());
+        editText.setFocusable(false);
+        editText.setClickable(true);
+        Calendar myCalendar = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH,month);
+                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
+                editText.setText(dateFormat.format(myCalendar.getTime()));
+            }
+        };
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(context, date,
+                        myCalendar.get(Calendar.YEAR),
+                        myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH));
+                if (maxDate) datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+                if (minDate) datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+            }
+        });
     }
 }

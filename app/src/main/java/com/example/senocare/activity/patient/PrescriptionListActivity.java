@@ -27,7 +27,7 @@ public class PrescriptionListActivity extends AppCompatActivity {
 
         createToolbar();
 
-        prescriptionRecyclerView = findViewById(R.id.app_rec);
+        prescriptionRecyclerView = findViewById(R.id.pres_rec);
         prescriptionRecyclerView.setLayoutManager(new LinearLayoutManager(PrescriptionListActivity.this, LinearLayoutManager.VERTICAL, false));
 
         // TODO: lay Prescription sort desc theo time
@@ -41,6 +41,7 @@ public class PrescriptionListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("All Prescription");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
