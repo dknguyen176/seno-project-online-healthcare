@@ -11,7 +11,6 @@
         android:textAlignment="center"
         android:text="Who are you?"
         android:textSize="20sp"
-        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
@@ -19,9 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Patient"
-        android:textColor="@color/dark_pink"
-        android:textSize="18sp"
-        android:fontFamily="@font/overlock_black"
+        android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_marginStart="40dp"
         app:layout_constraintTop_toBottomOf="@id/reg_text"
@@ -32,9 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Doctor"
-        android:textColor="@color/dark_pink"
-        android:textSize="18sp"
-        android:fontFamily="@font/overlock_black"
+        android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_marginEnd="40dp"
         app:layout_constraintTop_toBottomOf="@id/reg_text"

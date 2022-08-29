@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/medical_bg_large"
+            android:src="@color/green_light"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/profile_pic" />
 
@@ -308,7 +308,7 @@
                         android:text="Message"
                         android:textAllCaps="false"
                         android:layout_marginHorizontal="20dp"
-                        android:backgroundTint="@color/green"
+                        android:background="@drawable/roundedbutton2"
                         android:textColor="@color/black"/>
 
                     <Button
@@ -319,8 +319,8 @@
                         android:layout_weight="1"
                         android:text="Make an Appointment"
                         android:textAllCaps="false"
+                        android:background="@drawable/roundedbutton2"
                         android:layout_marginHorizontal="20dp"
-                        android:backgroundTint="@color/green"
                         android:textColor="@color/black"/>
 
                 </LinearLayout>

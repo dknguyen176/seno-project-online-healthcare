@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity"
-    android:background="@drawable/gradient_bg_pink">
+    android:background="@color/green_bg">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/senocare_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="100dp"/>
 
     <LinearLayout
         android:id="@+id/sign_up_box"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintWidth_percent="0.75"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/linear_layout_2"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical">
@@ -22,11 +34,11 @@
             android:id="@+id/sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/chela_one"
             android:text="Sign In"
+            android:textColor="@color/green_dark"
+            android:textStyle="bold"
             android:layout_marginBottom="20dp"
             android:layout_gravity="center"
-            android:textColor="@color/dark_pink"
             android:textSize="60sp"/>
 
         <EditText
@@ -56,45 +68,29 @@
             android:layout_marginBottom="10dp"
             android:hint="Password"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_layout_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintWidth_percent="0.75"
-        app:layout_constraintTop_toBottomOf="@+id/sign_up_box"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical">
-
         <Button
             android:id="@+id/btn_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="25dp"
+            android:layout_marginVertical="25dp"
             android:text="Sign In"
-            android:textColor="@color/dark_pink"
             android:textSize="18sp"
-            android:fontFamily="@font/overlock_black"
             android:background="@drawable/roundedbutton2"
-            app:backgroundTint="@color/white"
+            android:theme="@style/Button.Green"
             android:textAllCaps="false"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Don't have an account? "
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                android:fontFamily="@font/overlock"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/text_signup"
@@ -102,11 +98,9 @@
                 android:layout_height="wrap_content"
                 android:text="Sign up"
                 android:textSize="20sp"
-                android:textColor="@color/blue"
-                android:fontFamily="@font/overlock_bold"/>
+                android:textColor="@color/green_dark" />
 
         </LinearLayout>
-
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

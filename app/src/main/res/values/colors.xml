@@ -17,6 +17,7 @@
     <color name="dark_pink">#a13161</color>
     <color name="red">#bd0f0f</color>
     <color name="bg_message">#ebe2e1</color>
-    <color name="green">#5EBA7D</color>
-    <color name="green_light">#dcece9</color>
+    <color name="green_dark">#2e8e3d</color>
+    <color name="green_bg">#A0D5A8</color>
+    <color name="green_light">#2ce247</color>
 </resources>
