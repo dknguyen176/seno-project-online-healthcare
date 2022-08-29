@@ -22,12 +22,9 @@ import java.util.List;
 
 public class ShowDoctorList extends AppCompatActivity {
     Toolbar toolbar;
-    TextView titleView;
 
     RecyclerView doctorRecyclerView;
     public static DoctorAdapter doctorAdapter;
-
-    String title = "Doctor";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +35,12 @@ public class ShowDoctorList extends AppCompatActivity {
 
         createToolbar();
 
-        createTitle();
-
         createDoctorRecyclerView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    private void createTitle() {
-        titleView = findViewById(R.id.title);
-        titleView.setText(title);
     }
 
     private void createDoctorRecyclerView() {
@@ -65,6 +55,7 @@ public class ShowDoctorList extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle("All Doctors");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

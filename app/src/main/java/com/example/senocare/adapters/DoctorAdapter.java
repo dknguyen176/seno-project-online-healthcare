@@ -52,10 +52,10 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
         Log.i(TAG, "Binding view holder: " + doctor.getName());
 
         // Glide.with(context).load(productsModel.getImg_url()).into(holder.img);
-        holder.name.setText(doctor.getName());
+        holder.name.setText("Dr. " + doctor.getName());
         holder.spec.setText(doctor.getSpec());
-        holder.exper.setText(doctor.getExper().toString());
-        // holder.rating.setText(doctor.getRating());
+        holder.exper.setText(String.valueOf(doctor.getExper()) + " years");
+        holder.rating.setText(String.valueOf(doctor.getRating()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

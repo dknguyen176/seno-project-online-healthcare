@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/gradient_bg"
+            android:src="@drawable/medical_bg_large"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/profile_pic" />
 
@@ -284,10 +284,11 @@
             app:strokeWidth="3dp">
 
             <ImageView
+                android:id="@id/profile_pic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
-                android:src="@color/orange" />
+                android:src="@drawable/avatar" />
 
         </com.google.android.material.card.MaterialCardView>
 
