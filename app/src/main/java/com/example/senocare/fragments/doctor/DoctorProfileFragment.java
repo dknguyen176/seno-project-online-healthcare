@@ -3,6 +3,7 @@ package com.example.senocare.fragments.doctor;
 import static com.example.senocare.helper.SenoDB.getDoctor;
 import static com.example.senocare.helper.SenoDB.getPatient;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,12 +16,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.senocare.R;
+import com.example.senocare.activity.LoginActivity;
+import com.example.senocare.activity.MainActivity;
 import com.example.senocare.activity.doctor.DoctorEditProfileActivity;
 import com.example.senocare.activity.patient.PatientEditProfileActivity;
+import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 
 public class DoctorProfileFragment extends Fragment {
+
+    private static final int LAUNCH_EDIT = 1;
 
     @Nullable
     @Override
@@ -31,20 +37,32 @@ public class DoctorProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        setViewContent(view);
+        setViewContent(view, getDoctor());
 
         TextView editText = view.findViewById(R.id.edit_text);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), DoctorEditProfileActivity.class));
-                setViewContent(getView());
+                startActivityForResult(new Intent(getContext(), DoctorEditProfileActivity.class), LAUNCH_EDIT);
             }
         });
     }
 
-    private void setViewContent(@NonNull View view) {
-        Doctor doctor = getDoctor();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_EDIT) {
+            if (resultCode == Activity.RESULT_OK) {
+                Doctor doctor = (Doctor) data.getParcelableExtra("doctor");
+                setViewContent(getView(), doctor);
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
+    private void setViewContent(@NonNull View view, Doctor doctor) {
 
         TextView email = view.findViewById(R.id.email_content);
         email.setText(doctor.getEmail());

@@ -22,9 +22,12 @@ import com.example.senocare.activity.LoginActivity;
 import com.example.senocare.activity.MainActivity;
 import com.example.senocare.activity.ShowDoctorList;
 import com.example.senocare.activity.patient.PatientEditProfileActivity;
+import com.example.senocare.helper.SenoDB;
+import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 
 public class PatientProfileFragment extends Fragment {
+    private static final int LAUNCH_EDIT = 1;
 
     @Nullable
     @Override
@@ -35,20 +38,32 @@ public class PatientProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        setViewContent(view);
+        setViewContent(view, getPatient());
 
         TextView editText = view.findViewById(R.id.edit_text);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), PatientEditProfileActivity.class));
-                setViewContent(getView());
+                startActivityForResult(new Intent(getContext(), PatientEditProfileActivity.class), LAUNCH_EDIT);
             }
         });
     }
 
-    private void setViewContent(@NonNull View view) {
-        Patient patient = getPatient();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_EDIT) {
+            if (resultCode == Activity.RESULT_OK) {
+                Patient patient = (Patient) data.getParcelableExtra("patient");
+                setViewContent(getView(), patient);
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+
+            }
+        }
+    }
+
+    private void setViewContent(@NonNull View view, Patient patient) {
 
         TextView email = view.findViewById(R.id.email_content);
         email.setText(patient.getEmail());
