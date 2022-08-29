@@ -66,12 +66,18 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
             String name = SenoDB.getNameByEmail(email);
 
             holder.name.setText("Meeting with " + name);
+        }
+
+        if (holder.deny_btn != null) {
             holder.deny_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     SenoDB.modifySchedule(schedule.get_id(), "Accepted");
                 }
             });
+        }
+
+        if (holder.accept_btn != null) {
             holder.accept_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -79,12 +85,15 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
                 }
             });
         }
-        holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SenoDB.removeSchedule(schedule.get_id());
-            }
-        });
+
+        if (holder.cancel_btn != null) {
+            holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SenoDB.removeSchedule(schedule.get_id());
+                }
+            });
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -25,7 +25,11 @@ public class Drugs extends RealmObject {
     public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
     // Constructor
-    public Drugs() { }
+    public Drugs() {
+        name = "";
+        note = "";
+        quantity = 0;
+    }
 
     public Drugs(String name, Integer quantity, String note) {
         this.name = name;
