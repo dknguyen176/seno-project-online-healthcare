@@ -278,6 +278,14 @@ public final class SenoDB {
         });
     }
 
+    public static void removeSchedule(ObjectId _id) {
+        realm.executeTransaction(r -> {
+            Schedule schedule = r.where(Schedule.class).equalTo("_id", _id).findFirst();
+            schedule.deleteFromRealm();
+            schedule = null;
+        });
+    }
+
     public static RealmResults<Patient> getPatientList() {
         return realm.where(Patient.class).findAll();
     }
@@ -324,7 +332,7 @@ public final class SenoDB {
 
     public static RealmResults<Schedule> getScheduleList() {
         return realm.where(Schedule.class)
-                .sort("time", Sort.DESCENDING)
+                .sort("time", Sort.ASCENDING)
                 .findAll();
     }
 

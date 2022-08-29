@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.senocare.R;
 import com.example.senocare.adapters.AppointmentAdapter;
+import com.example.senocare.helper.SenoDB;
 
 public class ScheduleReviewActivity extends AppCompatActivity {
 
@@ -34,8 +36,11 @@ public class ScheduleReviewActivity extends AppCompatActivity {
         appointmentRecyclerView = findViewById(R.id.app_rec);
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(ScheduleReviewActivity.this, LinearLayoutManager.VERTICAL, false));
 
-        // TODO: SenoDB.getPendingScheduleList() lay nhung Schedule co status la Waiting/Pending gi do
-        // appointmentAdapter = new AppointmentAdapter(ScheduleUpcomingActivity.this, SenoDB.getScheduleList(), R.layout.appointment_review_doctor);
+        appointmentAdapter = new AppointmentAdapter(
+                ScheduleReviewActivity.this,
+                SenoDB.getPendingScheduleList(),
+                R.layout.appointment_review_doctor
+        );
 
         appointmentRecyclerView.setAdapter(appointmentAdapter);
     }
@@ -45,13 +50,14 @@ public class ScheduleReviewActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("Review Appointments");
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        TextView title = findViewById(R.id.title);
+        title.setText("Review Appointments");
     }
 }

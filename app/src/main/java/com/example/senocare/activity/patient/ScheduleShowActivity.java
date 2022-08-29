@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.senocare.R;
 import com.example.senocare.adapters.AppointmentAdapter;
+import com.example.senocare.helper.SenoDB;
 
 public class ScheduleShowActivity extends AppCompatActivity {
 
@@ -39,8 +41,11 @@ public class ScheduleShowActivity extends AppCompatActivity {
         appointmentRecyclerView = findViewById(R.id.app_rec);
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(com.example.senocare.activity.patient.ScheduleShowActivity.this, LinearLayoutManager.VERTICAL, false));
 
-        // TODO: SenoDB.getPatientScheduleList() lay nhung Schedule cua Patient
-        // appointmentAdapter = new appointmentAdapter(ScheduleShowActivity.this, SenoDB.getScheduleList(), R.layout.appointment_patient);
+        appointmentAdapter = new AppointmentAdapter(
+                ScheduleShowActivity.this,
+                SenoDB.getScheduleList(),
+                R.layout.appointment_patient
+        );
 
         appointmentRecyclerView.setAdapter(appointmentAdapter);
     }
@@ -50,13 +55,14 @@ public class ScheduleShowActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("All Appointments");
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        TextView title = findViewById(R.id.title);
+        title.setText("All Appointments");
     }
 }
