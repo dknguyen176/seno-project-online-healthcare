@@ -287,19 +287,21 @@ public final class SenoDB {
     }
 
     public static RealmResults<Patient> getPatientList() {
-        return realm.where(Patient.class).findAll();
+        return realm.where(Patient.class)
+                .sort("name", Sort.ASCENDING)
+                .findAll();
     }
 
     public static RealmResults<Doctor> getDoctorList() {
         return realm.where(Doctor.class)
-                .sort("rating", Sort.DESCENDING)
+                .sort("name", Sort.ASCENDING)
                 .findAll();
     }
 
     public static RealmResults<Doctor> getDoctorList(String spec) {
         return realm.where(Doctor.class)
                 .equalTo("spec", spec)
-                .sort("rating", Sort.DESCENDING)
+                .sort("name", Sort.ASCENDING)
                 .findAll();
     }
 
@@ -375,35 +377,5 @@ public final class SenoDB {
 
     public static Prescription getPrescription(ObjectId _id) {
         return realm.where(Prescription.class).equalTo("_id", _id).findFirst();
-    }
-
-    public static void setDateEditText(EditText editText,  String format, Context context, boolean maxDate, boolean minDate) {
-        editText.setHint(format.toLowerCase());
-        editText.setFocusable(false);
-        editText.setClickable(true);
-        Calendar myCalendar = Calendar.getInstance();
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
-                editText.setText(dateFormat.format(myCalendar.getTime()));
-            }
-        };
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(context, date,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
-                if (maxDate) datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-                if (minDate) datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-                datePickerDialog.show();
-            }
-        });
     }
 }

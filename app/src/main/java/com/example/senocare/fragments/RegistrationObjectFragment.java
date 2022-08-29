@@ -1,7 +1,5 @@
 package com.example.senocare.fragments;
 
-import static com.example.senocare.helper.SenoDB.setDateEditText;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
@@ -23,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.senocare.R;
+import com.example.senocare.helper.ViewSupporter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -181,6 +180,6 @@ public class RegistrationObjectFragment extends Fragment {
 
     private void inputBirthday(TextView textView, EditText editText) {
         textView.setText("When is your birthday?");
-        setDateEditText(editText, "dd/MM/yyyy", getView().getContext(), true, false);
+        ViewSupporter.setDateEditText(editText, "dd/MM/yyyy", getView().getContext(), true, false);
     }
 }

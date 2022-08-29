@@ -1,7 +1,7 @@
 package com.example.senocare.activity.doctor;
 
 import static com.example.senocare.helper.SenoDB.getDoctor;
-import static com.example.senocare.helper.SenoDB.setDateEditText;
+import static com.example.senocare.helper.ViewSupporter.setDateEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
