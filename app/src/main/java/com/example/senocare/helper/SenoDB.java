@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.example.senocare.model.Account;
 import com.example.senocare.model.Doctor;
+import com.example.senocare.model.Drugs;
 import com.example.senocare.model.Message;
 import com.example.senocare.model.Patient;
 import com.example.senocare.model.Prescription;
@@ -20,6 +21,7 @@ import com.example.senocare.model.Schedule;
 import org.bson.types.ObjectId;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
@@ -236,10 +238,11 @@ public final class SenoDB {
         });
     }
 
-    public static void insertPrescription(Prescription prescription) {
+    public static void insertPrescription(Prescription prescription, ArrayList<Drugs> Drugs) {
         realm.executeTransaction(r -> {
             Prescription newPrescription = r.createObject(Prescription.class, new ObjectId());
             newPrescription.set(prescription);
+            newPrescription.setDrugs(Drugs);
         });
     }
 
@@ -360,12 +363,20 @@ public final class SenoDB {
         return realm.where(Patient.class).equalTo("_id", _id).findFirst();
     }
 
+    public static Patient getPatientByEmail(String email) {
+        return realm.where(Patient.class).equalTo("email1", email).findFirst();
+    }
+
     public static Doctor getDoctor() {
         return realm.where(Doctor.class).findFirst();
     }
 
     public static Doctor getDoctor(String _id) {
         return realm.where(Doctor.class).equalTo("_id", _id).findFirst();
+    }
+
+    public static Doctor getDoctorByEmail(String email) {
+        return realm.where(Doctor.class).equalTo("email1", email).findFirst();
     }
 
     public static String getNameByEmail(String email) {

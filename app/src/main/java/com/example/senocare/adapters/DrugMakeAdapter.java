@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 
 public class DrugMakeAdapter extends RecyclerView.Adapter <DrugMakeAdapter.ViewHolder>  {
+    private final String TAG = "DRUG_ADAPTER";
 
     private Context context;
     private ArrayList<Drugs> list;
@@ -41,14 +42,9 @@ public class DrugMakeAdapter extends RecyclerView.Adapter <DrugMakeAdapter.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.remove_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                list.remove(position);
-                notifyItemRemoved(position);
-            }
-        });
+        holder.name.setText(list.get(position).getName());
+        holder.quantity.setText(String.valueOf(list.get(position).getQuantity()));
+        holder.note.setText(list.get(position).getNote());
     }
 
     @Override
@@ -66,8 +62,59 @@ public class DrugMakeAdapter extends RecyclerView.Adapter <DrugMakeAdapter.ViewH
 
             name = itemView.findViewById(R.id.name);
             quantity = itemView.findViewById(R.id.quantity);
-            note = itemView.findViewById(R.id.note);
+            note = itemView.findViewById(R.id.drug_note);
             remove_btn = itemView.findViewById(R.id.remove_btn);
+
+            remove_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    list.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
+
+            name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        Log.v(TAG, "Focus = true");
+                    } else {
+                        Log.v(TAG, "Focus = false");
+
+                        int position = getAdapterPosition();
+                        list.get(position).setName(((EditText) v).getText().toString());
+                    }
+                }
+            });
+
+            quantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        Log.v(TAG, "Focus = true");
+                    } else {
+                        Log.v(TAG, "Focus = false");
+
+                        int position = getAdapterPosition();
+                        list.get(position).setQuantity(Integer.parseInt((((EditText) v).getText().toString())));
+                    }
+                }
+            });
+
+            note.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        Log.v(TAG, "Focus = true");
+                    } else {
+                        Log.v(TAG, "Focus = false");
+
+                        int position = getAdapterPosition();
+                        list.get(position).setNote(((EditText) v).getText().toString());
+                    }
+                }
+            });
         }
     }
 }

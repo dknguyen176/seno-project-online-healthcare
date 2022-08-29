@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp">
+    android:paddingBottom="15dp">
 
     <TextView
         android:id="@+id/text1"
@@ -47,7 +47,8 @@
         android:maxLines="1"
         android:maxLength="3"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/remove_btn"/>
+        app:layout_constraintEnd_toStartOf="@id/remove_btn"
+        android:layout_marginRight="10dp"/>
 
     <TextView
         android:id="@+id/text3"
@@ -58,23 +59,24 @@
         android:textStyle="bold"
         android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/text1"
-        app:layout_constraintBottom_toBottomOf="@id/note"
-        app:layout_constraintEnd_toStartOf="@id/note"
+        app:layout_constraintBottom_toBottomOf="@id/drug_note"
+        app:layout_constraintEnd_toStartOf="@id/drug_note"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/note"
+        android:id="@+id/drug_note"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="Drug's note"
         app:layout_constraintTop_toBottomOf="@id/text1"
         app:layout_constraintStart_toEndOf="@id/text1"
-        app:layout_constraintEnd_toStartOf="@id/remove_btn"/>
+        app:layout_constraintEnd_toStartOf="@id/remove_btn"
+        android:layout_marginRight="10dp"/>
 
     <Button
         android:id="@+id/remove_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:background="@drawable/ic_baseline_remove_circle_outline_24"
         android:backgroundTint="@color/black"
         android:backgroundTintMode="src_over"

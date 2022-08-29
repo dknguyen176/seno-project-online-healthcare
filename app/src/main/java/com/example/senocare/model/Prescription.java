@@ -2,6 +2,8 @@ package com.example.senocare.model;
 
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -34,6 +36,10 @@ public class Prescription extends RealmObject {
 
     public RealmList<Drugs> getDrugs() { return Drugs; }
     public void setDrugs(RealmList<Drugs> Drugs) { this.Drugs = Drugs; }
+    public void setDrugs(ArrayList<Drugs> Drugs) {
+        this.Drugs = new RealmList<>();
+        this.Drugs.addAll(Drugs);
+    }
 
     public String getDiagnostic() { return diagnostic; }
     public void setDiagnostic(String diagnostic) { this.diagnostic = diagnostic; }
@@ -53,8 +59,7 @@ public class Prescription extends RealmObject {
     // Constructor
     public Prescription() { }
 
-    public Prescription(String doctor, String patient, String time, String diagnostic, RealmList<Drugs> drugs, String note) {
-        Drugs = drugs;
+    public Prescription(String doctor, String patient, String time, String diagnostic, String note) {
         this.diagnostic = diagnostic;
         this.email2 = doctor;
         this.note = note;
@@ -63,7 +68,6 @@ public class Prescription extends RealmObject {
     }
 
     public void set(Prescription p) {
-        Drugs = p.getDrugs();
         this.diagnostic = p.diagnostic;
         this.email2 = p.email2;
         this.note = p.note;
