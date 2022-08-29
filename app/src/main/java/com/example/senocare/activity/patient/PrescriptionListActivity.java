@@ -12,6 +12,7 @@ import com.example.senocare.R;
 import com.example.senocare.activity.doctor.ScheduleUpcomingActivity;
 import com.example.senocare.adapters.AppointmentAdapter;
 import com.example.senocare.adapters.PrescriptionAdapter;
+import com.example.senocare.helper.SenoDB;
 
 public class PrescriptionListActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class PrescriptionListActivity extends AppCompatActivity {
         prescriptionRecyclerView.setLayoutManager(new LinearLayoutManager(PrescriptionListActivity.this, LinearLayoutManager.VERTICAL, false));
 
         // TODO: lay Prescription sort desc theo time
-        prescriptionAdapter = null;
+        prescriptionAdapter = new PrescriptionAdapter(PrescriptionListActivity.this, SenoDB.getPrescriptionList(), R.layout.prescription_thumbnail);
 
         prescriptionRecyclerView.setAdapter(prescriptionAdapter);
     }
@@ -41,7 +42,6 @@ public class PrescriptionListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("All Prescription");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

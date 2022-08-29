@@ -56,7 +56,7 @@ public class PrescriptionAdapter extends RealmRecyclerViewAdapter<Prescription, 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PrescriptionSeeActivity.class);
-                intent.putExtra("_id", prescription.get_id());
+                intent.putExtra("_id", prescription.get_id().toString());
 
                 context.startActivity(intent);
             }

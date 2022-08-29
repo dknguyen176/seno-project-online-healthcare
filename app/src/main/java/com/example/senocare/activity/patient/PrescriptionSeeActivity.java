@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.senocare.R;
+import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 import com.example.senocare.model.Prescription;
@@ -31,13 +32,11 @@ public class PrescriptionSeeActivity extends AppCompatActivity {
 
         // TODO: lam may cai nay
 
-        ObjectId prescriptionID = null; // intent.getSerializableExtra("_id");
-
-        Prescription prescription = null; // getPrescriptionFromID;
-
-        Doctor doctor = null; // getDoctorFromEmail
-
-        Patient patient = null; // getPatientFromEmail
+        String _idString = intent.getStringExtra("_id");
+        ObjectId prescriptionID = new ObjectId(_idString);
+        Prescription prescription = SenoDB.getPrescription(prescriptionID);
+        Doctor doctor = SenoDB.getDoctorByEmail(prescription.getDoctor());
+        Patient patient = SenoDB.getPatientByEmail(prescription.getPatient());
 
         ((TextView) findViewById(R.id.doc_name)).setText(doctor.getName());
         ((TextView) findViewById(R.id.doc_loc)).setText(doctor.getLoc());

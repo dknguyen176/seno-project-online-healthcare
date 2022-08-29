@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     final private int LAUNCH_MAIN_ACTIVITY = 1;
     final private int LAUNCH_REGISTER_ACTIVITY = 2;
 
+    Button signInButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void createSignInBtn() {
-        Button signInButton = findViewById(R.id.btn_signin);
+        signInButton = findViewById(R.id.btn_signin);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        signInButton.setEnabled(true);
+
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_REGISTER_ACTIVITY) {

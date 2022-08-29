@@ -36,6 +36,7 @@ public class RegistrationFragment extends Fragment {
     // representing an object in the collection.
     RegistrationAdapter registrationAdapter;
     ViewPager2 viewPager;
+    Button nextBtn;
 
     int position = 1;
     public static boolean is_patient = true;
@@ -56,7 +57,7 @@ public class RegistrationFragment extends Fragment {
         viewPager.setAdapter(registrationAdapter);
         viewPager.setUserInputEnabled(false);
 
-        Button nextBtn = view.findViewById(R.id.reg_nextBtn);
+        nextBtn = view.findViewById(R.id.reg_nextBtn);
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +157,7 @@ public class RegistrationFragment extends Fragment {
 
                 Log.i("EXAMPLE", "Successfully registered user.");
             } else {
+                nextBtn.setEnabled(true);
                 Log.e("EXAMPLE", "Failed to register user: " + it.getError().getErrorMessage());
                 Toast.makeText(getContext(), "Failed to register user: " + it.getError().getErrorMessage(), Toast.LENGTH_LONG).show();
             }
@@ -169,6 +171,7 @@ public class RegistrationFragment extends Fragment {
 
                 Log.i("EXAMPLE", "Successfully registered user.");
             } else {
+                nextBtn.setEnabled(true);
                 Log.e("EXAMPLE", "Failed to register user: " + it.getError().getErrorMessage());
                 Toast.makeText(getContext(), "Failed to register user: " + it.getError().getErrorMessage(), Toast.LENGTH_LONG).show();
             }
