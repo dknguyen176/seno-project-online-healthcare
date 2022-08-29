@@ -65,7 +65,6 @@ public class DoctorHomeFragment extends Fragment {
         makePrescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: them args
                 startActivity(new Intent(getContext(), PrescriptionMakeActivity.class));
             }
         });
@@ -79,7 +78,7 @@ public class DoctorHomeFragment extends Fragment {
         });
 
 
-        test();
+        //test();
 
         return root;
     }

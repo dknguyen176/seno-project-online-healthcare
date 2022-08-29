@@ -86,7 +86,7 @@ public class PatientHomeFragment extends Fragment {
             }
         });
 
-        test();
+        //test();
 
         return root;
     }
