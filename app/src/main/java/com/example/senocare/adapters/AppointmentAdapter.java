@@ -55,11 +55,13 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
             String status = schedule.getStatus();
 
             holder.name.setText("Meeting with Dr. " + name);
-            holder.status.setText(status);
-            if (status.equals("Pending")) {
-                holder.status.setTextColor(getColor(context, R.color.blue));
-            } else if (status.equals("Accepted")) {
-                holder.status.setTextColor(getColor(context, R.color.orange));
+            if (holder.status != null) {
+                holder.status.setText(status);
+                if (status.equals("Denied")) {
+                    holder.status.setTextColor(getColor(context, R.color.red));
+                } else if (status.equals("Accepted")) {
+                    holder.status.setTextColor(getColor(context, R.color.green_light));
+                }
             }
         } else {
             String email = schedule.getPatient();
@@ -72,7 +74,7 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
             holder.deny_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SenoDB.modifySchedule(schedule.get_id(), "Accepted");
+                    SenoDB.modifySchedule(schedule.get_id(), "Denied");
                 }
             });
         }
@@ -81,7 +83,7 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
             holder.accept_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SenoDB.modifySchedule(schedule.get_id(), "Denied");
+                    SenoDB.modifySchedule(schedule.get_id(), "Accepted");
                 }
             });
         }

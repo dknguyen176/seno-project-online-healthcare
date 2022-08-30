@@ -1,15 +1,19 @@
 package com.example.senocare.activity;
 
 import static com.example.senocare.helper.SenoDB.getDoctor;
+import static com.example.senocare.helper.SenoDB.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.senocare.R;
+import com.example.senocare.activity.patient.ScheduleMakeActivity;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
 
@@ -23,7 +27,7 @@ public class DetailedDoctor extends AppCompatActivity {
         Intent intent = getIntent();
         String doc_id = intent.getStringExtra("_id");
 
-        Doctor doctor = getDoctorFromID(doc_id);
+        Doctor doctor = getDoctor(doc_id);
 
         Log.v("DETAIL DOCTOR", "" + doctor);
 
@@ -50,9 +54,44 @@ public class DetailedDoctor extends AppCompatActivity {
 
         TextView exper = findViewById(R.id.exper_content);
         exper.setText(String.valueOf(doctor.getExper()));
+
+        createChatBtn(doctor);
+
+        createAppointmentBtn(doctor);
     }
 
-    private Doctor getDoctorFromID(String doc_id) {
-        return SenoDB.getDoctor(doc_id);
+    private void createAppointmentBtn(Doctor doctor) {
+        Button appBtn = findViewById(R.id.app_btn);
+        appBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailedDoctor.this, ScheduleMakeActivity.class);
+                intent.putExtra("doctor", doctor);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void createChatBtn(Doctor doctor) {
+        Button chatBtn = findViewById(R.id.chat_btn);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String sender = user.getProfile().getEmail();
+                String receiver = doctor.getEmail();
+                String conservation;
+                if (sender.compareTo(receiver) < 0)
+                    conservation = sender + receiver;
+                else
+                    conservation = receiver + sender;
+
+                Intent intent = new Intent(DetailedDoctor.this, ChatBoxActivity.class);
+                intent.putExtra("conservation", conservation);
+                intent.putExtra("sender", sender);
+                intent.putExtra("receiver", receiver);
+
+                startActivity(intent);
+            }
+        });
     }
 }

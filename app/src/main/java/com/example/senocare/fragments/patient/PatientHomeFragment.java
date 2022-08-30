@@ -95,7 +95,7 @@ public class PatientHomeFragment extends Fragment {
     private void createAppointmentRecyclerView(View root) {
         appointmentRecyclerView = root.findViewById(R.id.app_rec);
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        appointmentAdapter = new AppointmentAdapter(getContext(), SenoDB.getUpcomingScheduleList(3), R.layout.appointment_patient);
+        appointmentAdapter = new AppointmentAdapter(getContext(), SenoDB.getUpcomingScheduleList(3), R.layout.appointment_upcoming_doctor);
         appointmentRecyclerView.setAdapter(appointmentAdapter);
     }
 

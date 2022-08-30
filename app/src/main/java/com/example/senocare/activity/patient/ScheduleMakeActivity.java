@@ -1,5 +1,7 @@
 package com.example.senocare.activity.patient;
 
+import static com.example.senocare.helper.SenoDB.getDoctor;
+import static com.example.senocare.helper.SenoDB.getPatient;
 import static com.example.senocare.helper.SenoDB.user;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Doctor;
+import com.example.senocare.model.Patient;
 import com.example.senocare.model.Schedule;
 
 import org.joda.time.DateTime;
@@ -44,7 +47,7 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
     TextView date1, date2, date3, date4;
     Button make;
 
-    String sex = null, doc_email, day_select;
+    String sex = null, doc_email = "", day_select = "";
     List<String> doctorList = new ArrayList<>();
     ArrayAdapter<CharSequence> specAdapter;
     ArrayAdapter<String> nameAdapter;
@@ -65,6 +68,38 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
         setSchedulePicker();
 
         setMakeBtn();
+
+        fillPatient();
+        fillDocFromIntent();
+    }
+
+    private void fillPatient() {
+        Patient patient = getPatient();
+        String name = patient.getName();
+        String birth = patient.getBirth();
+        String phone = patient.getPhone();
+        String sex = patient.getSex();
+
+        pat_name.setText(name);
+        pat_birth.setText(birth);
+        pat_phone.setText(phone);
+        if (sex.equals("Male")) male.setChecked(true); else female.setChecked(true);
+
+        this.sex = sex;
+    }
+
+    private void fillDocFromIntent() {
+        Intent intent = getIntent();
+        Doctor doctor = intent.getParcelableExtra("doctor");
+        if (doctor == null) return;
+
+        String spec = doctor.getSpec();
+        String name = doctor.getName() + " (" + doctor.getEmail() + ")";
+
+        doc_spec.setSelection(specAdapter.getPosition(spec));
+        doc_name.setSelection(nameAdapter.getPosition(name));
+
+        doc_email = doctor.getEmail();
     }
 
     private void setMakeBtn() {
@@ -111,10 +146,10 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
         Date d2 = c.getTime(); c.add(Calendar.DATE, 1);
         Date d3 = c.getTime();
 
-        setOnDateClick(date1, "MMM d, yyyy", "yyyy/MM/dd", d1);
-        setOnDateClick(date2, "MMM d, yyyy", "yyyy/MM/dd", d2);
-        setOnDateClick(date3, "MMM d, yyyy", "yyyy/MM/dd", d3);
-        setOnDateClick(date4, "MMM d, yyyy", "yyyy/MM/dd");
+        setOnDateClick(date1, "MMM d,\n yyyy", "yyyy/MM/dd", d1);
+        setOnDateClick(date2, "MMM d,\n yyyy", "yyyy/MM/dd", d2);
+        setOnDateClick(date3, "MMM d,\n yyyy", "yyyy/MM/dd", d3);
+        setOnDateClick(date4, "MMM d,\n yyyy", "yyyy/MM/dd");
     }
 
     private void setDocSpinner() {
