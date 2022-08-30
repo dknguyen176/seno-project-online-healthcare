@@ -1,27 +1,54 @@
 package com.example.senocare.fragments.doctor;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.senocare.helper.SenoDB.getDoctor;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.senocare.R;
 import com.example.senocare.activity.doctor.DoctorEditProfileActivity;
 import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Doctor;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class DoctorProfileFragment extends Fragment {
 
     private static final int LAUNCH_EDIT = 1;
+    private static final int GALLERY_ACTIVITY = 2;
+    private static final int CAMERA_ACTIVITY = 3;
+
+    Dialog dialog;
+    ImageView profile_pic;
 
     @Nullable
     @Override
@@ -32,6 +59,8 @@ public class DoctorProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        createDialog();
+
         setViewContent(view, getDoctor());
 
         TextView editText = view.findViewById(R.id.edit_text);
@@ -46,15 +75,87 @@ public class DoctorProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == LAUNCH_EDIT) {
-            if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == LAUNCH_EDIT) {
                 Doctor doctor = (Doctor) data.getParcelableExtra("doctor");
                 setViewContent(getView(), doctor);
-            } else if (resultCode == Activity.RESULT_CANCELED) {
+            }
+            else if (requestCode == GALLERY_ACTIVITY) {
+                Uri selectedImage = data.getData();
+                try {
+
+                    InputStream iStream = getActivity().getContentResolver().openInputStream(selectedImage);
+                    byte[] inputData = getBytes(iStream);
+
+                    // TODO: doan code nay tao Bitmap tu byte[] va nhet no vao ImageView, dem no qua nhung cho can profile_pic {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(inputData, 0, inputData.length);
+                    bmp = Bitmap.createScaledBitmap(bmp, profile_pic.getWidth(), profile_pic.getHeight(), false);
+                    profile_pic.setImageBitmap(bmp);
+                    // }
+
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                    // TODO: result byte[], nhet vao Doctor
+                    byte[] byteArray = stream.toByteArray();
+
+                } catch (Exception e) {
+
+                }
+            }
+            else if (requestCode == CAMERA_ACTIVITY) {
+                Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                selectedImage = Bitmap.createScaledBitmap(selectedImage, profile_pic.getWidth(), profile_pic.getHeight(), false);
+                selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+
+                profile_pic.setImageBitmap(selectedImage);
+
+                // TODO: result byte[], nhet vao Doctor
+                byte[] byteArray = stream.toByteArray();
 
             }
         }
+    }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        byte[] bytesResult = null;
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+        try {
+            int len;
+            while ((len = inputStream.read(buffer)) != -1) {
+                byteBuffer.write(buffer, 0, len);
+            }
+            bytesResult = byteBuffer.toByteArray();
+        } finally {
+            // close the stream
+            try{ byteBuffer.close(); } catch (IOException ignored){ /* do nothing */ }
+        }
+        return bytesResult;
+    }
+
+
+    public void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        String[] choice = new String[] {"From Gallery", "From Camera"};
+        builder.setTitle("Choose a picture")
+                .setItems(choice, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == 0){
+                            Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(pickPhoto , GALLERY_ACTIVITY);
+                        }
+                        else{
+                            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(takePicture, CAMERA_ACTIVITY);
+                        }
+                    }
+                });
+        dialog = builder.create();
     }
 
     private void setViewContent(@NonNull View view, Doctor doctor) {
@@ -82,5 +183,14 @@ public class DoctorProfileFragment extends Fragment {
 
         TextView exper = view.findViewById(R.id.exper_content);
         exper.setText(String.valueOf(doctor.getExper()));
+
+        profile_pic = view.findViewById(R.id.profile_pic);
+        profile_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
     }
+
 }
