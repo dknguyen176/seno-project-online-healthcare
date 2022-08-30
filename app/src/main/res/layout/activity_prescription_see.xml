@@ -63,7 +63,7 @@
             android:id="@+id/horizontal_line1"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/blue"
+            android:background="@color/green_dark"
             app:layout_constraintTop_toBottomOf="@id/rx"
             android:layout_marginTop="10dp"/>
 
@@ -203,7 +203,7 @@
             android:id="@+id/horizontal_line2"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/blue"
+            android:background="@color/green_dark"
             app:layout_constraintTop_toBottomOf="@id/drug_rec"
             android:layout_marginTop="10dp"/>
 

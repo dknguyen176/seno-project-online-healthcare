@@ -276,7 +276,7 @@
             android:innerRadius="0dp"
             android:shape="ring"
             android:thicknessRatio="1.9"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="70dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

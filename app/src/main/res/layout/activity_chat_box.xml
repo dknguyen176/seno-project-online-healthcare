@@ -33,7 +33,8 @@
         android:inputType="text"
         android:imeOptions="actionDone"
         android:importantForAutofill="no"
-        android:background="@drawable/bg_chat_input"/>
+        android:background="@drawable/bg_chat_input"
+        android:backgroundTint="@color/green_bg"/>
 
     <ImageView
         android:id="@+id/btn_send"

@@ -58,7 +58,7 @@
         android:minHeight="35dp"
         android:textSize="18sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/orange"
+        android:backgroundTint="@color/green_dark"
         android:background="@drawable/roundedbutton"/>
 
     <androidx.appcompat.widget.AppCompatButton

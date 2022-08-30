@@ -9,18 +9,21 @@
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.207" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.207" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/drawable/ic_baseline_password.xml" value="0.207" />
+        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/drawable/ic_round_send_24.xml" value="0.207" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/drawable/roundedbutton.xml" value="0.207" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/drawable/roundedbutton2.xml" value="0.207" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/font/amethysta.xml" value="0.28020833333333334" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/font/montserrat.xml" value="0.2791666666666667" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/font/roboto.xml" value="0.28020833333333334" />
+        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_chat_box.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_chat_list.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_detailed_doctor.xml" value="0.176" />
+        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_detailed_patient.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_doctor_edit_profile.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_edit_profile_doctor.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_edit_profile_patient.xml" value="0.264" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_login.xml" value="0.264" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_make_schedule.xml" value="0.264" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_patient_edit_profile.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/activity_prescription_list.xml" value="0.22826086956521738" />
@@ -39,7 +42,7 @@
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/appointment_doctor.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/appointment_large.xml" value="0.2" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/appointment_patient.xml" value="0.264" />
-        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/appointment_review_doctor.xml" value="0.22826086956521738" />
+        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/appointment_review_doctor.xml" value="0.4" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/appointment_upcoming_doctor.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/doctor_large.xml" value="0.2" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/drug.xml" value="0.264" />
@@ -59,6 +62,8 @@
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/fragment_profile_patient.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/fragment_registration.xml" value="0.176" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/fragment_registration2.xml" value="0.22826086956521738" />
+        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/item_chat_list.xml" value="0.536" />
+        <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/item_received_message.xml" value="0.72" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/item_sent_message.xml" value="0.22826086956521738" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/patient_or_doctor.xml" value="0.1" />
         <entry key="..\:/For HCMUS/Mobile App Dev/seno-project-online-healthcare/app/src/main/res/layout/patient_registration.xml" value="0.1" />
