@@ -1,6 +1,10 @@
 package com.example.senocare.adapters;
 
+import static com.example.senocare.helper.SenoDB.IS_PATIENT;
+import static com.example.senocare.helper.SenoDB.getDoctorByEmail;
+import static com.example.senocare.helper.SenoDB.getPatientByEmail;
 import static com.example.senocare.helper.SenoDB.user;
+import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.senocare.R;
 import com.example.senocare.activity.ChatBoxActivity;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.ViewSupporter;
+import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Message;
+import com.example.senocare.model.Patient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,15 +63,30 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
         Message message = getItem(position);
         String currentEmail = user.getProfile().getEmail();
 
-        holder.img.setImageResource(R.drawable.avatar);
         holder.time.setText(getTimeDiff(message.getTime()));
 
         if (currentEmail.equals(message.getSender())) {
             holder.name.setText(SenoDB.getNameByEmail(message.getReceiver()));
             holder.mess.setText("You: " + message.getText());
+            if (IS_PATIENT){
+                Doctor doctor = getDoctorByEmail(message.getReceiver());
+                putByteArrayToImageView(doctor.getImg(), holder.img, doctor.getSex());
+            }
+            else{
+                Patient patient = getPatientByEmail(message.getReceiver());
+                putByteArrayToImageView(patient.getImg(), holder.img, patient.getSex());
+            }
         } else {
             holder.name.setText(SenoDB.getNameByEmail(message.getSender()));
             holder.mess.setText(message.getText());
+            if (IS_PATIENT){
+                Doctor doctor = getDoctorByEmail(message.getSender());
+                putByteArrayToImageView(doctor.getImg(), holder.img, doctor.getSex());
+            }
+            else{
+                Patient patient = getPatientByEmail(message.getSender());
+                putByteArrayToImageView(patient.getImg(), holder.img, patient.getSex());
+            }
         }
 
         if (currentEmail.equals(message.getReceiver()) && message.getStatus().equals("unseen")) {

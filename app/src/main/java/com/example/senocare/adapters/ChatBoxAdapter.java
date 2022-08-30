@@ -1,6 +1,12 @@
 package com.example.senocare.adapters;
 
+import static com.example.senocare.helper.SenoDB.IS_PATIENT;
+import static com.example.senocare.helper.SenoDB.getDoctor;
+import static com.example.senocare.helper.SenoDB.getDoctorByEmail;
+import static com.example.senocare.helper.SenoDB.getPatient;
+import static com.example.senocare.helper.SenoDB.getPatientByEmail;
 import static com.example.senocare.helper.SenoDB.user;
+import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,7 +21,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.senocare.R;
+import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Message;
+import com.example.senocare.model.Patient;
 
 import io.realm.OrderedRealmCollection;
 
@@ -56,7 +64,14 @@ public class ChatBoxAdapter extends RealmRecyclerViewAdapter<Message, RecyclerVi
 
         } else {
             ((ReceivedViewHolder) holder).message.setText(message.getText());
-            ((ReceivedViewHolder) holder).img.setImageResource(R.drawable.avatar);
+            if (IS_PATIENT){
+                Doctor doctor = getDoctorByEmail(message.getSender());
+                putByteArrayToImageView(doctor.getImg(), ((ReceivedViewHolder) holder).img, doctor.getSex());
+            }
+            else {
+                Patient patient = getPatientByEmail(message.getSender());
+                putByteArrayToImageView(patient.getImg(), ((ReceivedViewHolder) holder).img, patient.getSex());
+            }
         }
     }
 

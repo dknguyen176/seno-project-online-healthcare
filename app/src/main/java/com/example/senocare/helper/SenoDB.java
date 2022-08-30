@@ -282,6 +282,13 @@ public final class SenoDB {
         });
     }
 
+    public static void modifyDoctor(String _id, byte[] img) {
+        realm.executeTransaction(r -> {
+            Doctor doctor = r.where(Doctor.class).equalTo("_id", _id).findFirst();
+            doctor.setImg(img);
+        });
+    }
+
     public static void modifySchedule(ObjectId _id, String status) {
         realm.executeTransaction(r -> {
             Schedule schedule = r.where(Schedule.class).equalTo("_id", _id).findFirst();

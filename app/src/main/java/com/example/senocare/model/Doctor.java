@@ -87,7 +87,14 @@ public class Doctor extends RealmObject implements Parcelable {
     public void setSpec(String spec) { this.spec = spec; }
 
     public byte[] getImg() { return img; }
-    public void setImg(byte[] img) { this.img = img; }
+    public void setImg(byte[] img) {
+        if (img == null) {
+            this.img = null;
+            return;
+        }
+        this.img = new byte[img.length];
+        for(int i = 0; i < img.length; ++i) this.img[i] = img[i];
+    }
 
     // Constructor
     public Doctor() {
@@ -140,7 +147,12 @@ public class Doctor extends RealmObject implements Parcelable {
         this.rating = d.rating;
         this.sex = d.sex;
         this.spec = d.spec;
-        this.img = d.img;
+        if (d.img == null) {
+            this.img = null;
+            return;
+        }
+        this.img = new byte[d.img.length];
+        for(int i = 0; i < d.img.length; ++i) this.img[i] = d.img[i];
     }
 
     public Doctor(Parcel source) {

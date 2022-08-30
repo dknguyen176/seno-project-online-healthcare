@@ -88,6 +88,7 @@ public class PatientEditProfileActivity extends AppCompatActivity {
                 Patient newPatient = new Patient(user.getProfile().getEmail(), name, sex,
                         TimeConverter.toDate(birthday, "dd/MM/yyyy"), phone, address);
                 newPatient.set_id(patient.get_id());
+                newPatient.setImg(patient.getImg());
                 SenoDB.modifyPatient(newPatient);
 
                 Intent intent = new Intent();

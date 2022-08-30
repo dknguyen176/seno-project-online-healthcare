@@ -17,12 +17,12 @@
             android:scaleType="centerCrop"
             android:src="@color/green_bg"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/profile_pic" />
+            app:layout_constraintBottom_toBottomOf="@id/profile_pic_card" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_pic"
+            app:layout_constraintTop_toBottomOf="@id/profile_pic_card"
             android:layout_marginTop="-40dp"
             app:cardElevation="0dp"
             app:cardCornerRadius="20dp">
@@ -266,7 +266,7 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/profile_pic"
+            android:id="@+id/profile_pic_card"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:elevation="15dp"

@@ -2,14 +2,17 @@ package com.example.senocare.activity;
 
 import static com.example.senocare.helper.SenoDB.getDoctor;
 import static com.example.senocare.helper.SenoDB.user;
+import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senocare.R;
@@ -60,6 +63,9 @@ public class DetailedDoctor extends AppCompatActivity {
 
         TextView exper = findViewById(R.id.exper_content);
         exper.setText(String.valueOf(doctor.getExper()));
+
+        ImageView profile_pic = findViewById(R.id.profile_pic);
+        putByteArrayToImageView(doctor.getImg(), profile_pic, doctor.getSex());
 
         createChatBtn(doctor);
 

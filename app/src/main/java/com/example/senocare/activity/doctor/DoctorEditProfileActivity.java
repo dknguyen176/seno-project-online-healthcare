@@ -100,6 +100,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
                 Doctor newDoctor = new Doctor(user.getProfile().getEmail(), first, last, sex,
                         TimeConverter.toDate(birthday, "dd/MM/yyyy"), spec, exper, loc, bio, 5);
                 newDoctor.set_id(doctor.get_id());
+                byte[] img = doctor.getImg();
+                newDoctor.setImg(img);
                 modifyDoctor(newDoctor);
 
                 Intent intent = new Intent();

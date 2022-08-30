@@ -1,7 +1,11 @@
 package com.example.senocare.adapters;
 
+import static androidx.core.content.ContextCompat.createDeviceProtectedStorageContext;
 import static androidx.core.content.ContextCompat.getColor;
 import static com.example.senocare.helper.SenoDB.IS_PATIENT;
+import static com.example.senocare.helper.SenoDB.getDoctorByEmail;
+import static com.example.senocare.helper.SenoDB.getPatientByEmail;
+import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,6 +26,9 @@ import com.example.senocare.activity.DetailedAppointment;
 import com.example.senocare.activity.patient.PrescriptionSeeActivity;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.helper.TimeConverter;
+import com.example.senocare.helper.ViewSupporter;
+import com.example.senocare.model.Doctor;
+import com.example.senocare.model.Patient;
 import com.example.senocare.model.Schedule;
 
 import io.realm.OrderedRealmCollection;
@@ -68,11 +75,15 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
                     holder.status.setTextColor(getColor(context, R.color.green_light));
                 }
             }
+            Doctor doctor = getDoctorByEmail(schedule.getDoctor());
+            putByteArrayToImageView(doctor.getImg(), holder.img, doctor.getSex());
         } else {
             String email = schedule.getPatient();
             String name = SenoDB.getNameByEmail(email);
 
             holder.name.setText("Meeting with " + name);
+            Patient patient = getPatientByEmail(schedule.getPatient());
+            putByteArrayToImageView(patient.getImg(), holder.img, patient.getSex());
         }
 
         if (holder.deny_btn != null) {

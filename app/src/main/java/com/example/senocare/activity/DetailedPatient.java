@@ -2,6 +2,7 @@ package com.example.senocare.activity;
 
 import static com.example.senocare.helper.SenoDB.getPatient;
 import static com.example.senocare.helper.SenoDB.user;
+import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.senocare.R;
@@ -53,6 +55,9 @@ public class DetailedPatient extends AppCompatActivity {
 
         TextView address = findViewById(R.id.address_content);
         address.setText(patient.getAddress());
+
+        ImageView profile_pic = findViewById(R.id.profile_pic);
+        putByteArrayToImageView(patient.getImg(), profile_pic, patient.getSex());
 
         createWritePrescription(patient);
     }

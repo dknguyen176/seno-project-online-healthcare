@@ -2,6 +2,9 @@ package com.example.senocare.fragments.doctor;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.senocare.helper.SenoDB.getDoctor;
+import static com.example.senocare.helper.SenoDB.modifyDoctor;
+import static com.example.senocare.helper.SenoDB.modifyPatient;
+import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +19,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +53,8 @@ public class DoctorProfileFragment extends Fragment {
 
     Dialog dialog;
     ImageView profile_pic;
+    Doctor doctor;
+    byte[] img;
 
     @Nullable
     @Override
@@ -59,11 +65,19 @@ public class DoctorProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        doctor = getDoctor();
+
+        // TODO: bo set byte array thanh null nay
+        modifyDoctor(doctor.get_id(), null);
+
+        img = null;
+
         createDialog();
 
-        setViewContent(view, getDoctor());
+        setViewContent(view, doctor);
 
         TextView editText = view.findViewById(R.id.edit_text);
+
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,28 +91,25 @@ public class DoctorProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == LAUNCH_EDIT) {
-                Doctor doctor = (Doctor) data.getParcelableExtra("doctor");
-                setViewContent(getView(), doctor);
+                Doctor newDoctor = (Doctor) data.getParcelableExtra("doctor");
+                setViewContent(getView(), newDoctor);
             }
             else if (requestCode == GALLERY_ACTIVITY) {
                 Uri selectedImage = data.getData();
                 try {
-
                     InputStream iStream = getActivity().getContentResolver().openInputStream(selectedImage);
                     byte[] inputData = getBytes(iStream);
 
-                    // TODO: doan code nay tao Bitmap tu byte[] va nhet no vao ImageView, dem no qua nhung cho can profile_pic {
                     Bitmap bmp = BitmapFactory.decodeByteArray(inputData, 0, inputData.length);
-                    bmp = Bitmap.createScaledBitmap(bmp, profile_pic.getWidth(), profile_pic.getHeight(), false);
+                    bmp = Bitmap.createScaledBitmap(bmp, 100, 100, false);
                     profile_pic.setImageBitmap(bmp);
-                    // }
 
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
-                    // TODO: result byte[], nhet vao Doctor
-                    byte[] byteArray = stream.toByteArray();
-
+                    img = stream.toByteArray();
+                    modifyDoctor(doctor.get_id(), img);
+                    putByteArrayToImageView(img, profile_pic, "Male");
                 } catch (Exception e) {
 
                 }
@@ -107,22 +118,21 @@ public class DoctorProfileFragment extends Fragment {
                 Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                selectedImage = Bitmap.createScaledBitmap(selectedImage, profile_pic.getWidth(), profile_pic.getHeight(), false);
+                selectedImage = Bitmap.createScaledBitmap(selectedImage, 100, 100, false);
                 selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
 
                 profile_pic.setImageBitmap(selectedImage);
 
-                // TODO: result byte[], nhet vao Doctor
-                byte[] byteArray = stream.toByteArray();
-
+                img = stream.toByteArray();
+                modifyDoctor(doctor.get_id(), img);
             }
         }
     }
 
-    public byte[] getBytes(InputStream inputStream) throws IOException {
+    private byte[] getBytes(InputStream inputStream) throws IOException {
         byte[] bytesResult = null;
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
+        int bufferSize = 10000;
         byte[] buffer = new byte[bufferSize];
         try {
             int len;
@@ -138,7 +148,7 @@ public class DoctorProfileFragment extends Fragment {
     }
 
 
-    public void createDialog() {
+    private void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String[] choice = new String[] {"From Gallery", "From Camera"};
         builder.setTitle("Choose a picture")
@@ -185,6 +195,8 @@ public class DoctorProfileFragment extends Fragment {
         exper.setText(String.valueOf(doctor.getExper()));
 
         profile_pic = view.findViewById(R.id.profile_pic);
+        putByteArrayToImageView(doctor.getImg(), profile_pic, doctor.getSex());
+
         profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,7 @@
 package com.example.senocare.adapters;
 
+import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -51,11 +53,11 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
         Doctor doctor = getItem(position);
         Log.i(TAG, "Binding view holder: " + doctor.getName());
 
-        // Glide.with(context).load(productsModel.getImg_url()).into(holder.img);
-        holder.name.setText("Dr. " + doctor.getLast());
+        holder.name.setText("Dr. " + doctor.getName());
         holder.spec.setText(doctor.getSpec());
         holder.exper.setText(String.valueOf(doctor.getExper()) + " years");
         holder.rating.setText(String.valueOf(doctor.getRating()));
+        putByteArrayToImageView(doctor.getImg(), holder.img, doctor.getSex());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

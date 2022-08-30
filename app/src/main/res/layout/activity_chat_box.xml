@@ -29,7 +29,7 @@
             android:layout_height="30dp"
             android:layout_gravity="end"
             android:layout_marginRight="20dp"
-            android:src="@drawable/ic_baseline_account_circle"/>
+            android:src="@drawable/ic_baseline_info_24"/>
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
