@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rec_chat_box"
+        app:layout_constraintBottom_toTopOf="@id/chat_view"
         android:background="@color/white">
 
         <TextView
@@ -32,15 +32,22 @@
             android:src="@drawable/ic_baseline_account_circle"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rec_chat_box"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/chat_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
         app:layout_constraintBottom_toTopOf="@+id/text_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_toolbar"/>
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_chat_box"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/text_message"
@@ -56,7 +63,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_send"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rec_chat_box"
+        app:layout_constraintTop_toBottomOf="@id/chat_view"
         android:textSize="18sp"
         android:inputType="textMultiLine"
         android:imeOptions="actionDone"

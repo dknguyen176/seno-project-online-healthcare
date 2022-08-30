@@ -50,12 +50,7 @@ public class DetailedAppointment extends AppCompatActivity {
         Button accept_btn= findViewById(R.id.accept_button);
         Button cancel_btn = findViewById(R.id.cancel_button);
 
-        if (schedule.getStatus().compareTo("Denied") == 0){
-            accept_btn.setVisibility(View.INVISIBLE);
-            deny_btn.setVisibility(View.INVISIBLE);
-            cancel_btn.setVisibility(View.INVISIBLE);
-        }
-        else if (schedule.getStatus().compareTo("Pending") == 0 && !IS_PATIENT){
+        if (schedule.getStatus().compareTo("Pending") == 0 && !IS_PATIENT){
             cancel_btn.setVisibility(View.INVISIBLE);
             accept_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,6 +70,7 @@ public class DetailedAppointment extends AppCompatActivity {
         else{
             accept_btn.setVisibility(View.INVISIBLE);
             deny_btn.setVisibility(View.INVISIBLE);
+            if (schedule.getStatus().compareTo("Denied") == 0) cancel_btn.setText("Delete");
             cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
