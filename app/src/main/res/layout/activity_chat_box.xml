@@ -19,22 +19,23 @@
     <EditText
         android:id="@+id/text_message"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="18dp"
+        android:paddingVertical="5dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="15dp"
         android:gravity="center_vertical"
         android:hint="Type a message"
+        android:maxLines="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_send"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rec_chat_box"
         android:textSize="18sp"
-        android:textColor="@color/black"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:imeOptions="actionDone"
         android:importantForAutofill="no"
-        android:background="@drawable/bg_chat_input"
-        android:backgroundTint="@color/green_bg"/>
+        android:background="@drawable/bg_chat_input" />
 
     <ImageView
         android:id="@+id/btn_send"

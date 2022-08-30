@@ -1,5 +1,6 @@
 package com.example.senocare.activity;
 
+import static com.example.senocare.helper.SenoDB.modifyMessage;
 import static com.example.senocare.helper.SenoDB.user;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,7 @@ public class ChatBoxActivity extends AppCompatActivity {
     String sender, receiver, conservation;
 
     RecyclerView chatBoxRecyclerView;
+    LinearLayoutManager chatBoxManager;
     ChatBoxAdapter chatBoxAdapter;
 
     @Override
@@ -69,11 +71,24 @@ public class ChatBoxActivity extends AppCompatActivity {
 
     private void createChatRecyclerView() {
         chatBoxRecyclerView = findViewById(R.id.rec_chat_box);
-        chatBoxRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        chatBoxManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        chatBoxRecyclerView.setLayoutManager(chatBoxManager);
         chatBoxAdapter = new ChatBoxAdapter(
                 ChatBoxActivity.this,
                 SenoDB.getMessageList(conservation)
         );
+        chatBoxAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+
+                //chatBoxManager.smoothScrollToPosition(chatBoxRecyclerView, null, 0);
+                //chatBoxRecyclerView.smoothScrollToPosition(0);
+                chatBoxManager.scrollToPositionWithOffset(0, 0);
+
+            }
+        });
+
         chatBoxRecyclerView.setAdapter(chatBoxAdapter);
     }
 
