@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".activity.ChatBoxActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/home_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rec_chat_box"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/receiver_name"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="Doctor 1"
+            android:textSize="20sp"
+            android:lines="1"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/profile_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_baseline_account_circle"/>
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_chat_box"
         android:layout_width="match_parent"
@@ -14,7 +40,7 @@
         app:layout_constraintBottom_toTopOf="@+id/text_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"/>
 
     <EditText
         android:id="@+id/text_message"
