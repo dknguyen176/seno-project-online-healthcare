@@ -3,11 +3,13 @@ package com.example.senocare.activity.patient;
 import static com.example.senocare.helper.SenoDB.getPrescription;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.senocare.R;
@@ -21,18 +23,34 @@ import org.bson.types.ObjectId;
 
 public class PrescriptionSeeActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_see);
 
         createView();
+
+        createToolbar();
+    }
+
+    private void createToolbar() {
+        toolbar = findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void createView() {
         Intent intent = getIntent();
-
-        // TODO: lam may cai nay
 
         String _idString = intent.getStringExtra("_id");
         ObjectId prescriptionID = new ObjectId(_idString);
@@ -40,7 +58,7 @@ public class PrescriptionSeeActivity extends AppCompatActivity {
         Doctor doctor = SenoDB.getDoctorByEmail(prescription.getDoctor());
         Patient patient = SenoDB.getPatientByEmail(prescription.getPatient());
 
-        ((TextView) findViewById(R.id.doc_name)).setText(doctor.getName());
+        ((TextView) findViewById(R.id.doc_name)).setText("Dr. " + doctor.getName());
         ((TextView) findViewById(R.id.doc_loc)).setText(doctor.getLoc());
 
         ((TextView) findViewById(R.id.pat_name)).setText(patient.getName());
@@ -50,6 +68,8 @@ public class PrescriptionSeeActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.pat_phone)).setText(patient.getPhone());
 
         ((TextView) findViewById(R.id.pres_date)).setText(prescription.getTime());
+        ((TextView) findViewById(R.id.pres_note)).setText(prescription.getNote());
+        ((TextView) findViewById(R.id.diagnostic)).setText(prescription.getDiagnostic());
         ((TextView) findViewById(R.id.doc_sig)).setText(doctor.getName());
 
         RecyclerView drugRecyclerView = findViewById(R.id.drug_rec);
