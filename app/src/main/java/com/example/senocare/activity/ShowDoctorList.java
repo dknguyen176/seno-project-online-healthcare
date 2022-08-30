@@ -55,7 +55,6 @@ public class ShowDoctorList extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("All Doctors");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
