@@ -1,20 +1,25 @@
 package com.example.senocare.activity.patient;
 
 import static com.example.senocare.helper.SenoDB.getPatient;
+import static com.example.senocare.helper.SenoDB.user;
 import static com.example.senocare.helper.ViewSupporter.setDateEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.senocare.R;
 import com.example.senocare.activity.doctor.PrescriptionMakeActivity;
+import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Patient;
 
 public class PatientEditProfileActivity extends AppCompatActivity {
@@ -25,6 +30,8 @@ public class PatientEditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile_patient);
+
+        setResult(Activity.RESULT_CANCELED, new Intent());
 
         createToolbar();
 
@@ -40,7 +47,7 @@ public class PatientEditProfileActivity extends AppCompatActivity {
 
         EditText birthday_view = findViewById(R.id.birthday);
         birthday_view.setText(patient.getBirth());
-        setDateEditText(birthday_view, "dd/MM/yyyy", PatientEditProfileActivity.this, true, false);
+        setDateEditText(birthday_view, "yyyy/MM/dd", PatientEditProfileActivity.this, true, false);
 
         EditText phone_view = findViewById(R.id.phone);
         phone_view.setText(patient.getPhone());
@@ -70,7 +77,20 @@ public class PatientEditProfileActivity extends AppCompatActivity {
                 if (female.isChecked()) sex = "Female";
 
                 // TODO: check input co sus ko + update patient
+                if (name.isEmpty()) { Toast.makeText(PatientEditProfileActivity.this, "Name cannot be empty", Toast.LENGTH_LONG).show(); return; }
+                if (birthday.isEmpty()) { Toast.makeText(PatientEditProfileActivity.this, "Birthday cannot be empty", Toast.LENGTH_LONG).show(); return; }
+                if (phone.isEmpty()) { Toast.makeText(PatientEditProfileActivity.this, "Phone cannot be empty", Toast.LENGTH_LONG).show(); return; }
+                if (address.isEmpty()) { Toast.makeText(PatientEditProfileActivity.this, "Address cannot be empty", Toast.LENGTH_LONG).show(); return; }
+                if (sex.isEmpty()) { Toast.makeText(PatientEditProfileActivity.this, "You haven't set your gender", Toast.LENGTH_LONG).show(); return; }
 
+                ((Button) v).setEnabled(false);
+                Patient newPatient = new Patient(user.getProfile().getEmail(), name, sex, birthday, phone, address);
+                newPatient.set_id(patient.get_id());
+                SenoDB.modifyPatient(newPatient);
+
+                Intent intent = new Intent();
+                intent.putExtra("patient", newPatient);
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });

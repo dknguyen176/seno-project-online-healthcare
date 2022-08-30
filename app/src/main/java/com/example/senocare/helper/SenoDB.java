@@ -355,6 +355,14 @@ public final class SenoDB {
                 .findAll();
     }
 
+    public static RealmResults<Schedule> getUpcomingScheduleList(int limit) {
+        return realm.where(Schedule.class)
+                .equalTo("status", "Accepted")
+                .sort("time", Sort.ASCENDING)
+                .limit(limit)
+                .findAll();
+    }
+
     public static Patient getPatient() {
         return realm.where(Patient.class).findFirst();
     }

@@ -87,7 +87,16 @@ public class PatientHomeFragment extends Fragment {
 
         createDoctorRecyclerView(root);
 
+        createAppointmentRecyclerView(root);
+
         return root;
+    }
+
+    private void createAppointmentRecyclerView(View root) {
+        appointmentRecyclerView = root.findViewById(R.id.app_rec);
+        appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        appointmentAdapter = new AppointmentAdapter(getContext(), SenoDB.getUpcomingScheduleList(3), R.layout.appointment_patient);
+        appointmentRecyclerView.setAdapter(appointmentAdapter);
     }
 
     private void createDoctorRecyclerView(View root) {
@@ -95,7 +104,7 @@ public class PatientHomeFragment extends Fragment {
         doctorRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         // TODO: getPopularDoctorList (khoang 10 cai sort desc theo rating)
-        doctorAdapter = new DoctorAdapter(getContext(), SenoDB.getDoctorList(), R.layout.doctor_large);
+        doctorAdapter = new DoctorAdapter(getContext(), SenoDB.getTopDoctorList(10), R.layout.doctor_large);
         doctorRecyclerView.setAdapter(doctorAdapter);
     }
 

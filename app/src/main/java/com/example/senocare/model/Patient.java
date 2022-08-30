@@ -1,10 +1,13 @@
 package com.example.senocare.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
-public class Patient extends RealmObject {
+public class Patient extends RealmObject implements Parcelable {
     @PrimaryKey
     private String _id;
 
@@ -75,4 +78,42 @@ public class Patient extends RealmObject {
         this.phone = p.phone;
         this.sex = p.sex;
     }
+
+    public Patient(Parcel source) {
+        _id = source.readString();
+        email1 = source.readString();
+        name = source.readString();
+        sex = source.readString();
+        birth = source.readString();
+        phone = source.readString();
+        address = source.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(email1);
+        dest.writeString(name);
+        dest.writeString(sex);
+        dest.writeString(birth);
+        dest.writeString(phone);
+        dest.writeString(address);
+    }
+
+    public static final Parcelable.Creator<Patient> CREATOR = new Creator<Patient>() {
+        @Override
+        public Patient createFromParcel(Parcel source) {
+            return new Patient(source);
+        }
+
+        @Override
+        public Patient[] newArray(int size) {
+            return new Patient[size];
+        }
+    };
 }

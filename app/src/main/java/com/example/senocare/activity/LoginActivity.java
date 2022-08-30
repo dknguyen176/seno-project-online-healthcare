@@ -73,8 +73,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        signInButton.setEnabled(true);
-
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == LAUNCH_REGISTER_ACTIVITY) {
@@ -82,10 +80,11 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
             } else if (resultCode == Activity.RESULT_CANCELED) {
-
+                signInButton.setEnabled(true);
             }
         } else if (requestCode == LAUNCH_MAIN_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
+                signInButton.setEnabled(true);
                 logout();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 finish();
@@ -137,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
             } else {
+                signInButton.setEnabled(true);
                 Log.e("AUTH", it.getError().toString() + " " + email + " " + password);
                 Toast.makeText(this, it.getError().toString(), Toast.LENGTH_LONG).show();
             }

@@ -10,13 +10,40 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Edit Profile"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linear_layout"
+        app:layout_constraintVertical_bias="0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Profile"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/black"/>
 
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tool_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="20dp"
         android:orientation="vertical">
 
@@ -24,20 +51,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name:"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Full Name"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,8 +74,8 @@
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:text="Sex:"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -75,8 +104,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Birthday:"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp"/>
 
         <EditText
@@ -89,8 +119,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Phone:"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp"/>
 
         <EditText
@@ -103,8 +134,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="Address:"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp"/>
 
         <EditText
@@ -112,12 +144,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Home Address"
-            android:textSize="18sp"/>
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp">
 
             <Button
                 android:id="@+id/btn_discard"
