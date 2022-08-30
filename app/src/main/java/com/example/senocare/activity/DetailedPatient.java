@@ -16,6 +16,7 @@ import com.example.senocare.R;
 import com.example.senocare.activity.doctor.PrescriptionMakeActivity;
 import com.example.senocare.activity.patient.ScheduleMakeActivity;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 
@@ -48,7 +49,7 @@ public class DetailedPatient extends AppCompatActivity {
         sex.setText(patient.getSex());
 
         TextView birthday = findViewById(R.id.birthday_content);
-        birthday.setText(patient.getBirth());
+        birthday.setText(TimeConverter.toString(patient.getBirth(), "dd/MM/yyyy"));
 
         TextView address = findViewById(R.id.address_content);
         address.setText(patient.getAddress());

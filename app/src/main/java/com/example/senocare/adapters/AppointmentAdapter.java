@@ -21,6 +21,7 @@ import com.example.senocare.R;
 import com.example.senocare.activity.DetailedAppointment;
 import com.example.senocare.activity.patient.PrescriptionSeeActivity;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Schedule;
 
 import io.realm.OrderedRealmCollection;
@@ -51,7 +52,8 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
     public void onBindViewHolder(@NonNull AppointmentAdapter.ViewHolder holder, int position) {
         Schedule schedule = getItem(position);
 
-        holder.date.setText("At " + schedule.getTime());
+        String time_text = "At " + TimeConverter.toString(schedule.getTime(), "dd/MM/yyyy");
+        holder.date.setText(time_text);
         if (IS_PATIENT) {
             String email = schedule.getDoctor();
             String name = SenoDB.getNameByEmail(email);

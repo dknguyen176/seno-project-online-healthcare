@@ -3,7 +3,12 @@ package com.example.senocare.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.senocare.helper.TimeConverter;
+
 import java.io.Serializable;
+import java.util.Date;
+
+import javax.annotation.Nullable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -18,7 +23,7 @@ public class Doctor extends RealmObject implements Parcelable {
     private String bio;
 
     @Required
-    private String birth;
+    private Date birth;
 
     @Required
     private String email1;
@@ -39,6 +44,8 @@ public class Doctor extends RealmObject implements Parcelable {
     @Required
     private String spec;
 
+    private byte[] img;
+
     // Standard getters & setters
     public String get_id() { return _id; }
     public void set_id(String _id) { this._id = _id; }
@@ -46,8 +53,8 @@ public class Doctor extends RealmObject implements Parcelable {
     public String getBio() { return bio; }
     public void setBio(String bio) { this.bio = bio; }
 
-    public String getBirth() { return birth; }
-    public void setBirth(String birth) { this.birth = birth; }
+    public Date getBirth() { return birth; }
+    public void setBirth(Date birth) { this.birth = birth; }
 
     public String getEmail() { return email1; }
     public void setEmail(String email) { this.email1 = email; }
@@ -70,10 +77,13 @@ public class Doctor extends RealmObject implements Parcelable {
     public String getSpec() { return spec; }
     public void setSpec(String spec) { this.spec = spec; }
 
+    public byte[] getImg() { return img; }
+    public void setImg(byte[] img) { this.img = img; }
+
     // Constructor
     public Doctor() {
         this.bio = "Hi! I'm the doctor you need.";
-        this.birth = "01/01/2000";
+        this.birth = TimeConverter.toDate("01/01/2000", "dd/MM/yyyy");
         this.email1 = "doctor@gmail.com";
         this.exper = 5;
         this.loc = "123 st. bolsa";
@@ -83,7 +93,7 @@ public class Doctor extends RealmObject implements Parcelable {
         this.spec = "Heart";
     }
 
-    public Doctor(String email, String name, String sex, String birth, String bio, String loc, String spec) {
+    public Doctor(String email, String name, String sex, Date birth, String bio, String loc, String spec) {
         this.bio = bio;
         this.birth = birth;
         this.email1 = email;
@@ -95,7 +105,7 @@ public class Doctor extends RealmObject implements Parcelable {
         this.rating = 5.f;
     }
 
-    public Doctor(String email, String name, String sex, String birth, String spec, int exper, String loc, String bio, float rating) {
+    public Doctor(String email, String name, String sex, Date birth, String spec, int exper, String loc, String bio, float rating) {
         this.bio = bio;
         this.birth = birth;
         this.email1 = email;
@@ -117,6 +127,7 @@ public class Doctor extends RealmObject implements Parcelable {
         this.rating = d.rating;
         this.sex = d.sex;
         this.spec = d.spec;
+        this.img = d.img;
     }
 
     public Doctor(Parcel source) {
@@ -124,7 +135,7 @@ public class Doctor extends RealmObject implements Parcelable {
         email1 = source.readString();
         name = source.readString();
         sex = source.readString();
-        birth = source.readString();
+        birth = new Date(source.readLong());
         spec = source.readString();
         exper = source.readInt();
         loc = source.readString();
@@ -143,7 +154,7 @@ public class Doctor extends RealmObject implements Parcelable {
         dest.writeString(email1);
         dest.writeString(name);
         dest.writeString(sex);
-        dest.writeString(birth);
+        dest.writeLong(birth.getTime());
         dest.writeString(spec);
         dest.writeInt(exper);
         dest.writeString(loc);

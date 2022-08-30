@@ -415,4 +415,12 @@ public final class SenoDB {
                 .sort("time", Sort.DESCENDING)
                 .findFirst();
     }
+
+    public static void clearAll() {
+        realm.executeTransaction(r -> {
+            r.delete(Message.class);
+            r.delete(Prescription.class);
+            r.delete(Schedule.class);
+        });
+    }
 }

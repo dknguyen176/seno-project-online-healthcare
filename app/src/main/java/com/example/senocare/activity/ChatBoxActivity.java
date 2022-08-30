@@ -120,9 +120,8 @@ public class ChatBoxActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String text = textMessage.getText().toString();
-                String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
-                Message message = new Message(conservation, sender, receiver, text, timeStamp, "unseen");
+                Message message = new Message(conservation, sender, receiver, text, new Date(), "unseen");
                 SenoDB.insertMessage(message);
 
                 textMessage.setText("");

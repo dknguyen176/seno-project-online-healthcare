@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.senocare.R;
 import com.example.senocare.activity.DetailedDoctor;
 import com.example.senocare.activity.patient.PrescriptionSeeActivity;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Prescription;
 
@@ -50,7 +51,7 @@ public class PrescriptionAdapter extends RealmRecyclerViewAdapter<Prescription, 
 
         holder.diagnostic.setText(prescription.getDiagnostic());
         holder.docname.setText(prescription.getDoctor());
-        holder.date.setText(prescription.getTime());
+        holder.date.setText(TimeConverter.toString(prescription.getTime(), "dd/MM/yyyy"));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

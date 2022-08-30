@@ -2,6 +2,8 @@ package com.example.senocare.model;
 
 import org.bson.types.ObjectId;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -23,7 +25,7 @@ public class Message extends RealmObject {
     private String text;
 
     @Required
-    private String time;
+    private Date time;
 
     @Required
     private String status;
@@ -44,8 +46,8 @@ public class Message extends RealmObject {
     public String getText() { return text; }
     public void setText(String text) { this.text = text; }
 
-    public String getTime() { return time; }
-    public void setTime(String time) { this.time = time; }
+    public Date getTime() { return time; }
+    public void setTime(Date time) { this.time = time; }
 
     public String getStatus()  { return status; }
     public void setStatus(String status) { this.status = status; }
@@ -53,7 +55,7 @@ public class Message extends RealmObject {
     // Constructor
     public Message() { }
 
-    public Message(String conservation, String sender, String receiver, String text, String time, String status) {
+    public Message(String conservation, String sender, String receiver, String text, Date time, String status) {
         this.conservation = conservation;
         this.email2 = receiver;
         this.email1 = sender;

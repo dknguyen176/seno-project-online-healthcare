@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.senocare.R;
 import com.example.senocare.activity.patient.PatientEditProfileActivity;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Doctor;
 
@@ -57,8 +58,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
         name_view.setText(doctor.getName());
         if (doctor.getSex().equals("Male")) male.setChecked(true);
         else female.setChecked(true);
-        birthday_view.setText(doctor.getBirth());
-        setDateEditText(birthday_view, "yyyy/MM/dd", DoctorEditProfileActivity.this, true, false);
+        birthday_view.setText(TimeConverter.toString(doctor.getBirth(), "dd/MM/yyyy"));
+        setDateEditText(birthday_view, "dd/MM/yyyy", DoctorEditProfileActivity.this, true, false);
         setSpinner(spec_view, doctor.getSpec());
         exper_view.setText(String.valueOf(doctor.getExper()));
         loc_view.setText(doctor.getLoc());
@@ -92,7 +93,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
                 if (bio.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Biography cannot be empty", Toast.LENGTH_LONG).show(); return; }
 
                 ((Button) v).setEnabled(false);
-                Doctor newDoctor = new Doctor(user.getProfile().getEmail(), name, sex, birthday, spec, exper, loc, bio, 5);
+                Doctor newDoctor = new Doctor(user.getProfile().getEmail(), name, sex,
+                        TimeConverter.toDate(birthday, "dd/MM/yyyy"), spec, exper, loc, bio, 5);
                 newDoctor.set_id(doctor.get_id());
                 modifyDoctor(newDoctor);
 

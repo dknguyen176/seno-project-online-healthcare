@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,19 +21,7 @@ import com.example.senocare.activity.patient.ScheduleMakeActivity;
 import com.example.senocare.activity.patient.ScheduleShowActivity;
 import com.example.senocare.adapters.AppointmentAdapter;
 import com.example.senocare.adapters.DoctorAdapter;
-import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
-import com.example.senocare.model.Doctor;
-import com.example.senocare.model.Specialty;
-import com.example.senocare.model.Message;
-import com.example.senocare.model.Patient;
-import com.example.senocare.model.Prescription;
-import com.example.senocare.model.Schedule;
-
-import java.util.ArrayList;
-
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmResults;
 
 public class PatientHomeFragment extends Fragment {
 
@@ -102,28 +89,7 @@ public class PatientHomeFragment extends Fragment {
     private void createDoctorRecyclerView(View root) {
         doctorRecyclerView = root.findViewById(R.id.doc_rec);
         doctorRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-
-        // TODO: getPopularDoctorList (khoang 10 cai sort desc theo rating)
         doctorAdapter = new DoctorAdapter(getContext(), SenoDB.getTopDoctorList(10), R.layout.doctor_large);
         doctorRecyclerView.setAdapter(doctorAdapter);
-    }
-
-    void test() {
-        RealmResults<Patient> patients = SenoDB.getPatientList();
-        RealmResults<Doctor> doctors = SenoDB.getDoctorList();
-        RealmResults<Doctor> doctors1 = SenoDB.getDoctorList("Heart");
-        RealmResults<Doctor> doctors2 = SenoDB.getTopDoctorList(1);
-        RealmResults<Prescription> prescriptions = SenoDB.getPrescriptionList();
-        RealmResults<Message> messages = SenoDB.getLatestMessageList();
-        //RealmResults<Message> messages1 = SenoDB.getMessageList(messages.get(0).getConservation());
-        RealmResults<Schedule> schedules = SenoDB.getScheduleList();
-
-        Log.v("TEST", "Patient list: " + patients.size() + '\n' + patients);
-        Log.v("TEST", "Doctor list: " + doctors.size() + '\n' + doctors);
-        Log.v("TEST", "Doctor list by speciality \"Heart\": " + doctors1.size() + '\n' + doctors1);
-        Log.v("TEST", "Top doctor list: " + doctors2.size() + '\n' + doctors2);
-        Log.v("TEST", "Prescription list: " + prescriptions.size() + '\n' + prescriptions);
-        Log.v("TEST", "Message list: " + messages.size() + '\n' + messages);
-        Log.v("TEST", "Schedule list: " + schedules.size() + '\n' + schedules);
     }
 }

@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.senocare.R;
 import com.example.senocare.activity.doctor.PrescriptionMakeActivity;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Patient;
 
 public class PatientEditProfileActivity extends AppCompatActivity {
@@ -46,8 +47,8 @@ public class PatientEditProfileActivity extends AppCompatActivity {
         else female.setChecked(true);
 
         EditText birthday_view = findViewById(R.id.birthday);
-        birthday_view.setText(patient.getBirth());
-        setDateEditText(birthday_view, "yyyy/MM/dd", PatientEditProfileActivity.this, true, false);
+        birthday_view.setText(TimeConverter.toString(patient.getBirth(), "dd/MM/yyyy"));
+        setDateEditText(birthday_view, "dd/MM/yyyy", PatientEditProfileActivity.this, true, false);
 
         EditText phone_view = findViewById(R.id.phone);
         phone_view.setText(patient.getPhone());
@@ -84,7 +85,8 @@ public class PatientEditProfileActivity extends AppCompatActivity {
                 if (sex.isEmpty()) { Toast.makeText(PatientEditProfileActivity.this, "You haven't set your gender", Toast.LENGTH_LONG).show(); return; }
 
                 ((Button) v).setEnabled(false);
-                Patient newPatient = new Patient(user.getProfile().getEmail(), name, sex, birthday, phone, address);
+                Patient newPatient = new Patient(user.getProfile().getEmail(), name, sex,
+                        TimeConverter.toDate(birthday, "dd/MM/yyyy"), phone, address);
                 newPatient.set_id(patient.get_id());
                 SenoDB.modifyPatient(newPatient);
 

@@ -4,6 +4,7 @@ import static com.example.senocare.helper.SenoDB.app;
 import static com.example.senocare.helper.SenoDB.regDoctorInit;
 import static com.example.senocare.helper.SenoDB.regPatientInit;
 import static com.example.senocare.helper.SenoDB.user;
+import static com.example.senocare.helper.TimeConverter.toDate;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -126,7 +127,7 @@ public class RegistrationFragment extends Fragment {
                         ((Button) v).setEnabled(false);
                         Log.v("REGISTER", "Button pressed.");
 
-                        Patient patient = new Patient(email, name, sex, birth, phone, address);
+                        Patient patient = new Patient(email, name, sex, toDate(birth, "dd/MM/yyyy"), phone, address);
                         register(patient.getEmail(), password, patient);
                     }
                 }
@@ -142,7 +143,7 @@ public class RegistrationFragment extends Fragment {
                         ((Button) v).setEnabled(false);
                         Log.v("REGISTER", "Button pressed.");
 
-                        Doctor doctor = new Doctor(email, name, sex, birth, bio, loc, spec);
+                        Doctor doctor = new Doctor(email, name, sex, toDate(birth, "dd/MM/yyyy"), bio, loc, spec);
                         register(doctor.getEmail(), password, doctor);
                     }
                 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.senocare.R;
 import com.example.senocare.activity.patient.ScheduleMakeActivity;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Doctor;
 
 public class DetailedDoctor extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class DetailedDoctor extends AppCompatActivity {
         sex.setText(doctor.getSex());
 
         TextView birthday = findViewById(R.id.birthday_content);
-        birthday.setText(doctor.getBirth());
+        birthday.setText(TimeConverter.toString(doctor.getBirth(), "dd/MM/yyyy"));
 
         TextView spec = findViewById(R.id.spec_content);
         spec.setText(doctor.getSpec());

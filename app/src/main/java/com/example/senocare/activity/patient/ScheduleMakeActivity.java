@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
@@ -81,7 +82,7 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
     private void fillPatient() {
         Patient patient = getPatient();
         String name = patient.getName();
-        String birth = patient.getBirth();
+        String birth = TimeConverter.toString(patient.getBirth(), "dd/MM/yyyy");
         String phone = patient.getPhone();
         String sex = patient.getSex();
 
@@ -131,7 +132,7 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
                 Schedule schedule = new Schedule(
                         doc_email,
                         user.getProfile().getEmail(),
-                        day_select,
+                        TimeConverter.toDate(day_select, "dd/MM/yyyy"),
                         note,
                         "Pending"
                 );
@@ -151,10 +152,10 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
         Date d2 = c.getTime(); c.add(Calendar.DATE, 1);
         Date d3 = c.getTime();
 
-        setOnDateClick(date1, "MMM d,\n yyyy", "yyyy/MM/dd", d1);
-        setOnDateClick(date2, "MMM d,\n yyyy", "yyyy/MM/dd", d2);
-        setOnDateClick(date3, "MMM d,\n yyyy", "yyyy/MM/dd", d3);
-        setOnDateClick(date4, "MMM d,\n yyyy", "yyyy/MM/dd");
+        setOnDateClick(date1, "MMM d,\n yyyy", "dd/MM/yyyy", d1);
+        setOnDateClick(date2, "MMM d,\n yyyy", "dd/MM/yyyy", d2);
+        setOnDateClick(date3, "MMM d,\n yyyy", "dd/MM/yyyy", d3);
+        setOnDateClick(date4, "MMM d,\n yyyy", "dd/MM/yyyy");
     }
 
     private void setDocSpinner() {

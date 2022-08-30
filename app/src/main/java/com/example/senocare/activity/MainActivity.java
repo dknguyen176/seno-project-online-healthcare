@@ -1,6 +1,7 @@
 package com.example.senocare.activity;
 
 import static com.example.senocare.helper.SenoDB.IS_PATIENT;
+import static com.example.senocare.helper.SenoDB.clearAll;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         setUserTypeTextView();
         
         setLogoutBtn();
+
+        //clearAll();
     }
 
     private void setLogoutBtn() {

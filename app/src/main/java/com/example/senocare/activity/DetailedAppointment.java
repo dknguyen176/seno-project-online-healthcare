@@ -10,12 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
-import com.example.senocare.model.Prescription;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Schedule;
 
 import org.bson.types.ObjectId;
@@ -43,7 +42,7 @@ public class DetailedAppointment extends AppCompatActivity {
         ((TextView) findViewById(R.id.doc_email)).setText(schedule.getDoctor());
         ((TextView) findViewById(R.id.pat_email)).setText(schedule.getPatient());
         ((TextView) findViewById(R.id.note)).setText(schedule.getNote());
-        ((TextView) findViewById(R.id.app_date)).setText(schedule.getTime());
+        ((TextView) findViewById(R.id.app_date)).setText(TimeConverter.toString(schedule.getTime(), "dd/MM/yyyy"));
         ((TextView) findViewById(R.id.app_status)).setText(schedule.getStatus());
 
         Button deny_btn = findViewById(R.id.deny_button);

@@ -27,6 +27,7 @@ import com.example.senocare.R;
 import com.example.senocare.adapters.AppointmentAdapter;
 import com.example.senocare.adapters.DrugMakeAdapter;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Drugs;
 import com.example.senocare.model.Patient;
@@ -35,6 +36,7 @@ import com.example.senocare.model.Prescription;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import io.realm.OrderedRealmCollection;
@@ -100,7 +102,7 @@ public class PrescriptionMakeActivity extends AppCompatActivity {
                     Log.v(TAG, "Drug name: " + drugName + "; Quantity: " + drugQuantity);
                 }
 
-                Prescription prescription = new Prescription(doc_email, pat_email, time, diagnostic, note);
+                Prescription prescription = new Prescription(doc_email, pat_email, TimeConverter.toDate(time, "dd/MM/yyyy"), diagnostic, note);
                 // TODO: add new prescription
                 SenoDB.insertPrescription(prescription, drugMakeList);
                 finish();
@@ -117,7 +119,8 @@ public class PrescriptionMakeActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.doc_email)).setText(getDoctor().getEmail());
 
         EditText time = findViewById(R.id.time);
-        setDateEditText(time, "yyyy/MM/dd", PrescriptionMakeActivity.this, false, true);
+        setDateEditText(time, "dd/MM/yyyy", PrescriptionMakeActivity.this, false, true);
+        time.setText(TimeConverter.toString(new Date(), "dd/MM/yyyy"));
     }
 
     private void createDrugsRecyclerView() {

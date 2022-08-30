@@ -1,13 +1,11 @@
 package com.example.senocare.fragments.patient;
 
-import static com.example.senocare.helper.SenoDB.IS_PATIENT;
 import static com.example.senocare.helper.SenoDB.getPatient;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,12 +16,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.senocare.R;
-import com.example.senocare.activity.LoginActivity;
-import com.example.senocare.activity.MainActivity;
-import com.example.senocare.activity.ShowDoctorList;
 import com.example.senocare.activity.patient.PatientEditProfileActivity;
-import com.example.senocare.helper.SenoDB;
-import com.example.senocare.model.Doctor;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Patient;
 
 public class PatientProfileFragment extends Fragment {
@@ -75,7 +69,7 @@ public class PatientProfileFragment extends Fragment {
         sex.setText(patient.getSex());
 
         TextView birthday = view.findViewById(R.id.birthday_content);
-        birthday.setText(patient.getBirth());
+        birthday.setText(TimeConverter.toString(patient.getBirth(), "dd/MM/yyyy"));
 
         TextView phone = view.findViewById(R.id.phone_content);
         phone.setText(patient.getPhone());

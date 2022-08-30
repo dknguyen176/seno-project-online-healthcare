@@ -2,6 +2,8 @@ package com.example.senocare.model;
 
 import org.bson.types.ObjectId;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -23,7 +25,7 @@ public class Schedule extends RealmObject {
     private String status;
 
     @Required
-    private String time;
+    private Date time;
 
     // Standard getters & setters
     public ObjectId get_id() { return _id; }
@@ -41,13 +43,13 @@ public class Schedule extends RealmObject {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-    public String getTime() { return time; }
-    public void setTime(String time) { this.time = time; }
+    public Date getTime() { return time; }
+    public void setTime(Date time) { this.time = time; }
 
     // Constructor
     public Schedule() { }
 
-    public Schedule(String doctor, String patient, String time, String note, String status) {
+    public Schedule(String doctor, String patient, Date time, String note, String status) {
         this.email2 = doctor;
         this.note = note;
         this.email1 = patient;

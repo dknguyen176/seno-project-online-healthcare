@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.senocare.R;
 import com.example.senocare.adapters.DrugSeeAdapter;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 import com.example.senocare.model.Prescription;
@@ -62,12 +63,12 @@ public class PrescriptionSeeActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.doc_loc)).setText(doctor.getLoc());
 
         ((TextView) findViewById(R.id.pat_name)).setText(patient.getName());
-        ((TextView) findViewById(R.id.pat_birth)).setText(patient.getBirth());
+        ((TextView) findViewById(R.id.pat_birth)).setText(TimeConverter.toString(patient.getBirth(), "dd/MM/yyyy"));
         ((TextView) findViewById(R.id.pat_sex)).setText(patient.getSex());
         ((TextView) findViewById(R.id.pat_address)).setText(patient.getAddress());
         ((TextView) findViewById(R.id.pat_phone)).setText(patient.getPhone());
 
-        ((TextView) findViewById(R.id.pres_date)).setText(prescription.getTime());
+        ((TextView) findViewById(R.id.pres_date)).setText(TimeConverter.toString(prescription.getTime(), "dd/MM/yyyy"));
         ((TextView) findViewById(R.id.pres_note)).setText(prescription.getNote());
         ((TextView) findViewById(R.id.diagnostic)).setText(prescription.getDiagnostic());
         ((TextView) findViewById(R.id.doc_sig)).setText(doctor.getName());

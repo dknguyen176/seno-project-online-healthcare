@@ -3,6 +3,7 @@ package com.example.senocare.model;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -28,7 +29,7 @@ public class Prescription extends RealmObject {
     private String email1;
 
     @Required
-    private String time;
+    private Date time;
 
     // Standard getters & setters
     public ObjectId get_id() { return _id; }
@@ -53,13 +54,13 @@ public class Prescription extends RealmObject {
     public String getPatient() { return email1; }
     public void setPatient(String patient) { this.email1 = patient; }
 
-    public String getTime() { return time; }
-    public void setTime(String time) { this.time = time; }
+    public Date getTime() { return time; }
+    public void setTime(Date time) { this.time = time; }
 
     // Constructor
     public Prescription() { }
 
-    public Prescription(String doctor, String patient, String time, String diagnostic, String note) {
+    public Prescription(String doctor, String patient, Date time, String diagnostic, String note) {
         this.diagnostic = diagnostic;
         this.email2 = doctor;
         this.note = note;

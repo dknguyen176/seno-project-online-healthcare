@@ -54,27 +54,31 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Message message = getItem(position);
+        String currentEmail = user.getProfile().getEmail();
 
         holder.img.setImageResource(R.drawable.avatar);
-        try {
-            holder.time.setText(getTimeDiff(message.getTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (user.getProfile().getEmail().equals(message.getSender())) {
+        holder.time.setText(getTimeDiff(message.getTime()));
+
+        if (currentEmail.equals(message.getSender())) {
             holder.name.setText(SenoDB.getNameByEmail(message.getReceiver()));
             holder.mess.setText("You: " + message.getText());
         } else {
             holder.name.setText(SenoDB.getNameByEmail(message.getSender()));
             holder.mess.setText(message.getText());
+        }
 
-            if (message.getStatus().equals("unseen")) {
-                holder.name.setTextSize(20);
-                holder.name.setTypeface(holder.name.getTypeface(), Typeface.BOLD);
-                holder.mess.setTypeface(holder.mess.getTypeface(), Typeface.BOLD);
-                holder.time.setTypeface(holder.time.getTypeface(), Typeface.BOLD);
-                holder.noti.setVisibility(View.VISIBLE);
-            }
+        if (currentEmail.equals(message.getReceiver()) && message.getStatus().equals("unseen")) {
+            holder.name.setTextSize(20);
+            holder.name.setTypeface(holder.name.getTypeface(), Typeface.BOLD);
+            holder.mess.setTypeface(holder.mess.getTypeface(), Typeface.BOLD);
+            holder.time.setTypeface(holder.time.getTypeface(), Typeface.BOLD);
+            holder.noti.setVisibility(View.VISIBLE);
+        } else {
+            holder.name.setTextSize(18);
+            holder.name.setTypeface(holder.name.getTypeface(), Typeface.NORMAL);
+            holder.mess.setTypeface(holder.mess.getTypeface(), Typeface.NORMAL);
+            holder.time.setTypeface(holder.time.getTypeface(), Typeface.NORMAL);
+            holder.noti.setVisibility(View.INVISIBLE);
         }
 
         holder.itemChatList.setOnClickListener(new View.OnClickListener() {
@@ -90,16 +94,15 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
         });
     }
 
-    private String getTimeDiff(String time) throws ParseException {
-        String format = "yyyy/MM/dd HH:mm:ss";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.US);
-        long millis  = new Date().getTime() - simpleDateFormat.parse(time).getTime();
+    private String getTimeDiff(Date time) {
+        long millis  = new Date().getTime() - time.getTime();
         long mins = millis  / (1000 * 60);
         long hours = millis / (1000 * 60 * 60);
         long days = millis / (1000 * 60 * 60 * 24);
         long weeks = millis / (1000 * 60 * 60 * 24 * 7);
         long years = millis / ((long)1000 * 60 * 60 * 24 * 365);
 
+        if (mins == 0) mins = 1;
         if (mins < 60) return mins + " mins";
         if (hours < 24) return hours + " hours";
         if (days < 7) return days + " days";
