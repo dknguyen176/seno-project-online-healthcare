@@ -5,6 +5,7 @@ import static com.example.senocare.helper.SenoDB.getPatient;
 import static com.example.senocare.helper.SenoDB.user;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -46,6 +47,7 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
     Spinner doc_spec, doc_name;
     TextView date1, date2, date3, date4;
     Button make;
+    Toolbar toolbar;
 
     String sex = null, doc_email = "", day_select = "";
     List<String> doctorList = new ArrayList<>();
@@ -59,6 +61,8 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
 
         bindView();
 
+        createToolbar();
+
         setBirthdayPicker();
 
         setGenderPick();
@@ -70,6 +74,7 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
         setMakeBtn();
 
         fillPatient();
+
         fillDocFromIntent();
     }
 
@@ -287,5 +292,21 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    private void createToolbar() {
+        toolbar = findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        TextView title = findViewById(R.id.title);
+        title.setText("Make Appointment");
     }
 }
