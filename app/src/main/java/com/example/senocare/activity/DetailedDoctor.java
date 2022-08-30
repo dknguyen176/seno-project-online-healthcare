@@ -19,6 +19,8 @@ import com.example.senocare.model.Doctor;
 
 public class DetailedDoctor extends AppCompatActivity {
 
+    private boolean chat_opened = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,9 @@ public class DetailedDoctor extends AppCompatActivity {
 
         Intent intent = getIntent();
         String doc_id = intent.getStringExtra("_id");
+        String chat_status = intent.getStringExtra("chat_status");
+        if (chat_status != null && chat_status.equals("opened"))
+            chat_opened = true;
 
         Doctor doctor = getDoctor(doc_id);
 
@@ -77,20 +82,24 @@ public class DetailedDoctor extends AppCompatActivity {
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sender = user.getProfile().getEmail();
-                String receiver = doctor.getEmail();
-                String conservation;
-                if (sender.compareTo(receiver) < 0)
-                    conservation = sender + receiver;
-                else
-                    conservation = receiver + sender;
+                if (chat_opened) {
+                    finish();
+                } else {
+                    String sender = user.getProfile().getEmail();
+                    String receiver = doctor.getEmail();
+                    String conservation;
+                    if (sender.compareTo(receiver) < 0)
+                        conservation = sender + receiver;
+                    else
+                        conservation = receiver + sender;
 
-                Intent intent = new Intent(DetailedDoctor.this, ChatBoxActivity.class);
-                intent.putExtra("conservation", conservation);
-                intent.putExtra("sender", sender);
-                intent.putExtra("receiver", receiver);
+                    Intent intent = new Intent(DetailedDoctor.this, ChatBoxActivity.class);
+                    intent.putExtra("conservation", conservation);
+                    intent.putExtra("sender", sender);
+                    intent.putExtra("receiver", receiver);
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
             }
         });
     }
