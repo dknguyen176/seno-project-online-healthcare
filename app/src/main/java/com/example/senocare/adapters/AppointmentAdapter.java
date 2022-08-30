@@ -5,6 +5,7 @@ import static com.example.senocare.helper.SenoDB.IS_PATIENT;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.senocare.R;
+import com.example.senocare.activity.DetailedAppointment;
+import com.example.senocare.activity.patient.PrescriptionSeeActivity;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Schedule;
 
@@ -92,10 +95,21 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
             holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SenoDB.removeSchedule(schedule.get_id());
+                    if (IS_PATIENT) SenoDB.removeSchedule(schedule.get_id());
+                    else SenoDB.modifySchedule(schedule.get_id(), "Denied");
                 }
             });
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailedAppointment.class);
+                intent.putExtra("_id", schedule.get_id().toString());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -405,6 +405,10 @@ public final class SenoDB {
         return realm.where(Prescription.class).equalTo("_id", _id).findFirst();
     }
 
+    public static Schedule getSchedule(ObjectId _id) {
+        return realm.where(Schedule.class).equalTo("_id", _id).findFirst();
+    }
+
     public static Message getLatestMessage(String conservation) {
         return realm.where(Message.class)
                 .equalTo("conservation", conservation)
