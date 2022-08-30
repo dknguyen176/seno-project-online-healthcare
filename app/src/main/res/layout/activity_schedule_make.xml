@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.patient.ScheduleMakeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_bar"
@@ -13,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -38,29 +43,26 @@
             android:text="Patient's Information"
             android:textColor="@color/black" />
 
-        <EditText
-            android:id="@+id/pat_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
-            android:maxLines="1"
-            android:textColor="@color/black"/>
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/pat_birth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Birthday"
-            android:maxLines="1"
-            android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name:"
+                android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/pat_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone Number"
-            android:maxLines="1"
-            android:textColor="@color/black"/>
+            <EditText
+                android:id="@+id/pat_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Full Name"
+                android:maxLines="1"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,21 +72,65 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Birthday:"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/pat_birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="dd/mm/yyyy"
+                android:maxLines="1"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone:"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/pat_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:digits="0123456789+"
+                android:maxLines="1"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center"
-                android:text="Sex:"
+                android:text="Gender:"
                 android:textSize="18sp"
                 android:textColor="@color/black"/>
 
             <RadioGroup
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_weight="2">
 
                 <RadioButton
                     android:id="@+id/male"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Male" />
@@ -92,7 +138,7 @@
                 <RadioButton
                     android:id="@+id/female"
                     android:layout_weight="1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Female" />
 
@@ -334,6 +380,6 @@
 
     </LinearLayout>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
