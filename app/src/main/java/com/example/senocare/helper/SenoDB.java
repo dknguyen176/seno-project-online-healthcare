@@ -281,6 +281,13 @@ public final class SenoDB {
         });
     }
 
+    public static void modifyMessage(ObjectId _id, String status) {
+        realm.executeTransaction(r -> {
+            Message message = r.where(Message.class).equalTo("_id", _id).findFirst();
+            message.setStatus(status);
+        });
+    }
+
     public static void removeSchedule(ObjectId _id) {
         realm.executeTransaction(r -> {
             Schedule schedule = r.where(Schedule.class).equalTo("_id", _id).findFirst();
@@ -396,5 +403,12 @@ public final class SenoDB {
 
     public static Prescription getPrescription(ObjectId _id) {
         return realm.where(Prescription.class).equalTo("_id", _id).findFirst();
+    }
+
+    public static Message getLatestMessage(String conservation) {
+        return realm.where(Message.class)
+                .equalTo("conservation", conservation)
+                .sort("time", Sort.DESCENDING)
+                .findFirst();
     }
 }

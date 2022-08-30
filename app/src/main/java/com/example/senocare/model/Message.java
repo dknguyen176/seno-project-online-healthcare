@@ -25,6 +25,9 @@ public class Message extends RealmObject {
     @Required
     private String time;
 
+    @Required
+    private String status;
+
     // Standard getters & setters
     public ObjectId get_id() { return _id; }
     public void set_id(ObjectId _id) { this._id = _id; }
@@ -44,15 +47,19 @@ public class Message extends RealmObject {
     public String getTime() { return time; }
     public void setTime(String time) { this.time = time; }
 
+    public String getStatus()  { return status; }
+    public void setStatus(String status) { this.status = status; }
+
     // Constructor
     public Message() { }
 
-    public Message(String conservation, String sender, String receiver, String text, String time) {
+    public Message(String conservation, String sender, String receiver, String text, String time, String status) {
         this.conservation = conservation;
         this.email2 = receiver;
         this.email1 = sender;
         this.text = text;
         this.time = time;
+        this.status = status;
     }
 
     public void set(Message m) {
@@ -61,6 +68,7 @@ public class Message extends RealmObject {
         this.email1 = m.email1;
         this.text = m.text;
         this.time = m.time;
+        this.status = m.status;
     }
 }
 

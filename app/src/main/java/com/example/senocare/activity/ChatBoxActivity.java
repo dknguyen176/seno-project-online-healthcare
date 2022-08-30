@@ -45,6 +45,16 @@ public class ChatBoxActivity extends AppCompatActivity {
         createChatRecyclerView();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Message message = SenoDB.getLatestMessage(conservation);
+        if (message.getReceiver().equals(user.getProfile().getEmail())) {
+            modifyMessage(message.get_id(), "seen");
+        }
+    }
+
     private void getExtra() {
         Intent intent = getIntent();
         sender = intent.getStringExtra("sender");
@@ -75,7 +85,7 @@ public class ChatBoxActivity extends AppCompatActivity {
                 String text = textMessage.getText().toString();
                 String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
 
-                Message message = new Message(conservation, sender, receiver, text, timeStamp);
+                Message message = new Message(conservation, sender, receiver, text, timeStamp, "unseen");
                 SenoDB.insertMessage(message);
 
                 textMessage.setText("");

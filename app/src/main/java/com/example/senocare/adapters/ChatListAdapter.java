@@ -4,6 +4,7 @@ import static com.example.senocare.helper.SenoDB.user;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,15 @@ import com.example.senocare.activity.ChatBoxActivity;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Message;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import io.realm.OrderedRealmCollection;
 
 public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListAdapter.ViewHolder> {
-    String TAG = "REALM_RECYCLER_ADAPTER";
+    String TAG = "CHAT_LIST_ADAPTER";
 
     private Context context;
     private int layoutId;
@@ -50,13 +56,25 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
         Message message = getItem(position);
 
         holder.img.setImageResource(R.drawable.avatar);
-        holder.time.setText("1 min");
+        try {
+            holder.time.setText(getTimeDiff(message.getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if (user.getProfile().getEmail().equals(message.getSender())) {
             holder.name.setText(SenoDB.getNameByEmail(message.getReceiver()));
             holder.mess.setText("You: " + message.getText());
         } else {
             holder.name.setText(SenoDB.getNameByEmail(message.getSender()));
             holder.mess.setText(message.getText());
+
+            if (message.getStatus().equals("unseen")) {
+                holder.name.setTextSize(20);
+                holder.name.setTypeface(holder.name.getTypeface(), Typeface.BOLD);
+                holder.mess.setTypeface(holder.mess.getTypeface(), Typeface.BOLD);
+                holder.time.setTypeface(holder.time.getTypeface(), Typeface.BOLD);
+                holder.noti.setVisibility(View.VISIBLE);
+            }
         }
 
         holder.itemChatList.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +90,25 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
         });
     }
 
+    private String getTimeDiff(String time) throws ParseException {
+        String format = "yyyy/MM/dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.US);
+        long millis  = new Date().getTime() - simpleDateFormat.parse(time).getTime();
+        long mins = millis  / (1000 * 60);
+        long hours = millis / (1000 * 60 * 60);
+        long days = millis / (1000 * 60 * 60 * 24);
+        long weeks = millis / (1000 * 60 * 60 * 24 * 7);
+        long years = millis / ((long)1000 * 60 * 60 * 24 * 365);
+
+        if (mins < 60) return mins + " mins";
+        if (hours < 24) return hours + " hours";
+        if (days < 7) return days + " days";
+        if (days < 365) return weeks + " weeks";
+        return years + " years";
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView img;
+        ImageView img, noti;
         TextView name, mess, time;
 
         ConstraintLayout itemChatList;
@@ -85,6 +120,7 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
             name = itemView.findViewById(R.id.name);
             mess = itemView.findViewById(R.id.latest_message);
             time = itemView.findViewById(R.id.time);
+            noti = itemView.findViewById(R.id.noti);
 
             itemChatList = itemView.findViewById(R.id.item_chat_list);
 

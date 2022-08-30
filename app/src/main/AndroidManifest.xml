@@ -41,9 +41,6 @@
             android:name=".activity.ChatBoxActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ChatListActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.patient.ScheduleShowActivity"
             android:exported="false" />
         <activity

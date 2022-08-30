@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.senocare.R;
-import com.example.senocare.activity.ChatListActivity;
 import com.example.senocare.adapters.ChatListAdapter;
 import com.example.senocare.helper.SenoDB;
 
