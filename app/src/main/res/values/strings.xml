@@ -21,6 +21,20 @@
         <item>Pediatrics</item>
         <item>Sports Physician</item>
     </string-array>
+    <string-array name="SpecialtiesList2">
+        <item>All</item>
+        <item>Allergy</item>
+        <item>Child Psychiatry</item>
+        <item>Dental Specialist</item>
+        <item>Dermatology</item>
+        <item>Heart</item>
+        <item>Infectious Diseases</item>
+        <item>Nutritionist</item>
+        <item>Ophthalmology</item>
+        <item>Otolaryngology</item>
+        <item>Pediatrics</item>
+        <item>Sports Physician</item>
+    </string-array>
     <string name="title_activity_schedule_upcoming">ScheduleUpcomingActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

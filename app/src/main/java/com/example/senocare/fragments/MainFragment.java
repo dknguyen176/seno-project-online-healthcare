@@ -14,14 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.senocare.R;
-import com.example.senocare.adapters.DoctorAdapter;
-import com.example.senocare.adapters.DoctorMainAdapter;
 import com.example.senocare.adapters.DoctorMainAdapter;
 import com.example.senocare.adapters.PatientMainAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
