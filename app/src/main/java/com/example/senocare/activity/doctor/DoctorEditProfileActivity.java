@@ -44,7 +44,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
 
         Doctor doctor = getDoctor();
 
-        EditText name_view = findViewById(R.id.name);
+        EditText first_view = findViewById(R.id.first);
+        EditText last_view = findViewById(R.id.last);
         RadioButton male = findViewById(R.id.male);
         RadioButton female = findViewById(R.id.female);
         EditText birthday_view = findViewById(R.id.birthday);
@@ -55,7 +56,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
         Button discard_btn = findViewById(R.id.btn_discard);
         Button save_btn = findViewById(R.id.btn_save);
 
-        name_view.setText(doctor.getName());
+        first_view.setText(doctor.getFirst());
+        last_view.setText(doctor.getLast());
         if (doctor.getSex().equals("Male")) male.setChecked(true);
         else female.setChecked(true);
         birthday_view.setText(TimeConverter.toString(doctor.getBirth(), "dd/MM/yyyy"));
@@ -73,7 +75,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = name_view.getText().toString();
+                String first = first_view.getText().toString();
+                String last = last_view.getText().toString();
                 String sex = "";
                 String birthday = birthday_view.getText().toString();
                 String spec = spec_view.getSelectedItem().toString();
@@ -84,7 +87,8 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
                 if (male.isChecked()) sex = "Male";
                 if (female.isChecked()) sex = "Female";
 
-                if (name.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Name cannot be empty", Toast.LENGTH_LONG).show(); return; }
+                if (first.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "First name cannot be empty", Toast.LENGTH_LONG).show(); return; }
+                if (last.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Last name cannot be empty", Toast.LENGTH_LONG).show(); return; }
                 if (sex.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "You haven't set your gender", Toast.LENGTH_LONG).show(); return; }
                 if (birthday.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Birthday cannot be empty", Toast.LENGTH_LONG).show(); return; }
                 if (spec.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Speciality cannot be empty", Toast.LENGTH_LONG).show(); return; }
@@ -93,7 +97,7 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
                 if (bio.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Biography cannot be empty", Toast.LENGTH_LONG).show(); return; }
 
                 ((Button) v).setEnabled(false);
-                Doctor newDoctor = new Doctor(user.getProfile().getEmail(), name, sex,
+                Doctor newDoctor = new Doctor(user.getProfile().getEmail(), first, last, sex,
                         TimeConverter.toDate(birthday, "dd/MM/yyyy"), spec, exper, loc, bio, 5);
                 newDoctor.set_id(doctor.get_id());
                 modifyDoctor(newDoctor);

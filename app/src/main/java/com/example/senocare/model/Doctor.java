@@ -34,7 +34,10 @@ public class Doctor extends RealmObject implements Parcelable {
     private String loc;
 
     @Required
-    private String name;
+    private String first;
+
+    @Required
+    private String last;
 
     private Float rating;
 
@@ -65,8 +68,14 @@ public class Doctor extends RealmObject implements Parcelable {
     public String getLoc() { return loc; }
     public void setLoc(String loc) { this.loc = loc; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() { return first + " " + last; }
+    public void setName(String first, String last) { this.first = first; this.last = last; }
+
+    public String getFirst() { return first; }
+    public void setFirst(String first) { this.first = first; }
+
+    public String getLast() { return last; }
+    public void setLast(String last) { this.last = last; }
 
     public Float getRating() { return rating; }
     public void setRating(Float rating) { this.rating = rating; }
@@ -87,31 +96,34 @@ public class Doctor extends RealmObject implements Parcelable {
         this.email1 = "doctor@gmail.com";
         this.exper = 5;
         this.loc = "123 st. bolsa";
-        this.name = "Doctor";
+        this.first = "first";
+        this.last = "Doctor";
         this.rating = 5.f;
         this.sex = "Male";
         this.spec = "Heart";
     }
 
-    public Doctor(String email, String name, String sex, Date birth, String bio, String loc, String spec) {
+    public Doctor(String email, String first, String last, String sex, Date birth, String bio, String loc, String spec) {
         this.bio = bio;
         this.birth = birth;
         this.email1 = email;
         this.loc = loc;
-        this.name = name;
+        this.first = first;
+        this.last = last;
         this.sex = sex;
         this.spec = spec;
         this.exper = 5;
         this.rating = 5.f;
     }
 
-    public Doctor(String email, String name, String sex, Date birth, String spec, int exper, String loc, String bio, float rating) {
+    public Doctor(String email, String first, String last, String sex, Date birth, String spec, int exper, String loc, String bio, float rating) {
         this.bio = bio;
         this.birth = birth;
         this.email1 = email;
         this.exper = exper;
         this.loc = loc;
-        this.name = name;
+        this.first = first;
+        this.last = last;
         this.rating = rating;
         this.sex = sex;
         this.spec = spec;
@@ -123,7 +135,8 @@ public class Doctor extends RealmObject implements Parcelable {
         this.email1 = d.email1;
         this.exper = d.exper;
         this.loc = d.loc;
-        this.name = d.name;
+        this.first = d.first;
+        this.last = d.last;
         this.rating = d.rating;
         this.sex = d.sex;
         this.spec = d.spec;
@@ -133,7 +146,8 @@ public class Doctor extends RealmObject implements Parcelable {
     public Doctor(Parcel source) {
         _id = source.readString();
         email1 = source.readString();
-        name = source.readString();
+        first = source.readString();
+        last = source.readString();
         sex = source.readString();
         birth = new Date(source.readLong());
         spec = source.readString();
@@ -152,7 +166,8 @@ public class Doctor extends RealmObject implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(_id);
         dest.writeString(email1);
-        dest.writeString(name);
+        dest.writeString(first);
+        dest.writeString(last);
         dest.writeString(sex);
         dest.writeLong(birth.getTime());
         dest.writeString(spec);

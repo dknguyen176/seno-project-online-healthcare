@@ -23,6 +23,7 @@ import org.bson.types.ObjectId;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -267,6 +268,13 @@ public final class SenoDB {
         });
     }
 
+    public static void modifyPatient(String _id, byte[] img) {
+        realm.executeTransaction(r -> {
+            Patient patient = r.where(Patient.class).equalTo("_id", _id).findFirst();
+            patient.setImg(img);
+        });
+    }
+
     public static void modifyDoctor(Doctor d) {
         realm.executeTransaction(r -> {
             Doctor doctor = r.where(Doctor.class).equalTo("_id", d.get_id()).findFirst();
@@ -366,6 +374,7 @@ public final class SenoDB {
         return realm.where(Schedule.class)
                 .equalTo("status", "Accepted")
                 .sort("time", Sort.ASCENDING)
+                .greaterThanOrEqualTo("time", new Date())
                 .limit(limit)
                 .findAll();
     }

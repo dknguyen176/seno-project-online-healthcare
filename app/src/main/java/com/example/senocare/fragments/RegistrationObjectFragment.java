@@ -44,18 +44,11 @@ public class RegistrationObjectFragment extends Fragment {
 
         switch (position) {
             case 1:
-            case 4:
-                layoutId = R.layout.registration_checkboxes;
-                break;
-            case 2:
-                layoutId = R.layout.registration_email_password;
-                break;
-            case 10:
-                layoutId = R.layout.registration_specialty;
-                break;
-            default:
-                layoutId = R.layout.registration_text;
-                break;
+            case 4: layoutId = R.layout.registration_checkboxes; break;
+            case 2: layoutId = R.layout.registration_email_password; break;
+            case 10: layoutId = R.layout.registration_specialty; break;
+            case 3: layoutId = R.layout.registration_first_last_name; break;
+            default: layoutId = R.layout.registration_text; break;
         }
 
         return inflater.inflate(layoutId, container, false);
@@ -71,6 +64,8 @@ public class RegistrationObjectFragment extends Fragment {
         TextView textView = view.findViewById(R.id.reg_text);
         TextView noteText = view.findViewById(R.id.reg_note);
         EditText editText = view.findViewById(R.id.reg_input);
+        EditText firstText = view.findViewById(R.id.reg_first);
+        EditText lastText = view.findViewById(R.id.reg_last);
         Spinner spinner = view.findViewById(R.id.spinner);
 
         if (position == 1 || position == 4){
@@ -78,33 +73,15 @@ public class RegistrationObjectFragment extends Fragment {
         }
 
         switch (position) {
-            case 1:
-                inputPatientDoctor(ckbox1, ckbox2, textView, noteText);
-                break;
-            case 3:
-                inputName(textView, editText);
-                break;
-            case 4:
-                inputMaleFemale(ckbox1, ckbox2, textView, noteText);
-                break;
-            case 5:
-                inputBirthday(textView, editText);
-                break;
-            case 6:
-                inputPhone(textView, editText);
-                break;
-            case 7:
-                inputHomeAddress(textView, editText);
-                break;
-            case 8:
-                inputBio(textView, editText);
-                break;
-            case 9:
-                inputLocation(textView, editText);
-                break;
-            case 10:
-                inputSpecialty(textView, spinner);
-                break;
+            case 1: inputPatientDoctor(ckbox1, ckbox2, textView, noteText); break;
+            case 3: inputName(textView, firstText, lastText); break;
+            case 4: inputMaleFemale(ckbox1, ckbox2, textView, noteText); break;
+            case 5: inputBirthday(textView, editText); break;
+            case 6: inputPhone(textView, editText); break;
+            case 7: inputHomeAddress(textView, editText); break;
+            case 8: inputBio(textView, editText); break;
+            case 9: inputLocation(textView, editText); break;
+            case 10: inputSpecialty(textView, spinner); break;
         }
     }
 
@@ -173,9 +150,11 @@ public class RegistrationObjectFragment extends Fragment {
         noteText.setVisibility(View.INVISIBLE);
     }
 
-    private void inputName(TextView textView, EditText editText) {
+    private void inputName(TextView textView, EditText firstText, EditText lastText) {
         textView.setText("What is your name?");
-        editText.setHint("Full Name");
+        //editText.setHint("Full Name");
+        firstText.setHint("First Name");
+        lastText.setHint("Last Name");
     }
 
     private void inputBirthday(TextView textView, EditText editText) {
