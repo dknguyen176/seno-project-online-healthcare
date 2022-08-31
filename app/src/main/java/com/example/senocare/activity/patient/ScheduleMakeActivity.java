@@ -1,11 +1,7 @@
 package com.example.senocare.activity.patient;
 
-import static com.example.senocare.helper.SenoDB.getDoctor;
 import static com.example.senocare.helper.SenoDB.getPatient;
 import static com.example.senocare.helper.SenoDB.user;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -16,12 +12,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
@@ -30,8 +28,6 @@ import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 import com.example.senocare.model.Schedule;
-
-import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -109,39 +105,36 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void setMakeBtn() {
-        make.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = pat_name.getText().toString();
-                String birth = pat_birth.getText().toString();
-                String phone = pat_phone.getText().toString();
-                String note = reason.getText().toString();
+        make.setOnClickListener(v -> {
+            String name = pat_name.getText().toString();
+            String birth = pat_birth.getText().toString();
+            String phone = pat_phone.getText().toString();
+            String note = reason.getText().toString();
 
-                if (name.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Name cannot be empty", Toast.LENGTH_LONG).show(); return;}
-                if (birth.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Birthday cannot be empty", Toast.LENGTH_LONG).show(); return;}
-                if (phone.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Phone cannot be empty", Toast.LENGTH_LONG).show(); return;}
-                if (sex == null) { Toast.makeText(ScheduleMakeActivity.this, "Sex cannot be empty", Toast.LENGTH_LONG).show(); return;}
-                if (doc_email.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Doctor cannot be empty", Toast.LENGTH_LONG).show(); return;}
-                if (day_select.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "You have not selected a date", Toast.LENGTH_LONG).show(); return;}
+            if (name.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Name cannot be empty", Toast.LENGTH_LONG).show(); return;}
+            if (birth.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Birthday cannot be empty", Toast.LENGTH_LONG).show(); return;}
+            if (phone.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Phone cannot be empty", Toast.LENGTH_LONG).show(); return;}
+            if (sex == null) { Toast.makeText(ScheduleMakeActivity.this, "Sex cannot be empty", Toast.LENGTH_LONG).show(); return;}
+            if (doc_email.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "Doctor cannot be empty", Toast.LENGTH_LONG).show(); return;}
+            if (day_select.isEmpty()) { Toast.makeText(ScheduleMakeActivity.this, "You have not selected a date", Toast.LENGTH_LONG).show(); return;}
 
-                note = "Full name: " + name
-                        + "\nSex: " + sex
-                        + "\nBirthday: " + birth
-                        + "\nPhone: " + phone
-                        + "\nReason: " + note;
-                Schedule schedule = new Schedule(
-                        doc_email,
-                        user.getProfile().getEmail(),
-                        TimeConverter.toDate(day_select, "dd/MM/yyyy"),
-                        note,
-                        "Pending"
-                );
-                SenoDB.insertSchedule(schedule);
+            note = "Full name: " + name
+                    + "\nSex: " + sex
+                    + "\nBirthday: " + birth
+                    + "\nPhone: " + phone
+                    + "\nReason: " + note;
+            Schedule schedule = new Schedule(
+                    doc_email,
+                    user.getProfile().getEmail(),
+                    TimeConverter.toDate(day_select, "dd/MM/yyyy"),
+                    note,
+                    "Pending"
+            );
+            SenoDB.insertSchedule(schedule);
 
-                Log.v(TAG, note);
+            Log.v(TAG, note);
 
-                finish();
-            }
+            finish();
         });
     }
 
@@ -152,10 +145,10 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
         Date d2 = c.getTime(); c.add(Calendar.DATE, 1);
         Date d3 = c.getTime();
 
-        setOnDateClick(date1, "MMM d,\n yyyy", "dd/MM/yyyy", d1);
-        setOnDateClick(date2, "MMM d,\n yyyy", "dd/MM/yyyy", d2);
-        setOnDateClick(date3, "MMM d,\n yyyy", "dd/MM/yyyy", d3);
-        setOnDateClick(date4, "MMM d,\n yyyy", "dd/MM/yyyy");
+        setOnDateClick(date1, d1);
+        setOnDateClick(date2, d2);
+        setOnDateClick(date3, d3);
+        setOnDateClick(date4);
     }
 
     private void setDocSpinner() {
@@ -197,76 +190,64 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
     }
 
     View.OnClickListener onGenderClicked() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean checked = ((RadioButton) v).isChecked();
-                if (checked) {
-                    sex = ((RadioButton) v).getText().toString();
-                    Log.v(TAG, "Gender: " + sex);
-                }
+        return v -> {
+            boolean checked = ((RadioButton) v).isChecked();
+            if (checked) {
+                sex = ((RadioButton) v).getText().toString();
+                Log.v(TAG, "Gender: " + sex);
             }
         };
     }
 
-    void setOnDateClick(TextView textView, String format, String rawFormat, Date dt) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
-        SimpleDateFormat rawDateFormat = new SimpleDateFormat(rawFormat, Locale.US);
+    void setOnDateClick(TextView textView, Date dt) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d,\n yyyy", Locale.US);
+        SimpleDateFormat rawDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
         textView.setClickable(true);
         textView.setText(dateFormat.format(dt));
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                day_select = rawDateFormat.format(dt);
-                date1.setBackgroundResource(android.R.color.transparent);
-                date2.setBackgroundResource(android.R.color.transparent);
-                date3.setBackgroundResource(android.R.color.transparent);
-                date4.setBackgroundResource(android.R.color.transparent);
-                v.setBackgroundResource(R.color.bg_message);
+        textView.setOnClickListener(v -> {
+            day_select = rawDateFormat.format(dt);
+            date1.setBackgroundResource(android.R.color.transparent);
+            date2.setBackgroundResource(android.R.color.transparent);
+            date3.setBackgroundResource(android.R.color.transparent);
+            date4.setBackgroundResource(android.R.color.transparent);
+            v.setBackgroundResource(R.color.bg_message);
 
-                Log.v(TAG, "Date: " + day_select);
-            }
+            Log.v(TAG, "Date: " + day_select);
         });
     }
 
-    void setOnDateClick(TextView textView, String format, String rawFormat) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
-        SimpleDateFormat rawDateFormat = new SimpleDateFormat(rawFormat, Locale.US);
+    void setOnDateClick(TextView textView) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d,\n yyyy", Locale.US);
+        SimpleDateFormat rawDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
         textView.setClickable(true);
 
         Calendar myCalendar = Calendar.getInstance();
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+        DatePickerDialog.OnDateSetListener date = (view, year, month, day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH,month);
+            myCalendar.set(Calendar.DAY_OF_MONTH,day);
 
-                textView.setTextSize(13);
-                textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
-                textView.setText(dateFormat.format(myCalendar.getTime()));
-                day_select = rawDateFormat.format(myCalendar.getTime());
+            textView.setTextSize(13);
+            textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+            textView.setText(dateFormat.format(myCalendar.getTime()));
+            day_select = rawDateFormat.format(myCalendar.getTime());
 
-                date1.setBackgroundResource(android.R.color.transparent);
-                date2.setBackgroundResource(android.R.color.transparent);
-                date3.setBackgroundResource(android.R.color.transparent);
-                date4.setBackgroundResource(R.color.bg_message);
+            date1.setBackgroundResource(android.R.color.transparent);
+            date2.setBackgroundResource(android.R.color.transparent);
+            date3.setBackgroundResource(android.R.color.transparent);
+            date4.setBackgroundResource(R.color.bg_message);
 
-                Log.v(TAG, "Date: " + day_select);
-            }
+            Log.v(TAG, "Date: " + day_select);
         };
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(ScheduleMakeActivity.this, date,
-                        myCalendar.get(Calendar.YEAR),
-                        myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH));
-                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-                datePickerDialog.show();
-            }
+        textView.setOnClickListener(view -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(ScheduleMakeActivity.this, date,
+                    myCalendar.get(Calendar.YEAR),
+                    myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+            datePickerDialog.show();
         });
     }
 
@@ -300,14 +281,6 @@ public class ScheduleMakeActivity extends AppCompatActivity implements AdapterVi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        TextView title = findViewById(R.id.title);
-        title.setText("Make Appointment");
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 }

@@ -21,8 +21,6 @@ import org.bson.types.ObjectId;
 
 public class DetailedAppointment extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,47 +49,33 @@ public class DetailedAppointment extends AppCompatActivity {
 
         if (schedule.getStatus().compareTo("Pending") == 0 && !IS_PATIENT){
             cancel_btn.setVisibility(View.INVISIBLE);
-            accept_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SenoDB.modifySchedule(schedule.get_id(), "Accepted");
-                    finish();
-                }
+            accept_btn.setOnClickListener(v -> {
+                SenoDB.modifySchedule(schedule.get_id(), "Accepted");
+                finish();
             });
-            deny_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SenoDB.modifySchedule(schedule.get_id(), "Denied");
-                    finish();
-                }
+            deny_btn.setOnClickListener(v -> {
+                SenoDB.modifySchedule(schedule.get_id(), "Denied");
+                finish();
             });
         }
         else{
             accept_btn.setVisibility(View.INVISIBLE);
             deny_btn.setVisibility(View.INVISIBLE);
             if (schedule.getStatus().compareTo("Denied") == 0) cancel_btn.setText("Delete");
-            cancel_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (IS_PATIENT) SenoDB.removeSchedule(schedule.get_id());
-                    else SenoDB.modifySchedule(schedule.get_id(), "Denied");
-                    finish();
-                }
+            cancel_btn.setOnClickListener(v -> {
+                if (IS_PATIENT) SenoDB.removeSchedule(schedule.get_id());
+                else SenoDB.modifySchedule(schedule.get_id(), "Denied");
+                finish();
             });
         }
     }
 
     private void createToolbar() {
-        toolbar = findViewById(R.id.tool_bar);
+        Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         TextView title = findViewById(R.id.title);
         title.setText("Appointment's Detail");

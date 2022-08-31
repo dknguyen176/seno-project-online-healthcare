@@ -11,8 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,12 +21,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.senocare.R;
-import com.example.senocare.activity.patient.PatientEditProfileActivity;
 import com.example.senocare.helper.TimeConverter;
-import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Doctor;
-
-import java.lang.reflect.Array;
 
 public class DoctorEditProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -67,47 +61,39 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
         exper_view.setText(String.valueOf(doctor.getExper()));
         loc_view.setText(doctor.getLoc());
         bio_view.setText(doctor.getBio());
-        discard_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String first = first_view.getText().toString();
-                String last = last_view.getText().toString();
-                String sex = "";
-                String birthday = birthday_view.getText().toString();
-                String spec = spec_view.getSelectedItem().toString();
-                int exper = Integer.parseInt(exper_view.getText().toString());
-                String loc = loc_view.getText().toString();
-                String bio = bio_view.getText().toString();
+        discard_btn.setOnClickListener(v -> finish());
+        save_btn.setOnClickListener(v -> {
+            String first = first_view.getText().toString();
+            String last = last_view.getText().toString();
+            String sex = "";
+            String birthday = birthday_view.getText().toString();
+            String spec = spec_view.getSelectedItem().toString();
+            int exper = Integer.parseInt(exper_view.getText().toString());
+            String loc = loc_view.getText().toString();
+            String bio = bio_view.getText().toString();
 
-                if (male.isChecked()) sex = "Male";
-                if (female.isChecked()) sex = "Female";
+            if (male.isChecked()) sex = "Male";
+            if (female.isChecked()) sex = "Female";
 
-                if (first.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "First name cannot be empty", Toast.LENGTH_LONG).show(); return; }
-                if (last.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Last name cannot be empty", Toast.LENGTH_LONG).show(); return; }
-                if (sex.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "You haven't set your gender", Toast.LENGTH_LONG).show(); return; }
-                if (birthday.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Birthday cannot be empty", Toast.LENGTH_LONG).show(); return; }
-                if (spec.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Speciality cannot be empty", Toast.LENGTH_LONG).show(); return; }
-                if (exper < 0) { Toast.makeText(DoctorEditProfileActivity.this, "Experience must be non-negative", Toast.LENGTH_LONG).show(); return; }
-                if (loc.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Workplace cannot be empty", Toast.LENGTH_LONG).show(); return; }
-                if (bio.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Biography cannot be empty", Toast.LENGTH_LONG).show(); return; }
+            if (first.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "First name cannot be empty", Toast.LENGTH_LONG).show(); return; }
+            if (last.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Last name cannot be empty", Toast.LENGTH_LONG).show(); return; }
+            if (sex.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "You haven't set your gender", Toast.LENGTH_LONG).show(); return; }
+            if (birthday.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Birthday cannot be empty", Toast.LENGTH_LONG).show(); return; }
+            if (spec.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Speciality cannot be empty", Toast.LENGTH_LONG).show(); return; }
+            if (exper < 0) { Toast.makeText(DoctorEditProfileActivity.this, "Experience must be non-negative", Toast.LENGTH_LONG).show(); return; }
+            if (loc.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Workplace cannot be empty", Toast.LENGTH_LONG).show(); return; }
+            if (bio.isEmpty()) { Toast.makeText(DoctorEditProfileActivity.this, "Biography cannot be empty", Toast.LENGTH_LONG).show(); return; }
 
-                ((Button) v).setEnabled(false);
-                Doctor newDoctor = new Doctor(user.getProfile().getEmail(), first, last, sex,
-                        TimeConverter.toDate(birthday, "dd/MM/yyyy"), spec, exper, loc, bio, 5);
-                newDoctor.set_id(doctor.get_id());
-                modifyDoctor(newDoctor);
+            v.setEnabled(false);
+            Doctor newDoctor = new Doctor(user.getProfile().getEmail(), first, last, sex,
+                    TimeConverter.toDate(birthday, "dd/MM/yyyy"), spec, exper, loc, bio, 5);
+            newDoctor.set_id(doctor.get_id());
+            modifyDoctor(newDoctor);
 
-                Intent intent = new Intent();
-                intent.putExtra("doctor", newDoctor);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
-            }
+            Intent intent = new Intent();
+            intent.putExtra("doctor", newDoctor);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         });
     }
 
@@ -136,11 +122,6 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 }

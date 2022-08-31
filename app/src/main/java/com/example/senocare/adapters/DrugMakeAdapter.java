@@ -1,15 +1,12 @@
 package com.example.senocare.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,8 +20,8 @@ import java.util.ArrayList;
 public class DrugMakeAdapter extends RecyclerView.Adapter <DrugMakeAdapter.ViewHolder>  {
     private final String TAG = "DRUG_ADAPTER";
 
-    private Context context;
-    private ArrayList<Drugs> list;
+    private final Context context;
+    private final ArrayList<Drugs> list;
 
     public DrugMakeAdapter(Context context, ArrayList<Drugs> list) {
         this.context = context;
@@ -65,54 +62,42 @@ public class DrugMakeAdapter extends RecyclerView.Adapter <DrugMakeAdapter.ViewH
             note = itemView.findViewById(R.id.drug_note);
             remove_btn = itemView.findViewById(R.id.remove_btn);
 
-            remove_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            remove_btn.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                list.remove(position);
+                notifyItemRemoved(position);
+            });
+
+            name.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    Log.v(TAG, "Focus = true");
+                } else {
+                    Log.v(TAG, "Focus = false");
+
                     int position = getAdapterPosition();
-                    list.remove(position);
-                    notifyItemRemoved(position);
+                    list.get(position).setName(((EditText) v).getText().toString());
                 }
             });
 
-            name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        Log.v(TAG, "Focus = true");
-                    } else {
-                        Log.v(TAG, "Focus = false");
+            quantity.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    Log.v(TAG, "Focus = true");
+                } else {
+                    Log.v(TAG, "Focus = false");
 
-                        int position = getAdapterPosition();
-                        list.get(position).setName(((EditText) v).getText().toString());
-                    }
+                    int position = getAdapterPosition();
+                    list.get(position).setQuantity(Integer.parseInt((((EditText) v).getText().toString())));
                 }
             });
 
-            quantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        Log.v(TAG, "Focus = true");
-                    } else {
-                        Log.v(TAG, "Focus = false");
+            note.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    Log.v(TAG, "Focus = true");
+                } else {
+                    Log.v(TAG, "Focus = false");
 
-                        int position = getAdapterPosition();
-                        list.get(position).setQuantity(Integer.parseInt((((EditText) v).getText().toString())));
-                    }
-                }
-            });
-
-            note.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        Log.v(TAG, "Focus = true");
-                    } else {
-                        Log.v(TAG, "Focus = false");
-
-                        int position = getAdapterPosition();
-                        list.get(position).setNote(((EditText) v).getText().toString());
-                    }
+                    int position = getAdapterPosition();
+                    list.get(position).setNote(((EditText) v).getText().toString());
                 }
             });
         }

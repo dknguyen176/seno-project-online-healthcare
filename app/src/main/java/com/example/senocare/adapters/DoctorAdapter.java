@@ -14,22 +14,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.senocare.R;
 import com.example.senocare.activity.DetailedDoctor;
 import com.example.senocare.model.Doctor;
 
-
-import java.util.List;
-
-import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollection;
 
 public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapter.ViewHolder>  {
     String TAG = "REALM_RECYCLER_ADAPTER";
 
-    private Context context;
-    private int layoutId;
+    private final Context context;
+    private final int layoutId;
 
     public DoctorAdapter(Context context, OrderedRealmCollection<Doctor> data, int layoutId) {
         super(data, true);
@@ -44,7 +39,7 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
         Log.i(TAG, "Creating view holder");
         return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(layoutId,parent,false)
+                .inflate(layoutId, parent, false)
         );
     }
 
@@ -55,22 +50,19 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
 
         holder.name.setText("Dr. " + doctor.getLast());
         holder.spec.setText(doctor.getSpec());
-        holder.exper.setText(String.valueOf(doctor.getExper()) + " years");
+        holder.exper.setText(doctor.getExper() + " years");
         holder.rating.setText(String.valueOf(doctor.getRating()));
         putByteArrayToImageView(doctor.getImg(), holder.img, doctor.getSex());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailedDoctor.class);
-                intent.putExtra("_id", doctor.get_id());
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailedDoctor.class);
+            intent.putExtra("_id", doctor.get_id());
 
-                context.startActivity(intent);
-            }
+            context.startActivity(intent);
         });
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img;
         TextView name, spec, exper, rating;

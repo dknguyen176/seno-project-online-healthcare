@@ -24,8 +24,6 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
 
-    PatientMainAdapter patientMainAdapter;
-    DoctorMainAdapter doctorMainAdapter;
     ViewPager2 viewPager;
 
     private final List<String> text = Arrays.asList("Home", "Messages", "Profile");

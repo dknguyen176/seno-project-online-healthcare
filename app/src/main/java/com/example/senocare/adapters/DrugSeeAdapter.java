@@ -18,8 +18,8 @@ import io.realm.OrderedRealmCollection;
 public class DrugSeeAdapter extends RealmRecyclerViewAdapter<Drugs, DrugSeeAdapter.ViewHolder>  {
     String TAG = "REALM_RECYCLER_ADAPTER";
 
-    private Context context;
-    private int layoutId;
+    private final Context context;
+    private final int layoutId;
 
     public DrugSeeAdapter(Context context, OrderedRealmCollection<Drugs> data, int layoutId) {
         super(data, true);
@@ -34,7 +34,7 @@ public class DrugSeeAdapter extends RealmRecyclerViewAdapter<Drugs, DrugSeeAdapt
         Log.i(TAG, "Creating view holder");
         return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(layoutId,parent,false)
+                .inflate(layoutId, parent, false)
         );
     }
 
@@ -48,7 +48,7 @@ public class DrugSeeAdapter extends RealmRecyclerViewAdapter<Drugs, DrugSeeAdapt
         holder.note.setText(drugs.getNote());
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, quantity, note;
 

@@ -1,39 +1,28 @@
 package com.example.senocare.activity;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.example.senocare.R;
 import com.example.senocare.adapters.DoctorAdapter;
-import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.model.Doctor;
-import com.example.senocare.model.Specialty;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 import io.realm.OrderedRealmCollection;
-import io.realm.RealmList;
 
 public class ShowDoctorList extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Toolbar toolbar;
 
     RecyclerView doctorRecyclerView;
-    public static DoctorAdapter doctorAdapter;
+    DoctorAdapter doctorAdapter;
     Spinner doc_spec;
     OrderedRealmCollection<Doctor> doctorList;
     ArrayAdapter<CharSequence> specAdapter;
@@ -94,12 +83,7 @@ public class ShowDoctorList extends AppCompatActivity implements AdapterView.OnI
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
 }

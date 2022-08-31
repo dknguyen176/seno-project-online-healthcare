@@ -1,16 +1,13 @@
 package com.example.senocare.activity.patient;
 
-import static com.example.senocare.helper.SenoDB.getPrescription;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import com.example.senocare.R;
 import com.example.senocare.adapters.DrugSeeAdapter;
@@ -24,8 +21,6 @@ import org.bson.types.ObjectId;
 
 public class PrescriptionSeeActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +32,12 @@ public class PrescriptionSeeActivity extends AppCompatActivity {
     }
 
     private void createToolbar() {
-        toolbar = findViewById(R.id.tool_bar);
+        Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     private void createView() {

@@ -1,13 +1,12 @@
 package com.example.senocare.activity.patient;
 
+import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 import com.example.senocare.R;
 import com.example.senocare.adapters.AppointmentAdapter;
@@ -18,14 +17,12 @@ public class ScheduleShowActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     RecyclerView appointmentRecyclerView;
-    public static AppointmentAdapter appointmentAdapter;
+    AppointmentAdapter appointmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_show);
-
-        //Intent intent = getIntent();
 
         createToolbar();
 
@@ -55,12 +52,7 @@ public class ScheduleShowActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         TextView title = findViewById(R.id.title);
         title.setText("All Appointments");

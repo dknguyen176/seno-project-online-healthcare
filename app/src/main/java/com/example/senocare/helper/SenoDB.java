@@ -1,14 +1,6 @@
 package com.example.senocare.helper;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import com.example.senocare.model.Account;
 import com.example.senocare.model.Doctor;
@@ -20,24 +12,16 @@ import com.example.senocare.model.Schedule;
 
 import org.bson.types.ObjectId;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
-import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.Realm;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
-import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
-import io.realm.mongodb.sync.MutableSubscriptionSet;
 import io.realm.mongodb.sync.Subscription;
-import io.realm.mongodb.sync.SubscriptionSet;
 import io.realm.mongodb.sync.SyncConfiguration;
 
 public final class SenoDB {
@@ -102,111 +86,96 @@ public final class SenoDB {
 
         realm = Realm.getInstance(config);
 
-        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
-            @Override
-            public void update(MutableSubscriptionSet subscriptions) {
-                // if subscription has been added, then skip
-                Subscription subscription = subscriptions.find("account");
-                if (subscription != null) return;
+        realm.getSubscriptions().update(subscriptions -> {
+            // if subscription has been added, then skip
+            Subscription subscription = subscriptions.find("account");
+            if (subscription != null) return;
 
-                // add a subscription with a name
-                subscriptions.add(Subscription.create("account",
-                        realm.where(Account.class)
-                                .equalTo("_id", user.getId())
-                ));
-            }
+            // add a subscription with a name
+            subscriptions.add(Subscription.create("account",
+                    realm.where(Account.class)
+                            .equalTo("_id", user.getId())
+            ));
         }).waitForSynchronization();
 
         realm.refresh();
     }
 
     public static void patientSubscription() {
-        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
-            @Override
-            public void update(MutableSubscriptionSet subscriptions) {
-                // if subscription has been added, then skip
-                Subscription subscription = subscriptions.find("patient");
-                if (subscription != null) return;
+        realm.getSubscriptions().update(subscriptions -> {
+            // if subscription has been added, then skip
+            Subscription subscription = subscriptions.find("patient");
+            if (subscription != null) return;
 
-                // add a subscription with a name
-                subscriptions.add(Subscription.create("patient",
-                        realm.where(Patient.class)
-                                .equalTo("_id", user.getId())
-                ));
-            }
+            // add a subscription with a name
+            subscriptions.add(Subscription.create("patient",
+                    realm.where(Patient.class)
+                            .equalTo("_id", user.getId())
+            ));
         }).waitForSynchronization();
 
         realm.refresh();
 
-        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
-            @Override
-            public void update(MutableSubscriptionSet subscriptions) {
-                // if subscription has been added, then skip
-                Subscription subscription = subscriptions.find("doctor");
-                if (subscription != null) return;
+        realm.getSubscriptions().update(subscriptions -> {
+            // if subscription has been added, then skip
+            Subscription subscription = subscriptions.find("doctor");
+            if (subscription != null) return;
 
-                subscriptions.add(Subscription.create("doctor",
-                        realm.where(Doctor.class)
-                ));
-                subscriptions.add(Subscription.create("prescription",
-                        realm.where(Prescription.class)
-                                .equalTo("email1", user.getProfile().getEmail())
-                ));
-                subscriptions.add(Subscription.create("schedule",
-                        realm.where(Schedule.class)
-                                .equalTo("email1", user.getProfile().getEmail())
-                ));
-                subscriptions.add(Subscription.create("message",
-                        realm.where(Message.class)
-                                .equalTo("email1", user.getProfile().getEmail())
-                                .or().equalTo("email2", user.getProfile().getEmail())
-                ));
-            }
+            subscriptions.add(Subscription.create("doctor",
+                    realm.where(Doctor.class)
+            ));
+            subscriptions.add(Subscription.create("prescription",
+                    realm.where(Prescription.class)
+                            .equalTo("email1", user.getProfile().getEmail())
+            ));
+            subscriptions.add(Subscription.create("schedule",
+                    realm.where(Schedule.class)
+                            .equalTo("email1", user.getProfile().getEmail())
+            ));
+            subscriptions.add(Subscription.create("message",
+                    realm.where(Message.class)
+                            .equalTo("email1", user.getProfile().getEmail())
+                            .or().equalTo("email2", user.getProfile().getEmail())
+            ));
         });
     }
 
     public static void doctorSubscription() {
-        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
-            @Override
-            public void update(MutableSubscriptionSet subscriptions) {
-                // if subscription has been added, then skip
-                Subscription subscription = subscriptions.find("doctor");
-                if (subscription != null) return;
+        realm.getSubscriptions().update(subscriptions -> {
+            // if subscription has been added, then skip
+            Subscription subscription = subscriptions.find("doctor");
+            if (subscription != null) return;
 
-                subscriptions.add(Subscription.create("doctor",
-                        realm.where(Doctor.class)
-                                .equalTo("_id", user.getId())
-                ));
-            }
+            subscriptions.add(Subscription.create("doctor",
+                    realm.where(Doctor.class)
+                            .equalTo("_id", user.getId())
+            ));
         }).waitForSynchronization();
 
         realm.refresh();
 
-        realm.getSubscriptions().update(new SubscriptionSet.UpdateCallback() {
-            @Override
-            public void update(MutableSubscriptionSet subscriptions) {
-                // if subscription has been added, then skip
-                Subscription subscription = subscriptions.find("patient");
-                if (subscription != null) return;
+        realm.getSubscriptions().update(subscriptions -> {
+            // if subscription has been added, then skip
+            Subscription subscription = subscriptions.find("patient");
+            if (subscription != null) return;
 
-                // add a subscription with a name
-                subscriptions.add(Subscription.create("patient",
-                        realm.where(Patient.class)
-                ));
-                subscriptions.add(Subscription.create("prescription",
-                        realm.where(Prescription.class)
-                                .equalTo("email2", user.getProfile().getEmail())
-                ));
-                subscriptions.add(Subscription.create("schedule",
-                        realm.where(Schedule.class)
-                                .equalTo("email2", user.getProfile().getEmail())
-                ));
-                subscriptions.add(Subscription.create("message",
-                        realm.where(Message.class)
-                                .equalTo("email1", user.getProfile().getEmail())
-                                .or().equalTo("email2", user.getProfile().getEmail())
-                ));
-            }
+            // add a subscription with a name
+            subscriptions.add(Subscription.create("patient",
+                    realm.where(Patient.class)
+            ));
+            subscriptions.add(Subscription.create("prescription",
+                    realm.where(Prescription.class)
+                            .equalTo("email2", user.getProfile().getEmail())
+            ));
+            subscriptions.add(Subscription.create("schedule",
+                    realm.where(Schedule.class)
+                            .equalTo("email2", user.getProfile().getEmail())
+            ));
+            subscriptions.add(Subscription.create("message",
+                    realm.where(Message.class)
+                            .equalTo("email1", user.getProfile().getEmail())
+                            .or().equalTo("email2", user.getProfile().getEmail())
+            ));
         });
     }
 
@@ -307,14 +276,7 @@ public final class SenoDB {
         realm.executeTransaction(r -> {
             Schedule schedule = r.where(Schedule.class).equalTo("_id", _id).findFirst();
             schedule.deleteFromRealm();
-            schedule = null;
         });
-    }
-
-    public static RealmResults<Patient> getPatientList() {
-        return realm.where(Patient.class)
-                .sort("name", Sort.ASCENDING)
-                .findAll();
     }
 
     public static RealmResults<Doctor> getDoctorList() {
@@ -432,11 +394,4 @@ public final class SenoDB {
                 .findFirst();
     }
 
-    public static void clearAll() {
-        realm.executeTransaction(r -> {
-            r.delete(Message.class);
-            r.delete(Prescription.class);
-            r.delete(Schedule.class);
-        });
-    }
 }

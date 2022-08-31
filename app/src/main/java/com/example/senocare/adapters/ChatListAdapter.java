@@ -23,23 +23,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.senocare.R;
 import com.example.senocare.activity.ChatBoxActivity;
 import com.example.senocare.helper.SenoDB;
-import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Message;
 import com.example.senocare.model.Patient;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 import io.realm.OrderedRealmCollection;
 
 public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListAdapter.ViewHolder> {
     String TAG = "CHAT_LIST_ADAPTER";
 
-    private Context context;
-    private int layoutId;
+    private final Context context;
+    private final int layoutId;
 
     public ChatListAdapter(Context context, OrderedRealmCollection<Message> data, int layoutId) {
         super(data, true);
@@ -54,7 +50,7 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
         Log.i(TAG, "Creating view holder");
         return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(layoutId,parent,false)
+                .inflate(layoutId, parent, false)
         );
     }
 
@@ -103,16 +99,13 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
             holder.noti.setVisibility(View.INVISIBLE);
         }
 
-        holder.itemChatList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ChatBoxActivity.class);
-                intent.putExtra("conservation", message.getConservation());
-                intent.putExtra("sender", message.getSender());
-                intent.putExtra("receiver", message.getReceiver());
+        holder.itemChatList.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatBoxActivity.class);
+            intent.putExtra("conservation", message.getConservation());
+            intent.putExtra("sender", message.getSender());
+            intent.putExtra("receiver", message.getReceiver());
 
-                context.startActivity(intent);
-            }
+            context.startActivity(intent);
         });
     }
 
@@ -132,7 +125,7 @@ public class ChatListAdapter extends RealmRecyclerViewAdapter<Message, ChatListA
         return years + " years";
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img, noti;
         TextView name, mess, time;
 

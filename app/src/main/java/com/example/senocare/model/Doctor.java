@@ -5,10 +5,7 @@ import android.os.Parcelable;
 
 import com.example.senocare.helper.TimeConverter;
 
-import java.io.Serializable;
 import java.util.Date;
-
-import javax.annotation.Nullable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

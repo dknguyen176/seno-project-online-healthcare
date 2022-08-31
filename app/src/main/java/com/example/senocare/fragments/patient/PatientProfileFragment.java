@@ -1,24 +1,17 @@
 package com.example.senocare.fragments.patient;
 
 import static com.example.senocare.helper.SenoDB.getPatient;
-import static com.example.senocare.helper.SenoDB.modifyDoctor;
 import static com.example.senocare.helper.SenoDB.modifyPatient;
 import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +19,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.senocare.R;
 import com.example.senocare.activity.patient.PatientEditProfileActivity;
 import com.example.senocare.helper.TimeConverter;
-import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Patient;
 
 import java.io.ByteArrayOutputStream;
@@ -63,22 +59,12 @@ public class PatientProfileFragment extends Fragment {
 
         profile_pic = view.findViewById(R.id.profile_pic);
         putByteArrayToImageView(patient.getImg(), profile_pic, patient.getSex());
-        profile_pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
+        profile_pic.setOnClickListener(v -> dialog.show());
 
         setViewContent(view, patient);
 
         TextView editText = view.findViewById(R.id.edit_text);
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(getContext(), PatientEditProfileActivity.class), LAUNCH_EDIT);
-            }
-        });
+        editText.setOnClickListener(v -> startActivityForResult(new Intent(getContext(), PatientEditProfileActivity.class), LAUNCH_EDIT));
     }
 
     @Override
@@ -87,7 +73,7 @@ public class PatientProfileFragment extends Fragment {
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == LAUNCH_EDIT) {
-                Patient newPatient = (Patient) data.getParcelableExtra("patient");
+                Patient newPatient = data.getParcelableExtra("patient");
                 setViewContent(getView(), newPatient);
             }
             else if (requestCode == GALLERY_ACTIVITY) {
@@ -106,7 +92,7 @@ public class PatientProfileFragment extends Fragment {
                     img = stream.toByteArray();
                     modifyPatient(patient.get_id(), img);
 
-                } catch (Exception e) {
+                } catch (Exception ignored) {
 
                 }
             }
@@ -120,13 +106,13 @@ public class PatientProfileFragment extends Fragment {
                 profile_pic.setImageBitmap(selectedImage);
 
                 img = stream.toByteArray();
-                modifyDoctor(patient.get_id(), img);
+                modifyPatient(patient.get_id(), img);
             }
         }
     }
 
     private byte[] getBytes(InputStream inputStream) throws IOException {
-        byte[] bytesResult = null;
+        byte[] bytesResult;
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
@@ -147,22 +133,20 @@ public class PatientProfileFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String[] choice = new String[] {"Set Default", "From Gallery", "From Camera"};
         builder.setTitle("Choose a picture")
-                .setItems(choice, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0){
-                            img = null;
-                            modifyPatient(patient.get_id(), null);
-                            putByteArrayToImageView(null, profile_pic, patient.getSex());
-                        }
-                        else if (which == 1){
-                            Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(pickPhoto , GALLERY_ACTIVITY);
-                        }
-                        else{
-                            Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            startActivityForResult(takePicture, CAMERA_ACTIVITY);
-                        }
+                .setItems(choice, (dialog, which) -> {
+                    if (which == 0){
+                        img = null;
+                        modifyPatient(patient.get_id(), null);
+                        putByteArrayToImageView(null, profile_pic, patient.getSex());
+                    }
+                    else if (which == 1){
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(pickPhoto , GALLERY_ACTIVITY);
+                    }
+                    else{
+                        Intent takePicture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(takePicture, CAMERA_ACTIVITY);
                     }
                 });
         dialog = builder.create();

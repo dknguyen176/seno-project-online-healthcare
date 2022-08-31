@@ -17,26 +17,13 @@ import com.example.senocare.activity.doctor.PrescriptionMakeActivity;
 import com.example.senocare.activity.doctor.ScheduleReviewActivity;
 import com.example.senocare.activity.doctor.ScheduleUpcomingActivity;
 import com.example.senocare.adapters.AppointmentAdapter;
-import com.example.senocare.adapters.DoctorAdapter;
-import com.example.senocare.adapters.SpecialtyAdapter;
 import com.example.senocare.helper.SenoDB;
-import com.example.senocare.model.Doctor;
-import com.example.senocare.model.Specialty;
-
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmResults;
 
 public class DoctorHomeFragment extends Fragment {
 
-    // private ArrayList<???> userMessageList;
-    private OrderedRealmCollection<Specialty> specialtiesList;
-    private OrderedRealmCollection<Doctor> popularDoctorsList;
-
-    private SpecialtyAdapter specialtyAdapter;
-    private DoctorAdapter popularDoctorsAdapter;
     private AppointmentAdapter appointmentAdapter;
 
-    RecyclerView messagesRecyclerView, specialtiesRecyclerView, popularDoctorsRecyclerView, appointmentRecyclerView;
+    RecyclerView appointmentRecyclerView;
 
     public DoctorHomeFragment() {
         // Required empty public constructor
@@ -48,29 +35,14 @@ public class DoctorHomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home_doctor, container, false);
 
         CardView reviewAppointment = root.findViewById(R.id.review_appointment_btn);
-        reviewAppointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ScheduleReviewActivity.class));
-            }
-        });
+        reviewAppointment.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleReviewActivity.class)));
 
 
         CardView makePrescription = root.findViewById(R.id.make_prescription_btn);
-        makePrescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), PrescriptionMakeActivity.class));
-            }
-        });
+        makePrescription.setOnClickListener(v -> startActivity(new Intent(getContext(), PrescriptionMakeActivity.class)));
 
         TextView app_btn = root.findViewById(R.id.app_see_all);
-        app_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ScheduleUpcomingActivity.class));
-            }
-        });
+        app_btn.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleUpcomingActivity.class)));
 
         createAppointmentRecyclerView(root);
 

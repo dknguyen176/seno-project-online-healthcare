@@ -1,9 +1,7 @@
 package com.example.senocare.adapters;
 
 import static com.example.senocare.helper.SenoDB.IS_PATIENT;
-import static com.example.senocare.helper.SenoDB.getDoctor;
 import static com.example.senocare.helper.SenoDB.getDoctorByEmail;
-import static com.example.senocare.helper.SenoDB.getPatient;
 import static com.example.senocare.helper.SenoDB.getPatientByEmail;
 import static com.example.senocare.helper.SenoDB.user;
 import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
@@ -12,12 +10,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.senocare.R;
@@ -32,7 +28,7 @@ public class ChatBoxAdapter extends RealmRecyclerViewAdapter<Message, RecyclerVi
     public static final int VIEW_TYPE_SENT = 1;
     public static final int VIEW_TYPE_RECEIVED = 2;
 
-    private Context context;
+    private final Context context;
 
     public ChatBoxAdapter(Context context, OrderedRealmCollection<Message> data) {
         super(data, true);
@@ -83,7 +79,7 @@ public class ChatBoxAdapter extends RealmRecyclerViewAdapter<Message, RecyclerVi
             return VIEW_TYPE_RECEIVED;
     }
 
-    public class SentViewHolder extends RecyclerView.ViewHolder {
+    public static class SentViewHolder extends RecyclerView.ViewHolder {
         TextView message;
 
         public SentViewHolder(@NonNull View itemView) {
@@ -93,7 +89,7 @@ public class ChatBoxAdapter extends RealmRecyclerViewAdapter<Message, RecyclerVi
         }
     }
 
-    public class ReceivedViewHolder extends RecyclerView.ViewHolder {
+    public static class ReceivedViewHolder extends RecyclerView.ViewHolder {
         TextView message;
         ImageView img;
 

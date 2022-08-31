@@ -40,37 +40,17 @@ public class PatientHomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home_patient, container, false);
 
         CardView makeAppointment = root.findViewById(R.id.make_appointment_btn);
-        makeAppointment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ScheduleMakeActivity.class));
-            }
-        });
+        makeAppointment.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleMakeActivity.class)));
 
 
         CardView seePrescription = root.findViewById(R.id.see_prescription_btn);
-        seePrescription.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), PrescriptionListActivity.class));
-            }
-        });
+        seePrescription.setOnClickListener(v -> startActivity(new Intent(getContext(), PrescriptionListActivity.class)));
 
         TextView doctor_btn = root.findViewById(R.id.doc_see_all);
-        doctor_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ShowDoctorList.class));
-            }
-        });
+        doctor_btn.setOnClickListener(v -> startActivity(new Intent(getContext(), ShowDoctorList.class)));
 
         TextView app_btn = root.findViewById(R.id.app_see_all);
-        app_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), ScheduleShowActivity.class));
-            }
-        });
+        app_btn.setOnClickListener(v -> startActivity(new Intent(getContext(), ScheduleShowActivity.class)));
 
         createDoctorRecyclerView(root);
 

@@ -1,25 +1,26 @@
 package com.example.senocare.activity;
 
 import static com.example.senocare.helper.SenoDB.IS_PATIENT;
-import static com.example.senocare.helper.SenoDB.clearAll;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.model.Doctor;
+import com.example.senocare.model.Patient;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        initializeSenoDB();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -32,14 +33,21 @@ public class MainActivity extends AppCompatActivity {
         //clearAll();
     }
 
+    private void initializeSenoDB() {
+        Intent data = getIntent();
+        Patient patient = data.getParcelableExtra("patient");
+        Doctor doctor = data.getParcelableExtra("doctor");
+
+        if (patient != null) SenoDB.regPatientInit(patient);
+        else if (doctor != null) SenoDB.regDoctorInit(doctor);
+        else SenoDB.loginInit();
+    }
+
     private void setLogoutBtn() {
         ImageView logoutBtn = findViewById(R.id.logout);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(Activity.RESULT_OK, new Intent());
-                finish();
-            }
+        logoutBtn.setOnClickListener(v -> {
+            setResult(Activity.RESULT_OK, new Intent());
+            finish();
         });
     }
 

@@ -1,13 +1,11 @@
 package com.example.senocare.adapters;
 
-import static androidx.core.content.ContextCompat.createDeviceProtectedStorageContext;
 import static androidx.core.content.ContextCompat.getColor;
 import static com.example.senocare.helper.SenoDB.IS_PATIENT;
 import static com.example.senocare.helper.SenoDB.getDoctorByEmail;
 import static com.example.senocare.helper.SenoDB.getPatientByEmail;
 import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -23,10 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.senocare.R;
 import com.example.senocare.activity.DetailedAppointment;
-import com.example.senocare.activity.patient.PrescriptionSeeActivity;
 import com.example.senocare.helper.SenoDB;
 import com.example.senocare.helper.TimeConverter;
-import com.example.senocare.helper.ViewSupporter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 import com.example.senocare.model.Schedule;
@@ -36,8 +32,8 @@ import io.realm.OrderedRealmCollection;
 public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, AppointmentAdapter.ViewHolder> {
     String TAG = "REALM_RECYCLER_ADAPTER";
 
-    private Context context;
-    private int layoutId;
+    private final Context context;
+    private final int layoutId;
 
     public AppointmentAdapter(Context context, OrderedRealmCollection<Schedule> data, int layoutId) {
         super(data, true);
@@ -49,9 +45,9 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
     @Override
     public AppointmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.i(TAG, "Creating view holder");
-        return new AppointmentAdapter.ViewHolder(LayoutInflater
+        return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(layoutId,parent,false)
+                .inflate(layoutId, parent, false)
         );
     }
 
@@ -87,45 +83,29 @@ public class AppointmentAdapter extends RealmRecyclerViewAdapter<Schedule, Appoi
         }
 
         if (holder.deny_btn != null) {
-            holder.deny_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SenoDB.modifySchedule(schedule.get_id(), "Denied");
-                }
-            });
+            holder.deny_btn.setOnClickListener(v -> SenoDB.modifySchedule(schedule.get_id(), "Denied"));
         }
 
         if (holder.accept_btn != null) {
-            holder.accept_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    SenoDB.modifySchedule(schedule.get_id(), "Accepted");
-                }
-            });
+            holder.accept_btn.setOnClickListener(v -> SenoDB.modifySchedule(schedule.get_id(), "Accepted"));
         }
 
         if (holder.cancel_btn != null) {
-            holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (IS_PATIENT) SenoDB.removeSchedule(schedule.get_id());
-                    else SenoDB.modifySchedule(schedule.get_id(), "Denied");
-                }
+            holder.cancel_btn.setOnClickListener(v -> {
+                if (IS_PATIENT) SenoDB.removeSchedule(schedule.get_id());
+                else SenoDB.modifySchedule(schedule.get_id(), "Denied");
             });
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailedAppointment.class);
-                intent.putExtra("_id", schedule.get_id().toString());
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DetailedAppointment.class);
+            intent.putExtra("_id", schedule.get_id().toString());
 
-                context.startActivity(intent);
-            }
+            context.startActivity(intent);
         });
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img;
         Button cancel_btn, accept_btn, deny_btn;

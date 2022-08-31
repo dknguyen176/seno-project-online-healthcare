@@ -4,21 +4,18 @@ import static com.example.senocare.helper.SenoDB.getDoctor;
 import static com.example.senocare.helper.SenoDB.user;
 import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.senocare.R;
 import com.example.senocare.activity.patient.ScheduleMakeActivity;
-import com.example.senocare.helper.SenoDB;
 import com.example.senocare.helper.TimeConverter;
 import com.example.senocare.model.Doctor;
 
@@ -77,39 +74,33 @@ public class DetailedDoctor extends AppCompatActivity {
 
     private void createAppointmentBtn(Doctor doctor) {
         Button appBtn = findViewById(R.id.app_btn);
-        appBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailedDoctor.this, ScheduleMakeActivity.class);
-                intent.putExtra("doctor", doctor);
-                startActivity(intent);
-            }
+        appBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailedDoctor.this, ScheduleMakeActivity.class);
+            intent.putExtra("doctor", doctor);
+            startActivity(intent);
         });
     }
 
     private void createChatBtn(Doctor doctor) {
         Button chatBtn = findViewById(R.id.chat_btn);
-        chatBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (chat_opened) {
-                    finish();
-                } else {
-                    String sender = user.getProfile().getEmail();
-                    String receiver = doctor.getEmail();
-                    String conservation;
-                    if (sender.compareTo(receiver) < 0)
-                        conservation = sender + receiver;
-                    else
-                        conservation = receiver + sender;
+        chatBtn.setOnClickListener(v -> {
+            if (chat_opened) {
+                finish();
+            } else {
+                String sender = user.getProfile().getEmail();
+                String receiver = doctor.getEmail();
+                String conservation;
+                if (sender.compareTo(receiver) < 0)
+                    conservation = sender + receiver;
+                else
+                    conservation = receiver + sender;
 
-                    Intent intent = new Intent(DetailedDoctor.this, ChatBoxActivity.class);
-                    intent.putExtra("conservation", conservation);
-                    intent.putExtra("sender", sender);
-                    intent.putExtra("receiver", receiver);
+                Intent intent = new Intent(DetailedDoctor.this, ChatBoxActivity.class);
+                intent.putExtra("conservation", conservation);
+                intent.putExtra("sender", sender);
+                intent.putExtra("receiver", receiver);
 
-                    startActivity(intent);
-                }
+                startActivity(intent);
             }
         });
     }
@@ -119,11 +110,6 @@ public class DetailedDoctor extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 }

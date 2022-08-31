@@ -16,7 +16,7 @@ public class PatientMainAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment = null;
+        Fragment fragment;
         switch (position){
             case 0: fragment = new PatientHomeFragment(); break;
             case 1: fragment = new PatientChatFragment(); break;

@@ -1,31 +1,24 @@
 package com.example.senocare.activity;
 
 import static com.example.senocare.helper.SenoDB.getPatient;
-import static com.example.senocare.helper.SenoDB.user;
 import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.senocare.R;
 import com.example.senocare.activity.doctor.PrescriptionMakeActivity;
-import com.example.senocare.activity.patient.ScheduleMakeActivity;
-import com.example.senocare.helper.SenoDB;
 import com.example.senocare.helper.TimeConverter;
-import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
 
 public class DetailedPatient extends AppCompatActivity {
-
-    private boolean chat_opened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +29,6 @@ public class DetailedPatient extends AppCompatActivity {
 
         Intent intent = getIntent();
         String pat_id = intent.getStringExtra("_id");
-        String chat_status = intent.getStringExtra("chat_status");
-        if (chat_status != null && chat_status.equals("opened"))
-            chat_opened = true;
 
         Patient patient = getPatient(pat_id);
 
@@ -67,13 +57,10 @@ public class DetailedPatient extends AppCompatActivity {
 
     private void createWritePrescription(Patient patient) {
         Button prescBtn = findViewById(R.id.presc_btn);
-        prescBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailedPatient.this, PrescriptionMakeActivity.class);
-                intent.putExtra("pat_email", patient.getEmail());
-                startActivity(intent);
-            }
+        prescBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(DetailedPatient.this, PrescriptionMakeActivity.class);
+            intent.putExtra("pat_email", patient.getEmail());
+            startActivity(intent);
         });
     }
 
@@ -82,11 +69,6 @@ public class DetailedPatient extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 }

@@ -1,26 +1,25 @@
 package com.example.senocare.activity;
 
-import static com.example.senocare.helper.SenoDB.IS_PATIENT;
 import static com.example.senocare.helper.SenoDB.app;
 import static com.example.senocare.helper.SenoDB.user;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.senocare.R;
 import com.example.senocare.helper.SenoDB;
+import com.example.senocare.model.Doctor;
+import com.example.senocare.model.Patient;
 
-import io.realm.Realm;
 import io.realm.mongodb.Credentials;
 
 public class LoginActivity extends AppCompatActivity {
@@ -46,29 +45,35 @@ public class LoginActivity extends AppCompatActivity {
 
     private void createSignUpBtn() {
         TextView signUpText = findViewById(R.id.text_signup);
-        signUpText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                startActivityForResult(intent, LAUNCH_REGISTER_ACTIVITY);
-            }
-        });
+        signUpText.setOnClickListener(v -> startRegister());
     }
 
     private void createSignInBtn() {
         signInButton = findViewById(R.id.btn_signin);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = ((EditText)findViewById(R.id.email)).getText().toString();
-                String password = ((EditText)findViewById(R.id.password)).getText().toString();
+        signInButton.setOnClickListener(v -> {
+            String email = ((EditText)findViewById(R.id.email)).getText().toString();
+            String password = ((EditText)findViewById(R.id.password)).getText().toString();
 
-                ((Button) v).setEnabled(false);
-                Log.v("LOGIN", "Button pressed.");
+            if (email.isEmpty()) { Toast.makeText(LoginActivity.this, "Email cannot be empty", Toast.LENGTH_LONG).show(); return; }
+            if (password.isEmpty()) { Toast.makeText(LoginActivity.this, "Password cannot be empty", Toast.LENGTH_LONG).show(); return; }
 
-                login(email, password);
-            }
+            v.setEnabled(false);
+            Log.v("LOGIN", "Button pressed.");
+
+            login(email, password);
         });
+    }
+
+    private void startLoading(Patient patient, Doctor doctor) {
+        Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
+        if (patient != null) intent.putExtra("patient", patient);
+        if (doctor != null) intent.putExtra("doctor", doctor);
+        startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
+    }
+
+    private void startRegister() {
+        Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+        startActivityForResult(intent, LAUNCH_REGISTER_ACTIVITY);
     }
 
     @Override
@@ -77,8 +82,16 @@ public class LoginActivity extends AppCompatActivity {
 
         if (requestCode == LAUNCH_REGISTER_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
+                signInButton.setEnabled(false);
+
+                String email = data.getStringExtra("email");
+                String password = data.getStringExtra("password");
+                Patient patient = data.getParcelableExtra("patient");
+                Doctor doctor = data.getParcelableExtra("doctor");
+
+                if (patient != null) login(email, password, patient);
+                else login(email, password, doctor);
+
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 signInButton.setEnabled(true);
             }
@@ -98,47 +111,51 @@ public class LoginActivity extends AppCompatActivity {
         SenoDB.close();
     }
 
-    /* ============================================================================================ */
-
-    private void anonymousLogin(boolean isPatient) {
-        // not login actually, just skip the login
-        // *** DON'T USE DB WITH THIS LOGIN ***
-        IS_PATIENT = true;
-
-        Log.v("AUTH", "Anonymous login");
-
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
-    }
-
     private void login() {
-        user = app.currentUser();
-        if (user == null) return;
-
-        SenoDB.loginInit();
-
+        user = app.currentUser(); if (user == null) return;
         Log.v("AUTH", "Remember patient login: " + user.getProfile().getEmail());
-
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
+        startLoading(null, null);
     }
 
     private void login(String email, String password) {
         Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
         app.loginAsync(emailPasswordCredentials, it -> {
             if (it.isSuccess()) {
-                user = app.currentUser();
-
-                SenoDB.loginInit();
-
                 Log.v("AUTH", "Successfully authenticated using an email and password.");
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivityForResult(intent, LAUNCH_MAIN_ACTIVITY);
+                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                user = app.currentUser();
+                startLoading(null, null);
             } else {
                 signInButton.setEnabled(true);
-                Log.e("AUTH", it.getError().toString() + " " + email + " " + password);
                 Toast.makeText(this, it.getError().toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void login(String email, String password, Patient patient) {
+        Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
+        app.loginAsync(emailPasswordCredentials, it -> {
+            if (it.isSuccess()) {
+                Log.v("AUTH", "Successfully authenticated using an email and password.");
+                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                user = app.currentUser();
+                startLoading(patient, null);
+            } else {
+                Log.e("AUTH", it.getError().toString());
+            }
+        });
+    }
+
+    private void login(String email, String password, Doctor doctor) {
+        Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
+        app.loginAsync(emailPasswordCredentials, it -> {
+            if (it.isSuccess()) {
+                Log.v("AUTH", "Successfully authenticated using an email and password.");
+                Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                user = app.currentUser();
+                startLoading(null, doctor);
+            } else {
+                Log.e("AUTH", it.getError().toString());
             }
         });
     }

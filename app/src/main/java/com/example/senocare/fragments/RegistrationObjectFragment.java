@@ -1,12 +1,6 @@
 package com.example.senocare.fragments;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.method.DigitsKeyListener;
@@ -15,23 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.senocare.R;
 import com.example.senocare.helper.ViewSupporter;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
 
 
 // Instances of this class are fragments representing a single
 // object in our collection.
 public class RegistrationObjectFragment extends Fragment {
-    public static final String ARG_OBJECT = "object";
 
     @Nullable
     @Override
@@ -40,7 +32,7 @@ public class RegistrationObjectFragment extends Fragment {
         Bundle args = getArguments();
         int position = args.getInt("position");
 
-        int layoutId = 0;
+        int layoutId;
 
         switch (position) {
             case 1:
@@ -86,21 +78,15 @@ public class RegistrationObjectFragment extends Fragment {
     }
 
     private void makeUniqueCheckBoxes(CheckBox ckbox1, CheckBox ckbox2) {
-        ckbox1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ckbox1.isChecked()){
-                    ckbox2.setChecked(false);
-                }
+        ckbox1.setOnClickListener(v -> {
+            if (ckbox1.isChecked()){
+                ckbox2.setChecked(false);
             }
         });
 
-        ckbox2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ckbox2.isChecked()){
-                    ckbox1.setChecked(false);
-                }
+        ckbox2.setOnClickListener(v -> {
+            if (ckbox2.isChecked()){
+                ckbox1.setChecked(false);
             }
         });
     }

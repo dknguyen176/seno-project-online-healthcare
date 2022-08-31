@@ -1,9 +1,6 @@
 package com.example.senocare.fragments;
 
 import static com.example.senocare.helper.SenoDB.app;
-import static com.example.senocare.helper.SenoDB.regDoctorInit;
-import static com.example.senocare.helper.SenoDB.regPatientInit;
-import static com.example.senocare.helper.SenoDB.user;
 import static com.example.senocare.helper.TimeConverter.toDate;
 
 import android.app.Activity;
@@ -29,8 +26,6 @@ import com.example.senocare.R;
 import com.example.senocare.adapters.RegistrationAdapter;
 import com.example.senocare.model.Doctor;
 import com.example.senocare.model.Patient;
-
-import io.realm.mongodb.Credentials;
 
 public class RegistrationFragment extends Fragment {
     // When requested, this adapter returns a PagerObjectFragment,
@@ -59,51 +54,48 @@ public class RegistrationFragment extends Fragment {
         viewPager.setUserInputEnabled(false);
 
         nextBtn = view.findViewById(R.id.reg_nextBtn);
-        nextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean valid = false;
-                switch (position) {
-                    case 1: valid = checkBoxUserType(view); break;
-                    case 2: valid = inputEmailPassword(view); break;
-                    case 3: valid = inputName(view); break;
-                    case 4: valid = checkBoxGender(view); break;
-                    case 5: valid = inputBirthday(view); break;
-                    case 6: valid = inputPhone(view); break;
-                    case 7: valid = inputAddress(view); break;
-                    case 8: valid = inputBio(view); break;
-                    case 9: valid = inputLoc(view); break;
-                    case 10: valid = spinnerSpec(view); break;
-                }
-                if (!valid) return;
+        nextBtn.setOnClickListener(v -> {
+            boolean valid = false;
+            switch (position) {
+                case 1: valid = checkBoxUserType(view); break;
+                case 2: valid = inputEmailPassword(view); break;
+                case 3: valid = inputName(view); break;
+                case 4: valid = checkBoxGender(view); break;
+                case 5: valid = inputBirthday(view); break;
+                case 6: valid = inputPhone(view); break;
+                case 7: valid = inputAddress(view); break;
+                case 8: valid = inputBio(view); break;
+                case 9: valid = inputLoc(view); break;
+                case 10: valid = spinnerSpec(view); break;
+            }
+            if (!valid) return;
 
-                if (is_patient) {
-                    if (position < 7) {
-                        position++;
-                        viewPager.setCurrentItem(position - 1);
-                        if (position == 7) nextBtn.setText("Finish Registration");
-                        return;
-                    }
-
-                    ((Button) v).setEnabled(false);
-                    Log.v("REGISTER", "Button pressed.");
-                    Patient patient = new Patient(email, name, sex, toDate(birth, "dd/MM/yyyy"), phone, address);
-                    register(patient.getEmail(), password, patient);
+            if (is_patient) {
+                if (position < 7) {
+                    position++;
+                    viewPager.setCurrentItem(position - 1);
+                    if (position == 7) nextBtn.setText("Finish Registration");
+                    return;
                 }
-                else{
-                    if (position == 5) position = 7;
-                    if (position < 10) {
-                        position++;
-                        viewPager.setCurrentItem(position - 1);
-                        if (position == 10) nextBtn.setText("Finish Registration");
-                        return;
-                    }
 
-                    ((Button) v).setEnabled(false);
-                    Log.v("REGISTER", "Button pressed.");
-                    Doctor doctor = new Doctor(email, first, last, sex, toDate(birth, "dd/MM/yyyy"), bio, loc, spec);
-                    register(doctor.getEmail(), password, doctor);
+                v.setEnabled(false);
+                Log.v("REGISTER", "Button pressed.");
+                Patient patient = new Patient(email, name, sex, toDate(birth, "dd/MM/yyyy"), phone, address);
+                register(patient.getEmail(), password, patient);
+            }
+            else{
+                if (position == 5) position = 7;
+                if (position < 10) {
+                    position++;
+                    viewPager.setCurrentItem(position - 1);
+                    if (position == 10) nextBtn.setText("Finish Registration");
+                    return;
                 }
+
+                v.setEnabled(false);
+                Log.v("REGISTER", "Button pressed.");
+                Doctor doctor = new Doctor(email, first, last, sex, toDate(birth, "dd/MM/yyyy"), bio, loc, spec);
+                register(doctor.getEmail(), password, doctor);
             }
         });
     }
@@ -116,8 +108,7 @@ public class RegistrationFragment extends Fragment {
             Toast.makeText(getContext(), "Please choose one of the choices above", Toast.LENGTH_LONG).show();
             return false;
         }
-        else if (ckbox_doctor.isChecked()) is_patient = false;
-        else is_patient = true;
+        else is_patient = !ckbox_doctor.isChecked();
 
         return true;
     }
@@ -133,7 +124,7 @@ public class RegistrationFragment extends Fragment {
     private boolean inputName(View view) {
         first = ((EditText) view.findViewById(R.id.reg_first)).getText().toString();
         last = ((EditText) view.findViewById(R.id.reg_last)).getText().toString();
-        name = first + last;
+        name = first + " " + last;
 
         if (first.isEmpty()) { Toast.makeText(getContext(), "First name cannot be empty", Toast.LENGTH_LONG).show(); return false; }
         if (last.isEmpty()) { Toast.makeText(getContext(), "Last name cannot be empty", Toast.LENGTH_LONG).show(); return false; }
@@ -192,64 +183,39 @@ public class RegistrationFragment extends Fragment {
     private void register(String email, String password, Patient patient) {
         app.getEmailPassword().registerUserAsync(email, password, it -> {
             if (it.isSuccess()) {
-                login(email, password, patient);
+                Log.i("EXAMPLE", "Successfully register user.");
+                Toast.makeText(getContext(), "Registration success", Toast.LENGTH_LONG).show();
 
-                Log.i("EXAMPLE", "Successfully registered user.");
+                Intent intent = new Intent();
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
+                intent.putExtra("patient", patient);
+                getActivity().setResult(Activity.RESULT_OK, intent);
             } else {
                 Log.e("EXAMPLE", "Failed to register user: " + it.getError().getErrorMessage());
                 Toast.makeText(getContext(), "Failed to register user: " + it.getError().getErrorMessage(), Toast.LENGTH_LONG).show();
-                getActivity().finish();
             }
+            getActivity().finish();
         });
     }
 
     private void register(String email, String password, Doctor doctor) {
         app.getEmailPassword().registerUserAsync(email, password, it -> {
             if (it.isSuccess()) {
-                login(email, password, doctor);
+                Log.i("EXAMPLE", "Successfully register user.");
+                Toast.makeText(getContext(), "Registration success", Toast.LENGTH_LONG).show();
 
-                Log.i("EXAMPLE", "Successfully registered user.");
+                Intent intent = new Intent();
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
+                intent.putExtra("doctor", doctor);
+                getActivity().setResult(Activity.RESULT_OK, intent);
+
             } else {
                 Log.e("EXAMPLE", "Failed to register user: " + it.getError().getErrorMessage());
                 Toast.makeText(getContext(), "Failed to register user: " + it.getError().getErrorMessage(), Toast.LENGTH_LONG).show();
-                getActivity().finish();
             }
-        });
-    }
-
-    private void login(String email, String password, Patient patient) {
-        Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
-        app.loginAsync(emailPasswordCredentials, it -> {
-            if (it.isSuccess()) {
-                user = app.currentUser();
-
-                regPatientInit(patient);
-
-                Log.v("AUTH", "Successfully authenticated using an email and password.");
-
-                getActivity().setResult(Activity.RESULT_OK, new Intent());
-                getActivity().finish();
-            } else {
-                Log.e("AUTH", it.getError().toString());
-            }
-        });
-    }
-
-    private void login(String email, String password, Doctor doctor) {
-        Credentials emailPasswordCredentials = Credentials.emailPassword(email, password);
-        app.loginAsync(emailPasswordCredentials, it -> {
-            if (it.isSuccess()) {
-                user = app.currentUser();
-
-                regDoctorInit(doctor);
-
-                Log.v("AUTH", "Successfully authenticated using an email and password.");
-
-                getActivity().setResult(Activity.RESULT_OK, new Intent());
-                getActivity().finish();
-            } else {
-                Log.e("AUTH", it.getError().toString());
-            }
+            getActivity().finish();
         });
     }
 }
