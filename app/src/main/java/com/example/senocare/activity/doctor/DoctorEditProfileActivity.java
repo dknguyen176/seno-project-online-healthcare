@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -100,8 +101,6 @@ public class DoctorEditProfileActivity extends AppCompatActivity implements Adap
                 Doctor newDoctor = new Doctor(user.getProfile().getEmail(), first, last, sex,
                         TimeConverter.toDate(birthday, "dd/MM/yyyy"), spec, exper, loc, bio, 5);
                 newDoctor.set_id(doctor.get_id());
-                byte[] img = doctor.getImg();
-                newDoctor.setImg(img);
                 modifyDoctor(newDoctor);
 
                 Intent intent = new Intent();

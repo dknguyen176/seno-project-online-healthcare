@@ -5,6 +5,7 @@ import static com.example.senocare.helper.SenoDB.user;
 import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ public class DetailedPatient extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_patient);
+
+        createToolbar();
 
         Intent intent = getIntent();
         String pat_id = intent.getStringExtra("_id");
@@ -70,6 +73,19 @@ public class DetailedPatient extends AppCompatActivity {
                 Intent intent = new Intent(DetailedPatient.this, PrescriptionMakeActivity.class);
                 intent.putExtra("pat_email", patient.getEmail());
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void createToolbar() {
+        Toolbar toolbar = findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

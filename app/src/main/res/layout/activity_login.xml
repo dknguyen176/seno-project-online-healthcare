@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_edittext"
             android:drawableLeft="@drawable/ic_baseline_account_circle"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:drawablePadding="5dp"
             android:elevation="3dp"

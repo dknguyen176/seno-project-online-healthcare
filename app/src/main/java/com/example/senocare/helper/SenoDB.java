@@ -319,14 +319,14 @@ public final class SenoDB {
 
     public static RealmResults<Doctor> getDoctorList() {
         return realm.where(Doctor.class)
-                .sort("name", Sort.ASCENDING)
+                .sort("first", Sort.ASCENDING)
                 .findAll();
     }
 
     public static RealmResults<Doctor> getDoctorList(String spec) {
         return realm.where(Doctor.class)
                 .equalTo("spec", spec)
-                .sort("name", Sort.ASCENDING)
+                .sort("first", Sort.ASCENDING)
                 .findAll();
     }
 

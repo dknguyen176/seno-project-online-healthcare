@@ -5,6 +5,7 @@ import static com.example.senocare.helper.SenoDB.user;
 import static com.example.senocare.helper.ViewSupporter.putByteArrayToImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.media.Image;
@@ -29,6 +30,8 @@ public class DetailedDoctor extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_doctor);
+
+        createToolbar();
 
         Intent intent = getIntent();
         String doc_id = intent.getStringExtra("_id");
@@ -107,6 +110,19 @@ public class DetailedDoctor extends AppCompatActivity {
 
                     startActivity(intent);
                 }
+            }
+        });
+    }
+
+    private void createToolbar() {
+        Toolbar toolbar = findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

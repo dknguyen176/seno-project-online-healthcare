@@ -56,9 +56,19 @@ public class PatientProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         patient = getPatient();
+
         img = patient.getImg();
 
         createDialog();
+
+        profile_pic = view.findViewById(R.id.profile_pic);
+        putByteArrayToImageView(patient.getImg(), profile_pic, patient.getSex());
+        profile_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+            }
+        });
 
         setViewContent(view, patient);
 
@@ -118,7 +128,7 @@ public class PatientProfileFragment extends Fragment {
     private byte[] getBytes(InputStream inputStream) throws IOException {
         byte[] bytesResult = null;
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 10000;
+        int bufferSize = 1024;
         byte[] buffer = new byte[bufferSize];
         try {
             int len;
@@ -135,11 +145,16 @@ public class PatientProfileFragment extends Fragment {
 
     private void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        String[] choice = new String[] {"From Gallery", "From Camera"};
+        String[] choice = new String[] {"Set Default", "From Gallery", "From Camera"};
         builder.setTitle("Choose a picture")
                 .setItems(choice, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0){
+                            img = null;
+                            modifyPatient(patient.get_id(), null);
+                            putByteArrayToImageView(null, profile_pic, patient.getSex());
+                        }
+                        else if (which == 1){
                             Intent pickPhoto = new Intent(Intent.ACTION_PICK,
                                     android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(pickPhoto , GALLERY_ACTIVITY);
@@ -173,13 +188,6 @@ public class PatientProfileFragment extends Fragment {
         TextView address = view.findViewById(R.id.address_content);
         address.setText(patient.getAddress());
 
-        profile_pic = view.findViewById(R.id.profile_pic);
-        putByteArrayToImageView(patient.getImg(), profile_pic, patient.getSex());
-        profile_pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
+        if (img == null) putByteArrayToImageView(null, profile_pic, patient.getSex());
     }
 }

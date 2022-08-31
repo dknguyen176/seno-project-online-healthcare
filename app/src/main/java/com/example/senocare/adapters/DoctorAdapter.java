@@ -53,7 +53,7 @@ public class DoctorAdapter extends RealmRecyclerViewAdapter<Doctor, DoctorAdapte
         Doctor doctor = getItem(position);
         Log.i(TAG, "Binding view holder: " + doctor.getName());
 
-        holder.name.setText("Dr. " + doctor.getName());
+        holder.name.setText("Dr. " + doctor.getLast());
         holder.spec.setText(doctor.getSpec());
         holder.exper.setText(String.valueOf(doctor.getExper()) + " years");
         holder.rating.setText(String.valueOf(doctor.getRating()));
